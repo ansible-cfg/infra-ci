@@ -1,12 +1,15 @@
 # Ansible playbooks & roles
 
-Let's start with the following structure:
-
-hosts:
+Copy my own public key on ovh to ease ansible execution afterwards.
 
 ```
+cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_keys'
+```
 
+Trigger with:
 
+```
+ansible-playbook -i inventory/ovh-alo playbooks/bastion.yml
 ```
 
 ## Inspiration
