@@ -1,0 +1,10 @@
+---
+- hosts: bastion
+  vars_prompt:
+    - name: "root_new_password"
+      prompt: "Root new password"
+      #private: yes
+ 
+  roles:
+    - ssh_disable_root
+ 
