@@ -1,0 +1,13 @@
+- name: Change root password
+  user:
+    name: root
+    password: "{{ root_new_password }}"
+
+- name: Disallow root SSH access
+  lineinfile: 
+    dest: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+  notify: 
+    - restart sshd

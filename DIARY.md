@@ -2,6 +2,20 @@
 
 Let's start with the following structure:
 
+hosts:
+
+```
+
+
+```
+
+## Inspiration
+
+* [Install Ansible, Create Your Inventory File, and Run an Ansible Playbook and Some Ansible Commands](https://thornelabs.net/2014/03/08/install-ansible-create-your-inventory-file-and-run-an-ansible-playbook-and-some-ansible-commands.html)
+* [Hash root's Password in RHEL and CentOS Kickstart Profiles](https://thornelabs.net/2014/02/03/hash-roots-password-in-rhel-and-centos-kickstart-profiles.html)
+* [Stackoverflow - Ansible: best practice for maintaining list of sudoers
+](https://stackoverflow.com/questions/33359404/ansible-best-practice-for-maintaining-list-of-sudoers)
+* [Managing sshd with Ansible](https://blather.michaelwlucas.com/archives/1819)
 
 
 # Mettre à Jour son OS (CentOS)
