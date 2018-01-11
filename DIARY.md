@@ -12,6 +12,12 @@ Trigger with:
 ansible-playbook -i inventory/ovh-alo playbooks/bastion.yml
 ```
 
+Once done, root is not allowed anymore to connect, one needs to change the `ansible_user` to your own user in the `inventory/ovh-alo` or use a different inventory afterwards with a technical user?
+
+```
+ansible -m ping -i inventory/ovh-alo all
+```
+
 ## Inspiration
 
 * [Install Ansible, Create Your Inventory File, and Run an Ansible Playbook and Some Ansible Commands](https://thornelabs.net/2014/03/08/install-ansible-create-your-inventory-file-and-run-an-ansible-playbook-and-some-ansible-commands.html)
