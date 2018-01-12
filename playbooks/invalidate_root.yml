@@ -3,9 +3,10 @@
   vars_prompt:
     - name: "root_new_password"
       prompt: "Root new password"
+      confirm: yes
       #private: yes
  
   roles:
-    - {role: user_declaration, usernames: ["arnauld"]}
+    - {role: users_declaration, usernames: ["arnauld"]}
     - ssh_disable_root
  

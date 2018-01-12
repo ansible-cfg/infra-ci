@@ -1,0 +1,5 @@
+---
+- include: rules.yml
+
+- include: persist.yml
+  when: v4_persist

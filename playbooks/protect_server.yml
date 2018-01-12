@@ -1,6 +1,34 @@
 ---
-- hosts: all
+- hosts: subnet
 
-  roles:
-    - {role: users_declaration, usernames: "{{ ['arnauld', 'zorg', 'morg'] }}"}
-    - vps_strict_ssh
+  tasks:
+    - include_role:
+        name: vps_strict_ssh
+
+    - name: Retrieve v4 rules
+      command: iptables -nL
+      changed_when: false
+      register: v4_rules
+
+    - name: Debug v4 rules
+      debug:
+        var: v4_rules
+
+
+#    - include_role: 
+#        name: my_iptables
+#      vars:
+#        v4_configure: true
+#        v4_persist: false
+#        v4_group_rules:
+#          {% for host in groups['subnet'] %}
+#             {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}
+#          {% endfor %}
+
+
+
+
+
+
+
+

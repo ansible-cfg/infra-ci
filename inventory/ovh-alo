@@ -2,5 +2,5 @@
 vps502106.ovh.net
 
 [subnet]
-vps502105.ovh.net ansible_user=arnauld
-vps502106.ovh.net ansible_user=arnauld
+vps502105.ovh.net
+vps502106.ovh.net
