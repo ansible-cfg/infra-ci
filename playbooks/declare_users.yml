@@ -2,4 +2,4 @@
 - hosts: all
 
   roles:
-    - {role: users_declaration, usernames: ['arnauld', 'fabien', 'amin']}
+    - {role: users_declaration, usernames: "{{ users }}" }

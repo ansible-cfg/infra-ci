@@ -1,0 +1,17 @@
+all:
+  children:
+    subnet:
+      hosts:
+        vps503105.ovh.net:
+        vps503106.ovh.net:
+        vps503107.ovh.net:
+        vps503108.ovh.net:
+        vps503114.ovh.net:
+          
+  vars:
+    users:
+      - hugh
+      - sylvain
+      - arnauld
+      - fabien
+      - amin
