@@ -12,18 +12,20 @@
     line: '%wheel ALL=(ALL) NOPASSWD: ALL'
     validate: visudo -cf %s
 
-- name: Add {{ username }} users to wheel group
+- name: Add {{ usernames }} users to wheel group
   user:
-    name: "{{ username }}"
+    name: "{{ item }}"
     groups: wheel
     append: yes
     state: present 
     createhome: yes
+  with_items: "{{ usernames }}"
 
-- name: Add SSH public key to ci user
+- name: Add SSH public keys
   authorized_key:
-    user: "{{ username }}"
+    user: "{{ item }}"
     state: present
-    key: "{{ lookup('file', '../keys/{{ username }}/id_rsa.pub') }}"
+    key: "{{ lookup('file', '../pub_keys/{{ item }}.pub') }}"
+  with_items: "{{ usernames }}"
 
 

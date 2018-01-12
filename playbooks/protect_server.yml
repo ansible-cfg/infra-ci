@@ -1,0 +1,6 @@
+---
+- hosts: all
+
+  roles:
+    - {role: users_declaration, usernames: "{{ ['arnauld', 'zorg', 'morg'] }}"}
+    - vps_strict_ssh

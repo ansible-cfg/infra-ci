@@ -6,6 +6,6 @@
       #private: yes
  
   roles:
-    - {role: user_declaration, username: "arnauld"}
+    - {role: user_declaration, usernames: ["arnauld"]}
     - ssh_disable_root
  

@@ -30,3 +30,18 @@ ansible-playbook -i "vps502106.ovh.net," playbooks/invalidate_root.yml
 Inspiration:
 > Note the comma (,) at the end; this signals that it's a list, not a file.
 > [stackoverflow](https://stackoverflow.com/a/18199029)
+
+# Etape 1: Protéger la machine
+
+
+```
+ansible-playbook -i inventory/ovh-alo playbooks/protect_server.yml
+```
+
+Pour limiter à un groupe de machine (e.g. `bastion`) uniquement:
+
+```
+ansible-playbook -i inventory/ovh-alo -l bastion playbooks/protect_server.yml
+```
+
+
