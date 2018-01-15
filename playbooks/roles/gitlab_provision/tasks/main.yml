@@ -1,0 +1,8 @@
+- name: Install gitlab container
+  become: yes
+  docker_container:
+    name: gitlab
+    image: gitlab/gitlab-ce
+    state: started
+    ports:
+     - "8080:80"
