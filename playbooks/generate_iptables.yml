@@ -21,9 +21,6 @@
         - -P INPUT DROP
 
   tasks:
-    - include_role:
-        name: vps_strict_ssh
-
     - name: Retrieve v4 rules
       command: iptables -nL
       changed_when: false
@@ -48,9 +45,11 @@
         var: ips
       vars:
         ips: |
-                    {{ groups['subnet'] 
-                      | map('extract', hostvars, 'ansible_eth0') 
-                      | map(attribute='ipv4') }}
+                {{ groups['subnet'] 
+                  | map('extract', hostvars, 'ansible_eth0') 
+                  | map(attribute='ipv4') 
+                  | map(attribute='address') 
+                  | list }}
 
 
 #    - include_role: 
