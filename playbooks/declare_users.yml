@@ -1,5 +1,21 @@
 ---
 - hosts: all
 
-  roles:
-    - {role: users_declaration, usernames: "{{ users }}" }
+  tasks:
+    - include_role:
+        name: users_declaration
+      vars:
+        usernames: "{{ users }}"
+
+    - name: Make sure we have a 'data' group
+      group:
+        name: data
+        state: present
+
+    - name: Create a technical 'data' account
+      user:
+          name: data
+          groups: data
+          append: yes
+          state: present
+

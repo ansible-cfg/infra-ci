@@ -27,6 +27,11 @@ cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_key
 ansible-playbook -i "vps502106.ovh.net," playbooks/invalidate_root.yml
 ```
 
+
+```
+ansible-playbook -i "vps494404.ovh.net," playbooks/invalidate_root.yml
+```
+
 ou (sur toutes les machines)
 
 ```

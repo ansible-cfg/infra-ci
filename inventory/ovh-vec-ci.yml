@@ -1,5 +1,16 @@
 all:
   children:
+    docker-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm3.dev-comutitres.fr:
+    gitlab-hosts:
+      hosts:
+        vm3.dev-comutitres.fr:
+    nginx-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+
     subnet:
       hosts:
         vps494404.ovh.net:
@@ -14,7 +25,7 @@ all:
           name: vm3
         vps503107.ovh.net:
           type: ssd2
-          type: vm6
+          name: vm6
         vps503108.ovh.net:
           type: ssd1
           name: vm2
