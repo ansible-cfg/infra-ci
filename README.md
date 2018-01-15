@@ -8,7 +8,7 @@ Supprimer le host des `known_hosts`; cela arrive lorsque l'on réinitialise un v
 ssh-keygen -R vps502106.ovh.net
 ```
 
-Copie sa clé publique ssh pour l'utilisateur root pour faciliter l'utilisation de ansible:
+Copie sa clé publique ssh pour l'utilisateur `root` pour faciliter l'utilisation de ansible:
 
 ```
 cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_keys'
@@ -27,7 +27,13 @@ cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_key
 ansible-playbook -i "vps502106.ovh.net," playbooks/invalidate_root.yml
 ```
 
-Une fois qu'un sudoer est créé il est possible de l'utiliser:
+ou (sur toutes les machines)
+
+```
+ansible-playbook -i inventory/ovh-alo playbooks/invalidate_root.yml
+```
+
+Une fois qu'un sudoer est créé il est possible de l'utiliser (d'autant plus que root n'est plus autorisé en ssh):
 
 ```
 ansible-playbook -i inventory/ovh-vec-ci playbooks/invalidate_root.yml -u arnauld

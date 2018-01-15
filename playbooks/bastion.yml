@@ -1,8 +1,0 @@
----
-- hosts: bastion
- 
-  roles:
-    - {role: user_declaration, username: "arnauld"}
-    - vps_strict_ssh
- 
-  

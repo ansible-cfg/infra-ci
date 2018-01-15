@@ -2,11 +2,25 @@ all:
   children:
     subnet:
       hosts:
+        vps494404.ovh.net:
+          bastion: true
+          type: ssd2
+          name: vm1
         vps503105.ovh.net:
+          type: ssd2
+          name: vm5
         vps503106.ovh.net:
+          type: ssd2
+          name: vm3
         vps503107.ovh.net:
+          type: ssd2
+          type: vm6
         vps503108.ovh.net:
+          type: ssd1
+          name: vm2
         vps503114.ovh.net:
+          type: ssd3
+          name: vm4
           
   vars:
     users:

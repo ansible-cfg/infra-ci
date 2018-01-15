@@ -12,7 +12,17 @@
 
     - name: Debug v4 rules
       debug:
-        var: v4_rules
+        msg: "{{ v4_rules.stdout_lines }}"
+
+    - name: Collect ip address
+      debug:
+        msg: "{{ allips }}"
+      vars:
+        - allips: |
+                    {% set comma = joiner(",") %}
+                    {% for host in groups['subnet'] -%}
+                      {{ comma() }}{{ hostvars[host]['ansible_eth0']['ipv4']['address']}}
+                    {%- endfor -%}
 
 
 #    - include_role: 

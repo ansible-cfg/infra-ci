@@ -4,9 +4,19 @@
     - name: "root_new_password"
       prompt: "Root new password"
       confirm: yes
-      #private: yes
+      private: yes
  
-  roles:
-    - {role: users_declaration, usernames: ["arnauld"]}
-    - ssh_disable_root
+  tasks:
+    - include_role:
+        name: users_declaration
+      vars:
+        usernames: ["arnauld"]
+
+    - name: Change root password
+      user:
+        name: root
+        password: "{{ root_new_password }}"
+
+    - include_role:
+        name: ssh_disable_root
  

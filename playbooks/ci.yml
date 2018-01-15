@@ -1,9 +1,0 @@
----
-- import_playbook: systools.yml
-- import_playbook: bastion.yml
-- import_playbook: nexus.yml
-- import_playbook: sonarq.yml
-- import_playbook: gitlab-ci.yml
-- import_playbook: gitlab-runner.yml
-- import_playbook: postgres.yml
-- import_playbook: nginx.yml
