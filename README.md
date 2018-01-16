@@ -70,19 +70,19 @@ ansible-playbook -i inventory/ovh-vec-ci playbooks/declare_users.yml -u arnauld
 :warning: cette étape modifie les IPtables des machines et empêchera les connexions directes par ssh.
 
 ```
-ansible-playbook -i inventory/ovh-alo playbooks/protect_server.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci playbooks/protect_server.yml -u arnauld
 ```
 
 puis
 
 ```
-ansible-playbook -i inventory/ovh-alo playbooks/generate_iptables.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci playbooks/generate_iptables.yml -u arnauld
 ```
 
 Pour limiter à un groupe de machine (e.g. `bastion`) uniquement:
 
 ```
-ansible-playbook -i inventory/ovh-alo -l bastion playbooks/protect_server.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci -l bastion playbooks/generate_iptables.yml -u arnauld
 ```
 
 
