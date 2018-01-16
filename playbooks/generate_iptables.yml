@@ -9,7 +9,6 @@
         - -P FORWARD DROP
       002 allow loopback:
         - -A INPUT -i lo -j ACCEPT
-        - -A OUTPUT -i lo -j ACCEPT
       003 allow ping replies:
         - -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
         - -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
