@@ -35,23 +35,23 @@
     state: present 
   register: "user_ssh_keys"
   with_items: "{{ usernames }}"
-  when: pubkey_generate
+  when: pubkey_generate|default(false)
 
-- name: Debug hostvars
-  debug:
-    var: item
-  with_items:
-    - "{{ user_ssh_keys.results }}"
+#- name: Debug user_ssh_keys
+#  debug:
+#    msg: "{{ item['item'] }}"
+#  with_items:
+#    - "{{ user_ssh_keys.results }}"
 
 - name: Copy generated pub_key for {{ usernames }} on {{ pubkey_install_hosts }}
   authorized_key:
-    user: "{{ item[1].item.name }}"
-    key: "{{ item[1].item.ssh_public_key }}"
-    delegate_to: "{{ item[0] }}"
+    user: "{{ item[1].name }}"
+    key: "{{ item[1].ssh_public_key }}"
+  delegate_to: "{{ item[0] }}"
   with_nested: 
    - "{{ groups['subnet'] }}"
    - "{{ user_ssh_keys.results }}"
-  when: pubkey_generate
+  when: pubkey_generate|default(false)
 
 
 
