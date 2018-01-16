@@ -1,0 +1,30 @@
+- name: create docker image folder
+  become: yes
+  file:
+    path: /volumes/gitlab-runner/docker-image
+    state: directory
+
+- name: copy docker image files
+  become: yes
+  copy:
+    src: files/docker/
+    dest: /volumes/gitlab-runner/docker-image
+
+- name: build docker image
+  docker_image:
+     path: /volumes/gitlab-runner/docker-image
+     name: comutitres/gitlab-runner-java-maven
+
+- name: install container
+  become: yes
+  docker_container:
+    name: gitlab-runner-java-maven
+    image: comutitres/gitlab-runner-java-maven
+    state: started
+    env:
+        CI_SERVER_URL: http://vm3.dev-comutitres.fr:10080/
+        USERNAME: root
+        PASSWORD: test123A
+        RUNNER_NAME: java_maven_runner
+        RUNNER_EXECUTOR: shell
+        RUNNER_TAG_LIST: 'java maven'
