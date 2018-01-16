@@ -24,7 +24,7 @@
       - /volumes/gitlab/logs:/var/log/gitlab
       - /volumes/gitlab/data:/home/git/data
     env:
-        GITLAB_HOST: gitlab-ci
+        GITLAB_HOST: gitlab.dev-comutitres.fr
         REDIS_HOST: vm6.dev-comutitres.fr
         REDIS_PORT: 6379
         DB_ADAPTER: postgresql
