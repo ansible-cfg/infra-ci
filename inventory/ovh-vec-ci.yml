@@ -4,12 +4,23 @@ all:
       hosts:
         vm2.dev-comutitres.fr:
         vm3.dev-comutitres.fr:
+        vm4.dev-comutitres.fr:
+        vm6.dev-comutitres.fr:
     gitlab-hosts:
       hosts:
         vm3.dev-comutitres.fr:
+    gitlab-runner-hosts:
+      hosts:
+        vm4.dev-comutitres.fr:
     nginx-hosts:
       hosts:
         vm2.dev-comutitres.fr:
+    postgresql-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
+    redis-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
 
     subnet:
       hosts:

@@ -1,8 +1,39 @@
+- name: create logs folder
+  become: yes
+  file:
+    path: /volumes/gitlab/logs
+    state: directory
+    
+- name: create data folder
+  become: yes
+  file:
+    path: /volumes/gitlab/data
+    state: directory
+
 - name: Install gitlab container
   become: yes
   docker_container:
-    name: gitlab
-    image: gitlab/gitlab-ce
+    name: gitlab-ci
+    image: sameersbn/gitlab:10.3.3
     state: started
     ports:
-     - "8080:80"
+        - "10022:22"
+        - "10080:80"
+        - "10443:443"
+    volumes:
+      - /volumes/gitlab/logs:/var/log/gitlab
+      - /volumes/gitlab/data:/home/git/data
+    env:
+        GITLAB_HOST: gitlab-ci
+        REDIS_HOST: vm6.dev-comutitres.fr
+        REDIS_PORT: 6379
+        DB_ADAPTER: postgresql
+        DB_HOST: vm6.dev-comutitres.fr
+        DB_PORT: 5432
+        DB_NAME: gitlabhq
+        DB_USER: gitlab
+        DB_PASS: passw0rd
+        GITLAB_SIGNUP_ENABLED: false
+        GITLAB_SECRETS_DB_KEY_BASE: E6568C0F3112274F1B751CDBA33E614848378540751D0B4FEE7CD9756D7DD4C8
+        GITLAB_SECRETS_SECRET_KEY_BASE: E6568C0F3112274F1B751CDBA33E614848378540751D0B4FEE7CD9756D7DD4C8
+        GITLAB_SECRETS_OTP_KEY_BASE: E6568C0F3112274F1B751CDBA33E614848378540751D0B4FEE7CD9756D7DD4C8

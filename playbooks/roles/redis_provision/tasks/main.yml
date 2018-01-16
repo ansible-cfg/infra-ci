@@ -1,0 +1,29 @@
+- name: create config folder
+  become: yes
+  file:
+    path: /volumes/redis/config
+    state: directory
+
+- name: copy config file
+  become: yes
+  copy:
+    src: files/redis.conf
+    dest: /volumes/redis/config
+    
+- name: create data folder
+  become: yes
+  file:
+    path: /volumes/redis/data
+    state: directory
+
+- name: install container
+  become: yes
+  docker_container:
+    name: gitlab-redis
+    image: redis
+    state: started
+    ports:
+     - "6379:6379"
+    volumes:
+      - /volumes/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - /volumes/redis/data:/var/lib/redis

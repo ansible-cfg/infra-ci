@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+if [ -z "$CI_SERVER_URL" ]; then
+  echo "ERROR: Env CI_SERVER_URL not set!"
+  exit 1
+fi
+
+if [ ! -z "$USERNAME" ] && [ ! -z "$PASSWORD" ]; then
+   ACCESS_TOKEN_RESULT=$(curl -s \
+                              -H "Content-Type: application/json" \
+                              -X POST -d '{"grant_type":"password","username":"'$USERNAME'","password":"'$PASSWORD'"}' \
+                              $CI_SERVER_URL/oauth/token)
+
+   ACCESS_TOKEN=`echo $ACCESS_TOKEN_RESULT | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])"`
+
+   RUNNERS_ADMIN_PAGE_CONTENT=$(curl -v \
+				     --silent \
+				     --header "Authorization: Bearer $ACCESS_TOKEN" \
+				     $CI_SERVER_URL/admin/runners --stderr -)
+
+   export REGISTRATION_TOKEN=`echo $RUNNERS_ADMIN_PAGE_CONTENT | grep 'registration_token' | sed -e 's/.*registration_token">\(.*\)<\/code.*/\1/'`
+   unset USERNAME PASSWORD ACCESS_TOKEN_RESULT ACCESS_TOKEN RUNNERS_ADMIN_PAGE_CONTENT
+fi
+
+if [ -z "$REGISTRATION_TOKEN" ]; then
+  echo "ERROR: Env REGISTRATION_TOKEN not set!"
+  exit 1
+fi
+
+if [ -z "$RUNNER_EXECUTOR" ]; then
+  echo "ERROR: Env RUNNER_EXECUTOR not set!"
+  exit 1
+fi
+
+if [ -z "$RUNNER_NAME" ]; then
+  echo "ERROR: Env RUNNER_NAME not set!"
+  exit 1
+fi
+
+echo "Trap SIGTERM to terminate Gitlab Runner..."
+trap "gitlab-runner stop" SIGTERM
+
+echo "Running gitlab-runner register..."
+export REGISTER_NON_INTERACTIVE=true
+gitlab-runner register
+if [ $? -gt 0 ]; then
+  echo "ERROR: Registration failed!"
+  exit 1
+fi
+
+echo "Current version of gitlab-runner:"
+gitlab-runner --version
+
+echo "Running gitlab-runner run..."
+gitlab-runner run
+
+echo "Stopping and unregistering..."
+gitlab-runner unregister --name "$RUNNER_NAME"

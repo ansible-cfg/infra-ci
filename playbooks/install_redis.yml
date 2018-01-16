@@ -1,0 +1,4 @@
+- name: install Redis
+  hosts: redis-hosts
+  roles:
+    - role: redis_provision
