@@ -1,12 +1,12 @@
 all:
   children:
-    bastion:
-      hosts:
-        vps502106.ovh.net:
     subnet:
       hosts:
         vps502105.ovh.net:
+          bastion: true
+          public_ssh: true
         vps502106.ovh.net:
+  
   vars:
     users:
       - arnauld

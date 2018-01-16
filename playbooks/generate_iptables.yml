@@ -9,14 +9,13 @@
         - -P FORWARD DROP
       002 allow loopback:
         - -A INPUT -i lo -j ACCEPT
+        - -A OUTPUT -i lo -j ACCEPT
       003 allow ping replies:
         - -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
         - -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
       100 allow established related:
         - -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-      200 allow ssh limiting brute force:
-        - -I INPUT -p tcp -d {{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }} --dport 22 -m state --state NEW -m recent --set
-        - -I INPUT -p tcp -d {{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }} --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP
+      200 allow ssh limiting brute force: []
       999 drop everything:
         - -P INPUT DROP
 
@@ -30,40 +29,65 @@
       debug:
         msg: "{{ v4_rules.stdout_lines }}"
 
-    - name: Collect ip address
+    - name: Generate IP table map for subnet
+      set_fact:
+        subnet_rules: |
+                        {{ subnet_rules
+                          | default([])
+                          | union([ '-A INPUT -i eth0 -s ' + item + ' -j ACCEPT'])
+                          }}
+      with_items: |
+                    {{ groups['subnet'] 
+                      | map('extract', hostvars, 'ansible_eth0') 
+                      | map(attribute='ipv4') 
+                      | map(attribute='address') 
+                      | list }}
+
+    - name: IPV4 Rules
+      set_fact:
+        v4_rules: "{{ v4_default_rules | combine({'300 subnet': subnet_rules}) }}"
+
+#    - name: Debug host_vars
+#      debug:
+#        var: hostvars
+
+    - name: Allow SSH?
+      set_fact:
+        ssh_rules: ["-A INPUT -p tcp --dport ssh -j ACCEPT"]
+        v4_rules: |
+                    {{ v4_rules 
+                      | combine({'200 allow ssh limiting brute force': '{{ ssh_rules }}' }) 
+                      }}
+      when: public_ssh|default(false)
+
+    - name: Allow HTTPS?
+      set_fact:
+        https_rules: ["-A INPUT -p tcp --dport https -j ACCEPT"]
+        v4_rules: |
+                    {{ v4_rules 
+                      | combine({'300 allow https': '{{ https_rules }}' }) 
+                      }}
+      when: public_https|default(false)
+
+    - name: Debug v4 rules
       debug:
-        msg: "{{ allips }}"
-      vars:
-        - allips: |
-                    {% set comma = joiner(",") %}
-                    {% for host in groups['subnet'] -%}
-                      {{ comma() }}{{ hostvars[host]['ansible_eth0']['ipv4']['address']}}
-                    {%- endfor -%}
+        var: v4_rules
 
-    - name: Collect ip address 2
+    - include_role: 
+        name: my_iptables
+      vars:
+        v4_configure: true
+        v4_persist: false
+        v4_host_rules: "{{v4_rules}}"
+
+    - name: Retrieve v4 rules afterwards
+      command: iptables -nL
+      changed_when: false
+      register: v4_rules_afterwards
+
+    - name: Debug v4 rules afterwards
       debug:
-        var: ips
-      vars:
-        ips: |
-                {{ groups['subnet'] 
-                  | map('extract', hostvars, 'ansible_eth0') 
-                  | map(attribute='ipv4') 
-                  | map(attribute='address') 
-                  | list }}
-
-
-#    - include_role: 
-#        name: my_iptables
-#      vars:
-#        v4_configure: true
-#        v4_persist: false
-#        v4_group_rules:
-#          {% for host in groups['subnet'] %}
-#             {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}
-#          {% endfor %}
-
-
-
+        msg: "{{ v4_rules_afterwards.stdout_lines }}"
 
 
 

@@ -1,5 +1,5 @@
 ---
-- include: rules.yml
+- include_tasks: rules.yml
 
-- include: persist.yml
+- include_tasks: persist.yml
   when: v4_persist

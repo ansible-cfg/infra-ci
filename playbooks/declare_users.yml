@@ -6,6 +6,14 @@
         name: users_declaration
       vars:
         usernames: "{{ users }}"
+        pubkey_generate: true
+        pubkey_install_hosts: "{{ groups['subnet'] }}"
+      when: bastion
+
+    - include_role:
+        name: users_declaration
+      vars:
+        usernames: "{{ users }}"
 
     - name: Make sure we have a 'data' group
       group:

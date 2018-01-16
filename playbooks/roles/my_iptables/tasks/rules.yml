@@ -1,6 +1,11 @@
 ---
 - name: Generate v4 rules
-  template: src=generated.v4.j2 dest=/etc/iptables.v4.generated owner=root group=root mode=755
+  template: 
+    src: generated.v4.j2
+    dest: /etc/iptables.v4.generated
+    owner: root 
+    group: root 
+    mode: 755
   register: v4_script
   when: v4_configure
 
