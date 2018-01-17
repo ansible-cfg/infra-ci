@@ -1,9 +1,8 @@
-- name: install nginx
+- name: install nginx paquet
   become: yes
   yum: name=nginx state=latest
-  become: yes
 
-- name: create nginx folder site config
+- name: create sites configuration folders
   become: yes
   file:
     path: /etc/nginx/{{ item }}
@@ -12,7 +11,7 @@
     - sites-available
     - sites-enabled
 
-- name: create nginx sites log folders
+- name: create folders to sites log
   become: yes
   file:
     path: /var/log/nginx/{{ item }}
