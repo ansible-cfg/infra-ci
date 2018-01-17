@@ -10,17 +10,12 @@ RUN chmod +x /usr/bin/dumb-init
 RUN apt-get update -y && \
     apt-get upgrade -y
 
-# Install Oralce Java 8 and set it as default
-RUN apt-get install -y software-properties-common
+# Install Open Java 8 and set it as default
+RUN apt-get install -y software-properties-common debconf-utils
+RUN add-apt-repository ppa:openjdk-r/ppa && apt-get update
+RUN apt-get install -y openjdk-8-jdk && apt-get update
 
-RUN add-apt-repository ppa:webupd8team/java && apt-get update
-
-RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
-RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
-
-RUN apt-get install -y oracle-java8-set-default
-
-# Install maven
+# Install Maven
 RUN apt-get install -y maven && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

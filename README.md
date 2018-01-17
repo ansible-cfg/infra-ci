@@ -33,7 +33,7 @@ ansible-playbook -i "vps502106.ovh.net," playbooks/invalidate_root.yml
 Ce playbook peut échouer sur certains host si le `root` a déjà été désactivé
 
 ```
-ansible-playbook -i inventory/ovh-alo playbooks/invalidate_root.yml
+ansible-playbook -i inventory/ovh-alo.yml playbooks/invalidate_root.yml
 ```
 
 ### Si un sudoer existe déjà et root n'est plus autorisé
@@ -44,7 +44,7 @@ Une fois qu'un sudoer est créé il est possible de l'utiliser (d'autant plus qu
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci playbooks/invalidate_root.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/invalidate_root.yml -u arnauld
 ```
 
 
@@ -59,7 +59,7 @@ Inspiration:
 
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci playbooks/declare_users.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/declare_users.yml -u arnauld
 ```
 
 # Etape 3: Protéger la machine :warning: 
@@ -70,13 +70,13 @@ ansible-playbook -i inventory/ovh-vec-ci playbooks/declare_users.yml -u arnauld
 :warning: cette étape modifie les IPtables des machines et empêchera les connexions directes par ssh.
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci playbooks/protect_server.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/protect_server.yml -u arnauld
 ```
 
 puis
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci playbooks/generate_iptables.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/generate_iptables.yml -u arnauld
 ```
 
 Pour limiter à un groupe de machine (e.g. `bastion`) uniquement:
