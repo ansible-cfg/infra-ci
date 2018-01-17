@@ -28,7 +28,7 @@
       - /volumes/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf:ro
       - /volumes/postgresql/data:/var/lib/postgresql
     env:
-        DB_NAME: gitlabhq
-        DB_USER: gitlab
-        DB_PASS: passw0rd
-        DB_EXTENSION: pg_trgm        
+        DB_NAME: "{{ ci_db_name }}" 
+        DB_USER: "{{ ci_db_user }}"
+        DB_PASS: "{{ ci_db_password }}"
+        DB_EXTENSION: pg_trgm

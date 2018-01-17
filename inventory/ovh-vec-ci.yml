@@ -9,15 +9,29 @@ all:
     gitlab-hosts:
       hosts:
         vm4.dev-comutitres.fr:
+            CI_GITLAB_HOST: gitlab.dev-comutitres.fr
+            CI_REDIS_HOST: vm6.dev-comutitres.fr
+            CI_REDIS_PORT: 6379
+            CI_DB_HOST: vm6.dev-comutitres.fr
+            CI_DB_PORT: 5432
+            CI_DB_NAME: gitlabhq
+            CI_DB_USER: gitlab
+            CI_DB_PASSWORD: passw0rd   
     gitlab-runner-hosts:
       hosts:
         vm3.dev-comutitres.fr:
+            CI_SERVER_URL: https://gitlab.dev-comutitres.fr/
+            CI_ROOT_USERNAME: root
+            CI_ROOT_PASSWORD: 5iveL!fe
     nginx-hosts:
       hosts:
         vm2.dev-comutitres.fr:
     postgresql-hosts:
       hosts:
         vm6.dev-comutitres.fr:
+            CI_DB_NAME: gitlabhq
+            CI_DB_USER: gitlab
+            CI_DB_PASSWORD: passw0rd
     redis-hosts:
       hosts:
         vm6.dev-comutitres.fr:

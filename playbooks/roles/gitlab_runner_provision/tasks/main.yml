@@ -22,9 +22,9 @@
     image: comutitres/gitlab-runner-java-maven
     state: started
     env:
-        CI_SERVER_URL: http://gitlab.dev-comutitres.fr/
-        USERNAME: root
-        PASSWORD: 5iveL!fe
+        CI_SERVER_URL: "{{ ci_server_url }}"
+        USERNAME: "{{ ci_root_username }}"
+        PASSWORD: "{{ ci_root_password }}"
         RUNNER_NAME: java_maven_runner
         RUNNER_EXECUTOR: shell
         RUNNER_TAG_LIST: 'java maven'

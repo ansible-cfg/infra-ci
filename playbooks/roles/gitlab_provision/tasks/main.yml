@@ -24,15 +24,15 @@
       - /volumes/gitlab/logs:/var/log/gitlab
       - /volumes/gitlab/data:/home/git/data
     env:
-        GITLAB_HOST: gitlab.dev-comutitres.fr
-        REDIS_HOST: vm6.dev-comutitres.fr
-        REDIS_PORT: 6379
+        GITLAB_HOST: "{{ CI_GITLAB_HOST }}"
+        REDIS_HOST: "{{ CI_REDIS_HOST }}"
+        REDIS_PORT: "{{ CI_REDIS_PORT }}"
         DB_ADAPTER: postgresql
-        DB_HOST: vm6.dev-comutitres.fr
-        DB_PORT: 5432
-        DB_NAME: gitlabhq
-        DB_USER: gitlab
-        DB_PASS: passw0rd
+        DB_HOST: "{{ CI_DB_HOST }}"
+        DB_PORT: "{{ CI_DB_PORT }}"
+        DB_NAME: "{{ CI_DB_NAME }}"
+        DB_USER: "{{ CI_DB_USER }}"
+        DB_PASS: "{{ CI_DB_PASSWORD }}"
         GITLAB_SIGNUP_ENABLED: false
         GITLAB_SECRETS_DB_KEY_BASE: sie_phae1Mavomahthahxafivueraihu
         GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej

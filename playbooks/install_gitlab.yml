@@ -1,5 +1,14 @@
 - name: Install gitlab
   hosts: gitlab-hosts
-  roles:
-    - role: gitlab_provision
-
+  tasks:
+    - include_role:
+        name: gitlab_provision
+      vars:
+        ci_gitlab_host: "{{ CI_GITLAB_HOST }}"
+        ci_redis_host: "{{ CI_REDIS_HOST }}"
+        ci_redis_port: "{{ CI_REDIS_PORT }}"
+        ci_db_host: "{{ CI_DB_HOST }}"
+        ci_db_port: "{{ CI_DB_PORT }}"
+        ci_db_name: "{{ CI_DB_NAME }}"
+        ci_db_user: "{{ CI_DB_USER }}"
+        ci_db_password: "{{ CI_DB_PASSWORD }}"

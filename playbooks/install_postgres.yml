@@ -1,4 +1,9 @@
 - name: install PostgreSQL
   hosts: postgresql-hosts
-  roles:
-    - role: postgresql_provision
+  tasks:
+    - include_role:
+        name: postgresql_provision
+      vars:
+        ci_db_name: "{{ CI_DB_NAME }}"
+        ci_db_user: "{{ CI_DB_USER }}"
+        ci_db_password: "{{ CI_DB_PASSWORD }}"

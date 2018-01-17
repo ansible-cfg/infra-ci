@@ -1,5 +1,9 @@
 - name: Install Gitlab Runner
   hosts: gitlab-runner-hosts
-  roles:
-    - role: gitlab_runner_provision
-
+  tasks:
+    - include_role:
+        name: gitlab_runner_provision
+      vars:
+        ci_server_url: "{{ CI_SERVER_URL }}"
+        ci_root_username: "{{ CI_ROOT_USERNAME }}"
+        ci_root_password: "{{ CI_ROOT_PASSWORD }}"
