@@ -22,9 +22,9 @@
     image: comutitres/gitlab-runner-java-maven
     state: started
     env:
-        CI_SERVER_URL: http://vm3.dev-comutitres.fr:10080/
+        CI_SERVER_URL: http://vm4.dev-comutitres.fr:10080/
         USERNAME: root
-        PASSWORD: test123A
+        PASSWORD: 5iveL!fe
         RUNNER_NAME: java_maven_runner
         RUNNER_EXECUTOR: shell
         RUNNER_TAG_LIST: 'java maven'

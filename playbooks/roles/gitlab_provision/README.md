@@ -15,6 +15,7 @@ The Gitlab CI is based on [the sameersbn Gitlab CI docker image](https://github.
 | DB_USER | The database database user. Defaults to root  |
 | DB_PASS                                   | The database database password. Defaults to no password |
 | GITLAB_SIGNUP_ENABLED | Enable or disable user signups (first run only). Default is true |
+| GITLAB_HTTPS | Set to true to enable https support, disabled by default. |
 
 ## Inspiration and sources
 * [Gitlab CI docker image sources](https://github.com/sameersbn/docker-gitlab)

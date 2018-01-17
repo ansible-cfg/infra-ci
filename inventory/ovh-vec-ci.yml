@@ -8,10 +8,10 @@ all:
         vm6.dev-comutitres.fr:
     gitlab-hosts:
       hosts:
-        vm3.dev-comutitres.fr:
+        vm4.dev-comutitres.fr:
     gitlab-runner-hosts:
       hosts:
-        vm4.dev-comutitres.fr:
+        vm3.dev-comutitres.fr:
     nginx-hosts:
       hosts:
         vm2.dev-comutitres.fr:
@@ -31,31 +31,31 @@ all:
           type: ssd2
           name: vm1
           public_ssh: true
-        vm5.dev-comutitres.fr:
-          vps: vps503105.ovh.net
-          ipv4: 217.182.205.222
-          type: ssd2
-          name: vm5
-        vm3.dev-comutitres.fr:
-          vps: vps503106.ovh.net
-          ipv4: 217.182.206.15
-          type: ssd2
-          name: vm3
-        vm6.dev-comutitres.fr:
-          vps: vps503107.ovh.net
-          ipv4: 217.182.206.135
-          type: ssd2
-          name: vm6
         vm2.dev-comutitres.fr:
           vps: vps503108.ovh.net
           ipv4: 217.182.206.140
           type: ssd1
           name: vm2
+        vm3.dev-comutitres.fr:
+          vps: vps503106.ovh.net
+          ipv4: 217.182.206.15
+          type: ssd2
+          name: vm3
         vm4.dev-comutitres.fr:
           vps: vps503114.ovh.net
           ipv4: 217.182.207.96
           type: ssd3
           name: vm4
+        vm5.dev-comutitres.fr:
+          vps: vps503105.ovh.net
+          ipv4: 217.182.205.222
+          type: ssd2
+          name: vm5
+        vm6.dev-comutitres.fr:
+          vps: vps503107.ovh.net
+          ipv4: 217.182.206.135
+          type: ssd2
+          name: vm6
           
   vars:
     users:

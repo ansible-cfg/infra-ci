@@ -4,10 +4,6 @@ Gitlab Runner is used to fetch and run pipeline jobs with GitLab CI.
 
 The Auto Register Gitlab Runner is based on [the official Gitlab runner docker image](https://hub.docker.com/r/gitlab/gitlab-runner).
 
-## Pull the docker image
-
-`docker pull gitlab/gitlab-runner`
-
 ## Build the docker image
 
 `docker build --tag comutitres/gitlab-runner-java-maven .`

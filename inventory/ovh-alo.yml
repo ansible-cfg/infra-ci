@@ -11,3 +11,4 @@ all:
     users:
       - arnauld
       - fabien
+      - amin
