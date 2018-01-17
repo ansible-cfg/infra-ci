@@ -1,6 +1,6 @@
 # let gitlab deal with the redirection
 upstream gitlab {
-  server                    vm3.dev-comutitres.fr:80 fail_timeout=0;
+  server                    vm4.dev-comutitres.fr:10080 fail_timeout=0;
 }
 
 server {
