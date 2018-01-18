@@ -16,7 +16,8 @@ all:
             CI_DB_PORT: 5432
             CI_DB_NAME: gitlabhq
             CI_DB_USER: gitlab
-            CI_DB_PASSWORD: passw0rd   
+            CI_DB_PASSWORD: passw0rd
+            CI_DOMAIN_NAME: vm4.dev-comutitres.fr
     gitlab-runner-hosts:
       hosts:
         vm3.dev-comutitres.fr:

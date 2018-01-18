@@ -3,7 +3,7 @@
   file:
     path: /volumes/gitlab/logs
     state: directory
-    
+
 - name: create data folder
   become: yes
   file:
@@ -18,22 +18,24 @@
     state: started
     ports:
         - "10022:22"
-        - "10080:80"
         - "10443:443"
     volumes:
       - /volumes/gitlab/logs:/var/log/gitlab
       - /volumes/gitlab/data:/home/git/data
     env:
-        GITLAB_HOST: "{{ CI_GITLAB_HOST }}"
-        REDIS_HOST: "{{ CI_REDIS_HOST }}"
-        REDIS_PORT: "{{ CI_REDIS_PORT }}"
+        GITLAB_HOST: "{{ ci_gitlab_host }}"
+        REDIS_HOST: "{{ ci_redis_host }}"
+        REDIS_PORT: "{{ ci_redis_port }}"
         DB_ADAPTER: postgresql
-        DB_HOST: "{{ CI_DB_HOST }}"
-        DB_PORT: "{{ CI_DB_PORT }}"
-        DB_NAME: "{{ CI_DB_NAME }}"
-        DB_USER: "{{ CI_DB_USER }}"
-        DB_PASS: "{{ CI_DB_PASSWORD }}"
-        GITLAB_SIGNUP_ENABLED: false
+        DB_HOST: "{{ ci_db_host }}"
+        DB_PORT: "{{ ci_db_port }}"
+        DB_NAME: "{{ ci_db_name }}"
+        DB_USER: "{{ ci_db_user }}"
+        DB_PASS: "{{ ci_db_password }}"
+        GITLAB_SIGNUP_ENABLED: 'false'
         GITLAB_SECRETS_DB_KEY_BASE: sie_phae1Mavomahthahxafivueraihu
         GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej
         GITLAB_SECRETS_OTP_KEY_BASE: aeVi7ja.maquooliacolietevaloowahfohkaeviesaeshahfohfueneraseeyun
+        GITLAB_HTTPS: 'true'
+        GITLAB_SSH_PORT: 10022
+        GITLAB_PORT: 10443

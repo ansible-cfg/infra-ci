@@ -31,7 +31,7 @@
     src: files/sites-enabled/{{ item }}
     dest: /etc/nginx/sites-enabled/{{ item }}
   with_items:
-    - gitlab
+    - gitlab-ssl
 
 - name: copy nginx config
   become: yes
@@ -52,7 +52,7 @@
     dest: "/etc/nginx/sites-available/{{ item }}"
     state: link
   with_items:
-    - gitlab
+    - gitlab-ssl
 
 
 - name: Ensure nginx is started and enabled at boot.
