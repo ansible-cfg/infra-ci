@@ -37,5 +37,3 @@
         GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej
         GITLAB_SECRETS_OTP_KEY_BASE: aeVi7ja.maquooliacolietevaloowahfohkaeviesaeshahfohfueneraseeyun
         GITLAB_HTTPS: 'true'
-        GITLAB_SSH_PORT: 10022
-        GITLAB_PORT: 10443

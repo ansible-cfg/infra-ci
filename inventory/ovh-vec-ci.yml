@@ -9,7 +9,7 @@ all:
     gitlab-hosts:
       hosts:
         vm4.dev-comutitres.fr:
-            CI_GITLAB_HOST: vm4.dev-comutitres.fr
+            CI_GITLAB_HOST: gitlab.dev-comutitres.fr
             CI_REDIS_HOST: vm6.dev-comutitres.fr
             CI_REDIS_PORT: 6379
             CI_DB_HOST: vm6.dev-comutitres.fr
@@ -18,7 +18,7 @@ all:
             CI_DB_USER: gitlab
             CI_DB_PASSWORD: passw0rd
             CI_DOMAIN_NAME: vm4.dev-comutitres.fr
-   gitlab-runner-hosts:
+    gitlab-runner-hosts:
       hosts:
         vm3.dev-comutitres.fr:
             CI_SERVER_URL: https://gitlab.dev-comutitres.fr
