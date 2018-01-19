@@ -6,14 +6,16 @@ if [ -z "$CI_SERVER_URL" ]; then
 fi
 
 if [ ! -z "$USERNAME" ] && [ ! -z "$PASSWORD" ]; then
-   ACCESS_TOKEN_RESULT=$(curl -s \
+   # TODO : add letsencrypt ca certifcate in curl ca trust store and remove k option
+    # Certificate link : https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt
+   ACCESS_TOKEN_RESULT=$(curl -s -k \
                               -H "Content-Type: application/json" \
                               -X POST -d '{"grant_type":"password","username":"'$USERNAME'","password":"'$PASSWORD'"}' \
                               $CI_SERVER_URL/oauth/token)
 
    ACCESS_TOKEN=`echo $ACCESS_TOKEN_RESULT | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])"`
 
-   RUNNERS_ADMIN_PAGE_CONTENT=$(curl -v \
+   RUNNERS_ADMIN_PAGE_CONTENT=$(curl -v -k \
 				     --silent \
 				     --header "Authorization: Bearer $ACCESS_TOKEN" \
 				     $CI_SERVER_URL/admin/runners --stderr -)

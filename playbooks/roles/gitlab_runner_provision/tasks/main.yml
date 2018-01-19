@@ -15,12 +15,26 @@
      path: /volumes/gitlab-runner/docker-image
      name: comutitres/gitlab-runner-java-maven
 
+- name: create certs folder
+  become: yes
+  file:
+    path: /volumes/gitlab-runner/certs
+    state: directory
+    
+- name: copy letsencrypt ca root certificate
+  become: yes
+  copy:
+    src: files/letsencrypt-root-ca.crt
+    dest: /volumes/gitlab-runner/certs/ca.crt   
+
 - name: install container
   become: yes
   docker_container:
     name: gitlab-runner-java-maven
     image: comutitres/gitlab-runner-java-maven
     state: started
+    volumes:
+      - /volumes/gitlab-runner/certs:/etc/gitlab-runner/certs
     env:
         CI_SERVER_URL: "{{ ci_server_url }}"
         USERNAME: "{{ ci_root_username }}"
@@ -28,3 +42,5 @@
         RUNNER_NAME: java_maven_runner
         RUNNER_EXECUTOR: shell
         RUNNER_TAG_LIST: 'java maven'
+        CI_SERVER_TLS_CA_FILE: /etc/gitlab-runner/certs/ca.crt
+
