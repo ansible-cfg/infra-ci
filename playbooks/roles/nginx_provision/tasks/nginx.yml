@@ -19,6 +19,12 @@
   with_items:
     - gitlab
 
+- name: create acme challenge folder
+  become: yes
+  file:
+    path: /var/run/acme/acme-challenge
+    state: directory
+
 - name: create nginx conf.d folder
   become: yes
   file:
