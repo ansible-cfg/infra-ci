@@ -54,7 +54,6 @@
   with_items:
     - gitlab-ssl
 
-
 - name: Ensure nginx is started and enabled at boot.
   become: yes
   systemd:
