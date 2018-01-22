@@ -1,0 +1,71 @@
+---
+- hosts: subnet
+
+  vars:
+    subnet_zone: "trusted"
+    active_zones: [ "{{ subnet_zone }}" ]
+
+  reload:
+
+    - name: reload firewalld
+      command: firewall-cmd --reload
+
+  tasks:
+
+    - name: Declare hosts in {{ subnet_zone }} zone
+      firewalld: 
+        source: "{{ item }}"
+        permanent: true
+        state: enabled
+      with_items: |
+                    {{ groups['subnet'] 
+                      | map('extract', hostvars, 'ansible_eth0') 
+                      | map(attribute='ipv4') 
+                      | map(attribute='address') 
+                      | list }}
+      notify:
+        - reload firewalld
+
+    - name: Declare {{ subnet_zone }} ports ({{ subnet_ports|default([ '22/tcp' ]) }})
+      firewalld:
+        zone: "{{ subnet_zone }}"
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+      with_items:
+        - "{{ subnet_ports|default([ '22/tcp' ]) }}"
+      notify:
+        - reload firewalld
+
+    - name: Make sure ssh is not open on public zone for bastion
+      firewalld:
+        zone: public
+        service: ssh
+        permanent: true
+        state: enabled
+      notify:
+        - reload firewalld
+      when: bastion
+
+    - name: Make sure ssh is not open on public zone
+      firewalld:
+        zone: public
+        service: ssh
+        permanent: true
+        state: disabled
+      notify:
+        - reload firewalld
+      when: not bastion
+
+    - name: Declare 'public' ports
+      firewalld:
+        zone: public
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+      with_items:
+        - "{{ public_opened_ports|default([]) }}"
+      notify:
+        - reload firewalld
+
+
