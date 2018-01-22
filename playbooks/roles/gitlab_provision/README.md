@@ -1,6 +1,5 @@
 # Gitlab CI Dockerfile
 Dockerfile to build a GitLab image for the Docker opensource container platform.
-
 The Gitlab CI is based on [the sameersbn Gitlab CI docker image](https://github.com/sameersbn/docker-gitlab).
 
 ## Env variables

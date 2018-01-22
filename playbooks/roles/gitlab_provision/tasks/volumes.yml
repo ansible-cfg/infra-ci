@@ -15,3 +15,16 @@
   file:
     path: /volumes/gitlab/data/certbot
     state: directory
+
+- name: create backup scripts folder
+  become: yes
+  file:
+    path: /backup/scripts
+    state: directory
+    
+- name: copy backup scripts files
+  become: yes
+  copy:
+    src: files/backup/
+    dest: /backup/scripts
+    mode: u=rwx,g=rx,o=rx
