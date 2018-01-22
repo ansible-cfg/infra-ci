@@ -1,0 +1,29 @@
+---
+- hosts: subnet
+
+  vars:
+    subnet_zone: "trusted"
+    active_zones: [ "{{ subnet_zone }}" ]
+
+  tasks:
+    
+    - name: Retrieve firewalld active zones
+      block:
+        - command: firewall-cmd --get-active-zones
+          changed_when: false
+          register: firewalld_active_zones
+        - debug:
+            var: firewalld_active_zones
+        - set_fact:
+            firewalld_active_zones_list: |
+                                          {{ firewalld_active_zones.stdout
+                                            | regex_findall('^([^\s]+)') }}
+        - debug:
+            var: firewalld_active_zones_list
+  
+    - name: Check that only {{ subnet_zone }} and 'public' are active
+      assert:
+        that: 
+          - "'public' in firewalld_active_zones_list"
+          - "{{ subnet_zone }} in firewalld_active_zones_list"
+          - "firewalld_active_zones_list.size == 2"
