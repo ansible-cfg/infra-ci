@@ -62,7 +62,7 @@ Inspiration:
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/declare_users.yml -u arnauld
 ```
 
-# Etape 3: Protéger la machine :warning: 
+# Etape 3: Protéger la machine :warning:
 
 *Attention* remplacer `arnauld` par votre propre login sudoer.
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
@@ -86,3 +86,23 @@ ansible-playbook -i inventory/ovh-vec-ci -l bastion playbooks/generate_iptables.
 ```
 
 
+# Etape 4: Installer la machine Nginx
+
+  Une des machines (actuellement VM2) servira de "breaking glass" HTTP. C'est elle qui sera ouverte en public et redirigera les flux HTTP/HTTPS vers les bonnes machines.
+  C'est elle qui fera par exemple qu'en appellant gitlab.dev-comutitres.fr nous arrivions sur la machine gitlab en HTTPS.
+
+  Pour cela nous allons utiliser Nginx.
+
+## Mise en place HTTPS
+
+     Pour les certificats, nous utiliserons [Let's Ecnrypt](LETS_ENCYPT.md).
+
+## Deployer Nginx
+
+  ```
+  ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_nginx.yml -u arnauld
+  ```
+
+
+
+TODO firewald pour ouvrir les ports
