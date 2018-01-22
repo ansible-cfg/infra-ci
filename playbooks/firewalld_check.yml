@@ -16,7 +16,7 @@
         - set_fact:
             firewalld_active_zones_list: |
                                           {{ firewalld_active_zones.stdout
-                                            | regex_findall('(?s)^([^\s]+)') }}
+                                            | regex_findall('(?ms)^([^\s]+)') }}
         - debug:
             var: firewalld_active_zones_list
 
@@ -43,16 +43,47 @@
       assert:
         that: 
           - "'public' in firewalld_active_zones_list"
-          - "{{ subnet_zone }} in firewalld_active_zones_list"
-          - "firewalld_active_zones_list.size == 2"
+          - "'{{ subnet_zone }}' in firewalld_active_zones_list"
+          - "firewalld_active_zones_list|length == 2"
 
-    - name: Check that only {{ public_ports }} are opened in public zone
+    - name: Collect undeclared ports in public zone
       block:
         - set_fact:
-            public_services: |
+            undeclared_public_ports: |
+                              {{ firewalld_public_zone.stdout
+                                  | regex_findall('ports: (.+)') 
+                                  | first
+                                  | regex_findall('([^\s]+)') }}
+        - debug:
+            var: undeclared_public_ports
+        - set_fact:
+            undeclared_public_ports: |
+                              {{ undeclared_public_ports 
+                                  | difference([ item ]) }}
+          with_items:
+            - "{{ public_ports }}"
+        - debug:
+            var: undeclared_public_ports
+
+    - name: Check that only declared ports are activated in public zone
+      assert:
+        that: 
+          - "undeclared_public_ports|length == 0"
+
+
+    - name: Collected activated services
+      block:
+        - set_fact:
+            undeclared_public_services: |
                               {{ firewalld_public_zone.stdout
                                   | regex_findall('services: (.+)')
-                                  | splitext }}
+                                  | first
+                                  | regex_findall('([^\s]+)') }}
         - debug:
-            var: public_services
+            var: undeclared_public_services
+
+    - name: Check that no services are activated in public zone
+      assert:
+        that: 
+            - "undeclared_public_services|length == 0"
 
