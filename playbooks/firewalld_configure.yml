@@ -37,17 +37,19 @@
       notify:
         - reload firewalld
 
-    - name: Make sure ssh is open on public zone for bastion
+    - name: Make sure defaults services are disabled (one will use explicit port)
       firewalld:
         zone: public
-        service: ssh
+        service: "{{ item }}"
         permanent: true
-        state: enabled
+        state: disabled
+      with_items:
+        - ssh
+        - dhcpv6-client
       notify:
         - reload firewalld
-      when: bastion|default(false)
 
-    - name: Make sure ssh is not open on public zone if not bastion
+    - name: Make sure ssh service is disabled (one will use explicit port)
       firewalld:
         zone: public
         service: ssh
@@ -55,7 +57,7 @@
         state: disabled
       notify:
         - reload firewalld
-      when: not (bastion|default(false))
+
 
     - name: Declare 'public' ports ({{ public_ports|default([]) }})
       firewalld:
