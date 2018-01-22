@@ -1,0 +1,17 @@
+- name: create logs folder
+  become: yes
+  file:
+    path: /volumes/gitlab/logs
+    state: directory
+
+- name: create data folder
+  become: yes
+  file:
+    path: /volumes/gitlab/data
+    state: directory
+
+- name: create certbot generation folder
+  become: yes
+  file:
+    path: /volumes/gitlab/data/certbot
+    state: directory

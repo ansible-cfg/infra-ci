@@ -1,5 +1,5 @@
 - name: Lets encypt the plateform
-  hosts: vm5.dev-comutitres.fr
+  hosts: vm4.dev-comutitres.fr
   vars_prompt:
     - name: "contact_mail_prompt"
       prompt: "Email contact to lets encrypt"
@@ -10,5 +10,5 @@
         name: lets_encrypt
       vars:
         contact_mail: {{ contact_mail_prompt}}
-        domain_name: vm5.dev-comutitres.fr
+        domain_name: vm4.dev-comutitres.fr
         nginx: false
