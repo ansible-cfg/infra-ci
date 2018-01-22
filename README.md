@@ -1,3 +1,7 @@
+# Sommaire
+
+* [Gitlab - Backup](playbooks/roles/gitlab_provision/README.md)
+
 # Etape 0 : On reçoit une nouvelle machine
 
 ## Clé SSH
