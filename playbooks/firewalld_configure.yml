@@ -3,9 +3,8 @@
 
   vars:
     subnet_zone: "trusted"
-    active_zones: [ "{{ subnet_zone }}" ]
 
-  reload:
+  handlers:
 
     - name: reload firewalld
       command: firewall-cmd --reload
@@ -14,6 +13,7 @@
 
     - name: Declare hosts in {{ subnet_zone }} zone
       firewalld: 
+        zone: "{{ subnet_zone }}"
         source: "{{ item }}"
         permanent: true
         state: enabled
@@ -37,7 +37,7 @@
       notify:
         - reload firewalld
 
-    - name: Make sure ssh is not open on public zone for bastion
+    - name: Make sure ssh is open on public zone for bastion
       firewalld:
         zone: public
         service: ssh
@@ -45,9 +45,9 @@
         state: enabled
       notify:
         - reload firewalld
-      when: bastion
+      when: bastion|default(false)
 
-    - name: Make sure ssh is not open on public zone
+    - name: Make sure ssh is not open on public zone if not bastion
       firewalld:
         zone: public
         service: ssh
@@ -55,16 +55,16 @@
         state: disabled
       notify:
         - reload firewalld
-      when: not bastion
+      when: not (bastion|default(false))
 
-    - name: Declare 'public' ports
+    - name: Declare 'public' ports ({{ public_ports|default([]) }})
       firewalld:
         zone: public
         port: "{{ item }}"
         permanent: true
         state: enabled
       with_items:
-        - "{{ public_opened_ports|default([]) }}"
+        - "{{ public_ports|default([]) }}"
       notify:
         - reload firewalld
 
