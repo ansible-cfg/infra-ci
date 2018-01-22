@@ -4,7 +4,7 @@ all:
       hosts:
         vps502105.ovh.net:
           bastion: true
-          trusted_ports: ["22/tcp"]
+          trusted_ports: []
           public_ports: ["22/tcp"]
         vps502106.ovh.net:
           trusted_ports: ["22/tcp"]
