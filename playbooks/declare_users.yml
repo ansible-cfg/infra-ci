@@ -14,3 +14,4 @@
         name: users_declaration
       vars:
         usernames: "{{ users }}"
+      when: not bastion
