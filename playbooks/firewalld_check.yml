@@ -3,7 +3,6 @@
 
   vars:
     subnet_zone: "trusted"
-    active_zones: [ "{{ subnet_zone }}" ]
 
   tasks:
     
@@ -17,13 +16,43 @@
         - set_fact:
             firewalld_active_zones_list: |
                                           {{ firewalld_active_zones.stdout
-                                            | regex_findall('^([^\s]+)') }}
+                                            | regex_findall('(?s)^([^\s]+)') }}
         - debug:
             var: firewalld_active_zones_list
+
+
+    - name: Retrieve firewalld public zone settings
+      block:
+        - command: firewall-cmd --zone=public --list-all
+          changed_when: false
+          register: firewalld_public_zone
+        - debug:
+            var: firewalld_public_zone
+
+
+    - name: Retrieve firewalld {{ subnet_zone }} zone settings
+      block:
+        - command: "firewall-cmd --zone={{ subnet_zone }} --list-all"
+          changed_when: false
+          register: firewalld_subnet_zone
+        - debug:
+            var: firewalld_subnet_zone
+
   
-    - name: Check that only {{ subnet_zone }} and 'public' are active
+    - name: Check that only {{ subnet_zone }} and 'public' are actives
       assert:
         that: 
           - "'public' in firewalld_active_zones_list"
           - "{{ subnet_zone }} in firewalld_active_zones_list"
           - "firewalld_active_zones_list.size == 2"
+
+    - name: Check that only {{ public_ports }} are opened in public zone
+      block:
+        - set_fact:
+            public_services: |
+                              {{ firewalld_public_zone.stdout
+                                  | regex_findall('services: (.+)')
+                                  | splitext }}
+        - debug:
+            var: public_services
+
