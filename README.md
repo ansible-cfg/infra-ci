@@ -123,7 +123,7 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_postgres.yml -u a
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_redis.yml -u arnauld
 ```
 
-# Etape 6: Installer la machine Gitlab-CI
+# Etape 7 : Installer la machine Gitlab-CI
 
 ## Initialiser les serveurs de sauvegarde
 
@@ -152,4 +152,4 @@ Deux crons sont installés sur la machine qui héberge le serveur `Gitlab-CI`.
 Nous gardons un historique de 7 jours des sauvegardes.
 Les fichiers sauvegardés sont transférés dans le dossiers `/backups` sur les serveurs de sauvegarde vm1 et vm2.
 
-* [Manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
+[Manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)

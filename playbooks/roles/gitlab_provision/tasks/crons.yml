@@ -2,6 +2,6 @@
     name: "Launch gitlab hot backup"
     user: robocop
     weekday: "*"
-    hour: 10
-    minute: 00
+    hour: 2
+    minute: 0
     job: "/bin/sh /backup/scripts/gitlab-hot-backup.sh > /home/robocop/backup.log"
