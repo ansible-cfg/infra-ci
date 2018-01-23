@@ -26,5 +26,7 @@
   become: yes
   copy:
     src: files/backup/
+    owner: robocop
+    group: robocop
     dest: /backup/scripts
     mode: u=rwx,g=rx,o=rx

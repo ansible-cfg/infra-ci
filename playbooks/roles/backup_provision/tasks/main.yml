@@ -1,0 +1,8 @@
+---
+- name: create backups folder
+  become: yes
+  file:
+    path: /backups
+    state: directory
+    owner: robocop
+    group: robocop

@@ -36,6 +36,10 @@ all:
     redis-hosts:
       hosts:
         vm6.dev-comutitres.fr:
+    backup-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm1.dev-comutitres.fr:
 
     subnet:
       hosts:

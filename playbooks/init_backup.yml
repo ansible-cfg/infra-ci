@@ -1,0 +1,5 @@
+- name: initialize backup dirs
+  hosts: backup-hosts
+  tasks:
+    - include_role:
+        name: backup_provision
