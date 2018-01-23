@@ -53,10 +53,13 @@
                               {{ firewalld_public_zone.stdout
                                   | regex_findall('ports: (.+)') 
                                   | first
+                                  | default("")
                                   | regex_findall('([^\s]+)') }}
         - debug:
             var: undeclared_public_ports
         - set_fact:
+            # Remove declared ports from the list:
+            # only unwanted ports will remain
             undeclared_public_ports: |
                               {{ undeclared_public_ports 
                                   | difference([ item ]) }}
@@ -78,6 +81,7 @@
                               {{ firewalld_public_zone.stdout
                                   | regex_findall('services: (.+)')
                                   | first
+                                  | default("")
                                   | regex_findall('([^\s]+)') }}
         - debug:
             var: undeclared_public_services
