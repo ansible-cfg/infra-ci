@@ -27,6 +27,7 @@
     state: present
     key: "{{ lookup('file', '../pub_keys/{{ item }}.pub') }}"
   with_items: "{{ usernames }}"
+  when: personal_pubkey|default(true)
 
 - name: Generate ssh_keys for {{ usernames }} users
   user:

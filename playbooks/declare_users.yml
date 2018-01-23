@@ -5,7 +5,16 @@
     - include_role:
         name: users_declaration
       vars:
+        usernames: robocop
+        personal_pubkey: false
+        pubkey_generate: true
+        pubkey_install_hosts: "{{ groups['subnet'] }}"
+
+    - include_role:
+        name: users_declaration
+      vars:
         usernames: "{{ users }}"
+        personal_pubkey: true
         pubkey_generate: true
         pubkey_install_hosts: "{{ groups['subnet'] }}"
       when: bastion
@@ -13,5 +22,7 @@
     - include_role:
         name: users_declaration
       vars:
+        personal_pubkey: true
         usernames: "{{ users }}"
       when: not bastion
+
