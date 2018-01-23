@@ -1,11 +1,15 @@
 - name: Install certbot
   yum: name=certbot state=latest
   become: yes
-  when: $nginx == 'false'
+
+- name: create certs path
+  become: yes
+  file:
+    path: {{ cert_path }}
+    state: directory
 
 - name: run Certbot
-  command: sudo certbot certonly --standalone -m {{ contact_mail }} -d {{ domain_name }} -n -vvv --agree-tos
-  when: $nginx == 'false'
+  command: sudo certbot certonly --standalone -m {{ contact_mail }} -d {{ domain_name }} --config-path {{ cert_path }} -n -vvv --agree-tos > /volumes/certbot.log
 
 - name: cron renew
   become: yes
@@ -14,17 +18,8 @@
     minute: 0
     hour: 0,12
     user: root
-    job: python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew --cert-path /volumes/gitlab/data/certbot --standalone -vvv
+    job: python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew --config-path {{ cert_path }} --standalone -vvv
   when: $nginx == 'false'
-
-- name: Install certbot-nginx
-  yum: name=certbot-nginx state=latest
-  become: yes
-  when: $nginx == 'true'
-
-- name: run Certbot-nginx
-  command: sudo certbot certonly --installer nginx --pre-hook "nginx -s stop" --post-hook "nginx" --redirect --standalone -m {{ contact_mail }} -d {{ domain_name }} -n -vvv --agree-tos
-  when: $nginx == 'true'
 
 - name: cron renew
   become: yes

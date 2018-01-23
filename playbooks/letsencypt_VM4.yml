@@ -11,4 +11,5 @@
       vars:
         contact_mail: {{ contact_mail_prompt}}
         domain_name: vm4.dev-comutitres.fr
+        cert_path:  /volumes/gitlab/data/certbot/
         nginx: false
