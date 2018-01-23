@@ -1,1 +1,0 @@
-sudo docker exec -it gitlab-ci bundle exec rake gitlab:backup:restore BACKUP=$1

@@ -1,0 +1,28 @@
+# Download the backup file to restore
+scp -p robocop@vm1.dev-comutitres.fr:/backups/$1_gitlab_backup.tar robocop@vm4.dev-comutitres.fr:/volumes/gitlab/data/backups
+
+# Stop the gitlab-ci docker container
+sudo docker stop gitlab-ci
+
+# Run a gitlab-restore container to restore data
+sudo docker run --name gitlab-restore \
+                -v /volumes/gitlab/logs:/var/log/gitlab \
+                -v /volumes/gitlab/data:/home/git/data \
+                -e 'REDIS_HOST={{ ci_redis_host }}' \
+                -e 'REDIS_PORT={{ ci_redis_port }}' \
+                -e 'DB_ADAPTER={{ ci_db_adapter }}' \
+                -e 'DB_HOST={{ ci_db_host }}' \
+                -e 'DB_PORT={{ ci_db_port }}' \
+                -e 'DB_NAME={{ ci_db_name }}' \
+                -e 'DB_USER={{ ci_db_user }}' \
+                -e 'DB_PASS={{ ci_db_password }}' \
+                -e 'GITLAB_SECRETS_DB_KEY_BASE={{ ci_gitlab_secrets_db_key_base }}' \
+                -e 'GITLAB_SECRETS_SECRET_KEY_BASE={{ ci_gitlab_secrets_secret_key_base }}' \
+                -e 'GITLAB_SECRETS_OTP_KEY_BASE={{ ci_gitlab_secrets_otp_key_base }}' \
+                sameersbn/gitlab:10.3.5 app:rake gitlab:backup:restore BACKUP=$1
+
+# Remove the gitlab-restore docker container
+sudo docker rm gitlab-restore
+
+# Restart the gitlab-ci docker container
+sudo docker start gitlab-ci

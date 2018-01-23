@@ -1,7 +1,17 @@
 - cron:
-    name: "Launch gitlab hot backup"
+    name: cron to hot backup
     user: robocop
+    # @ 02:00 Everyday
     weekday: "*"
+    hour: 16
+    minute: 24
+    job: "/bin/sh /backup/scripts/hot-backup.sh > /home/robocop/hot-backup.log"
+    
+- cron:
+    name: cron to cold backup
+    user: robocop
+    # @ 02:00 on Saturday
+    weekday: "6"
     hour: 2
     minute: 0
-    job: "/bin/sh /backup/scripts/gitlab-hot-backup.sh > /home/robocop/backup.log"
+    job: "/bin/sh /backup/scripts/cold-backup.sh > /home/robocop/cold-backup.log"    

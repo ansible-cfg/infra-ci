@@ -11,5 +11,4 @@ LAST_BACKUP_FILE=$(sudo ls -1t /volumes/gitlab/data/backups/* | head -1)
 sudo chmod 755 $LAST_BACKUP_FILE
 
 # Transfer backup file to the archive machines
-scp -p $LAST_BACKUP_FILE robocop@vm1.dev-comutitres.fr:/backups
-scp -p $LAST_BACKUP_FILE robocop@vm2.dev-comutitres.fr:/backups
+/bin/sh transfer-backups.sh $LAST_BACKUP_FILE

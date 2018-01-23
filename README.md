@@ -131,7 +131,7 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_redis.yml -u arna
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/init_backup.yml -u amin
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/init_backup.yml -u arnauld
 ```
 
 ## Installer Gitlab-CI
@@ -140,7 +140,7 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/init_backup.yml -u amin
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_gitlab.yml -u amin
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_gitlab.yml -u arnauld
 ```
 
 ## Activer la sauvegarde des données Gitlab-CI

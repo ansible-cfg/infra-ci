@@ -21,7 +21,23 @@
   file:
     path: /backup/scripts
     state: directory
+
+- name: generate cold backup script
+  template: 
+    src: cold-backup.sh.j2
+    dest: /backup/scripts/cold-backup.sh
+    owner: robocop 
+    group: robocop
+    mode: u=rwx,g=rx,o=rx
     
+- name: generate cold restore script
+  template: 
+    src: cold-restore.sh.j2
+    dest: /backup/scripts/cold-restore.sh
+    owner: robocop 
+    group: robocop
+    mode: u=rwx,g=rx,o=rx    
+        
 - name: copy backup scripts files
   become: yes
   copy:
