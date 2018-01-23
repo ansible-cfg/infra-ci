@@ -10,7 +10,7 @@ Supprimer le host des `known_hosts`; cela arrive lorsque l'on réinitialise un v
 ssh-keygen -R vps502106.ovh.net
 ```
 
-Copie sa clé publique ssh pour l'utilisateur `root` pour faciliter l'utilisation de ansible:
+Copier la clé publique ssh de l'utilisateur `root` pour faciliter l'utilisation d'Ansible:
 
 ```
 cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_keys'
@@ -22,7 +22,7 @@ cat ~/.ssh/id_rsa.pub | ssh root@vps502106.ovh.net 'cat >> ~/.ssh/authorized_key
 
 * Modifie le mot de passe `root`
 * Déclare l'utilisateur (`arnauld`) qui nous servira à configurer la machine (sudoer avec sa clé publique)
-* empêche l'accès SSH au user `root`
+* Empêche l'accès SSH au user `root`
 
 ### Sur une machine
 
@@ -152,4 +152,5 @@ Deux crons sont installés sur la machine qui héberge le serveur `Gitlab-CI`.
 Nous gardons un historique de 7 jours des sauvegardes.
 Les fichiers sauvegardés sont transférés dans le dossiers `/backups` sur les serveurs de sauvegarde vm1 et vm2.
 
-[Manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
+Pour plus d'informations, vous pouvez consuler le [manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
+
