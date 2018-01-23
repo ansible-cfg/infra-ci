@@ -1,3 +1,15 @@
+# TLDR;
+
+```
+ssh-keygen -R vps502106.ovh.net
+ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/invalidate_root.yml
+ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/declare_users.yml  -u arnauld
+ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/protect_server.yml -u arnauld
+
+# Bastion mode
+ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/firewalld.yml -u arnauld
+```
+
 # Sommaire
 
 # Etape 0 : On reçoit une nouvelle machine
@@ -153,4 +165,3 @@ Nous gardons un historique de 7 jours des sauvegardes.
 Les fichiers sauvegardés sont transférés dans le dossiers `/backups` sur les serveurs de sauvegarde vm1 et vm2.
 
 Pour plus d'informations, vous pouvez consuler le [manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
-
