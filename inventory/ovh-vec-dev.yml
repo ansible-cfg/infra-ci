@@ -1,0 +1,50 @@
+all:
+  children:
+    subnet:
+      hosts:
+        dev1.dev-comutitres.fr:
+          vps: vps507040.ovh.net
+          ipv4: 79.137.34.112
+          bastion: true
+          type: ssd1
+          trusted_ports: []
+          public_ports: ["22/tcp"]
+        dev2.dev-comutitres.fr:
+          vps: vps507041.ovh.net
+          ipv4: 217.182.207.47
+          type: ssd1
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+        dev3.dev-comutitres.fr:
+          vps: vps507042.ovh.net
+          ipv4: 217.182.207.55
+          type: ssd1
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+        dev4.dev-comutitres.fr:
+          vps: vps507044.ovh.net
+          ipv4: 217.182.207.127
+          type: ssd2
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+        dev5.dev-comutitres.fr:
+          vps: vps507045.ovh.net
+          ipv4: 217.182.207.133
+          type: ssd2
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+        dev6.dev-comutitres.fr:
+          vps: vps507046.ovh.net
+          ipv4: 151.80.140.214
+          type: ssd2
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+
+  vars:
+    users:
+      - hugh
+      - sylvain
+      - arnauld
+      - fabien
+      - amin
+      - rguichard
