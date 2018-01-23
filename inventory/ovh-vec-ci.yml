@@ -51,6 +51,8 @@ all:
           ipv4: 217.182.206.140
           type: ssd1
           name: vm2
+          trusted_ports: ["22/tcp"]
+          public_ports: ["443/tcp", "80/tcp"]
         vm3.dev-comutitres.fr:
           vps: vps503106.ovh.net
           ipv4: 217.182.206.15
@@ -61,6 +63,8 @@ all:
           ipv4: 217.182.207.96
           type: ssd3
           name: vm4
+          trusted_ports: ["22/tcp", "10443/tcp"]
+          public_ports: ["10022/tcp", "80/tcp"]
         vm5.dev-comutitres.fr:
           vps: vps503105.ovh.net
           ipv4: 217.182.205.222
@@ -71,7 +75,7 @@ all:
           ipv4: 217.182.206.135
           type: ssd2
           name: vm6
-          
+
   vars:
     users:
       - hugh
