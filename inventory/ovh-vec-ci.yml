@@ -53,7 +53,8 @@ all:
           bastion: true
           type: ssd2
           name: vm1
-          public_ssh: true
+          trusted_ports: []
+          public_ports: ["22/tcp"]
         vm2.dev-comutitres.fr:
           vps: vps503108.ovh.net
           ipv4: 217.182.206.140
@@ -66,6 +67,8 @@ all:
           ipv4: 217.182.206.15
           type: ssd2
           name: vm3
+          trusted_ports: ["22/tcp"]
+          public_ports: []
         vm4.dev-comutitres.fr:
           vps: vps503114.ovh.net
           ipv4: 217.182.207.96
@@ -78,11 +81,15 @@ all:
           ipv4: 217.182.205.222
           type: ssd2
           name: vm5
+          trusted_ports: ["22/tcp", "5432/tcp"]
+          public_ports: []
         vm6.dev-comutitres.fr:
           vps: vps503107.ovh.net
           ipv4: 217.182.206.135
           type: ssd2
           name: vm6
+          trusted_ports: ["22/tcp"]
+          public_ports: []
 
   vars:
     users:
