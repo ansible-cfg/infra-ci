@@ -1,0 +1,10 @@
+- name: add postgres service
+  become: yes
+  firewalld:
+    service: postgresql
+    permanent: true
+    state: enabled
+
+- name: Enable firewalld
+  become: yes
+  service: name=firewalld state=restarted enabled=yes

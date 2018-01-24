@@ -1,0 +1,63 @@
+- name: install postgres paquet
+  become: yes
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql
+    - postgresql-server
+    - postgresql-contrib
+    - python-psycopg2
+
+
+- stat:
+    path: /var/lib/pgsql/data/postgresql.conf
+  register: conf_file
+
+- name: Initiate database
+  become: yes
+  command: postgresql-setup initdb
+  when: conf_file.stat.exists  is defined and conf_file.stat.exists == False
+
+- name: gather subnet ip address
+  setup:
+  delegate_facts: true
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups['subnet'] }}"
+
+
+- name: copy config
+  become: yes
+  copy:
+    src: files/default_postgresql.conf
+    dest: /var/lib/pgsql/data/postgresql.conf
+
+- name: Deploy pg_hba file
+  template:
+    src: "pg_hba.conf.j2"
+    dest: "/var/lib/pgsql/data/pg_hba.conf"
+    mode: 0600
+  delegate_facts: true
+
+- name: Ensure postgres is started and enabled at boot.
+  become: yes
+  systemd:
+    name: postgresql
+    state: restarted
+    enabled: yes
+
+- name: create DB {{ CI_DB_NAME }}
+  become: yes
+  postgresql_db:
+    name: "{{ CI_DB_NAME }}"
+
+- postgresql_ext:
+    name: pg_trgm
+    db: "{{ CI_DB_NAME }}"
+
+- name: create user {{ CI_DB_USER }} on {{ CI_DB_NAME }}
+  become: yes
+  postgresql_user:
+    db: "{{ CI_DB_NAME }}"
+    name: "{{ CI_DB_USER }}"
+    password: "{{ CI_DB_PASSWORD }}"
+    role_attr_flags: CREATEDB,LOGIN

@@ -9,7 +9,37 @@ all:
         vps502106.ovh.net:
           trusted_ports: ["22/tcp"]
           public_ports: ["80/tcp", "443/tcp"]
-  
+    postgresql-hosts:
+      hosts:
+        vps502106.ovh.net:
+          CI_DB_NAME: gitlabhq
+          CI_DB_USER: gitlab
+          CI_DB_PASSWORD: passw0rd
+    gitlab-hosts:
+      hosts:
+        vps502105.ovh.net:
+            CI_GITLAB_HOST: vps502105.ovh.net
+            CI_REDIS_HOST: vps502106.ovh.net
+            CI_REDIS_PORT: 6379
+            CI_DB_HOST: vps502106.ovh.net
+            CI_DB_PORT: 5432
+            CI_DB_NAME: gitlabhq
+            CI_DB_USER: gitlab
+            CI_DB_PASSWORD: passw0rd
+            CI_DB_ADAPTER: postgresql
+            CI_DOMAIN_NAME: vps502105.ovh.net
+            CI_GITLAB_SECRETS_DB_KEY_BASE: sie_phae1Mavomahthahxafivueraihu
+            CI_GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej
+            CI_GITLAB_SECRETS_OTP_KEY_BASE: aeVi7ja.maquooliacolietevaloowahfohkaeviesaeshahfohfueneraseeyun
+    redis-hosts:
+      hosts:
+        vps502106.ovh.net:
+    docker-hosts:
+      hosts:
+        vps502105.ovh.net:
+        vps502106.ovh.net:
+
+
   vars:
     users:
       - arnauld
