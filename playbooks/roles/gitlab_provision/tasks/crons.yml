@@ -1,14 +1,14 @@
 - cron:
-    name: cron to hot backup
+    name: add cron for hot backup
     user: robocop
     # @ 02:00 Everyday
     weekday: "*"
-    hour: 16
-    minute: 24
+    hour: 2
+    minute: 0
     job: "/bin/sh /backup/scripts/hot-backup.sh > /home/robocop/hot-backup.log"
     
 - cron:
-    name: cron to cold backup
+    name: add cron for cold backup
     user: robocop
     # @ 02:00 on Saturday
     weekday: "6"

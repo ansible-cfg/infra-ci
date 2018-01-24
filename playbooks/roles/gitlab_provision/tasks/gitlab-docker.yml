@@ -1,4 +1,4 @@
-- name: Install gitlab container
+- name: install gitlab container
   become: yes
   docker_container:
     name: gitlab-ci
