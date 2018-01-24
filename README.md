@@ -97,24 +97,14 @@ Pour limiter à un groupe de machine (e.g. `bastion`) uniquement:
 ansible-playbook -i inventory/ovh-vec-ci -l bastion playbooks/generate_iptables.yml -u arnauld
 ```
 
-# Etape 4 : Installer la machine Nginx
+# Etape 4 : Installer docker
 
-Une des machines (actuellement VM2) servira de "breaking glass" HTTP. C'est elle qui sera ouverte en public et redirigera les flux HTTP/HTTPS vers les bonnes machines.
-C'est elle qui fera par exemple qu'en appellant gitlab.dev-comutitres.fr nous arrivions sur la machine gitlab en HTTPS.
-
-Pour cela nous allons utiliser Nginx.
-
-## Mise en place HTTPS
-
-Pour les certificats, nous utiliserons [Let's Ecnrypt](LETS_ENCYPT.md).
-
-## Deployer Nginx
+La plupart des machines necessitent docker, il faut donc lancer la recette suivante:
 
 ```
-ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_nginx.yml -u arnauld
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_docker.yml -u arnauld
 ```
 
-TODO firewald pour ouvrir les ports
 
 # Etape 5 : Installer la base des données PostgreSQL pour le Gitlab-CI
 
@@ -165,3 +155,22 @@ Nous gardons un historique de 7 jours des sauvegardes.
 Les fichiers sauvegardés sont transférés dans le dossiers `/backups` sur les serveurs de sauvegarde vm1 et vm2.
 
 Pour plus d'informations, vous pouvez consuler le [manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
+
+# Etape 8 : Installer la machine Nginx
+
+Une des machines (actuellement VM2) servira de "breaking glass" HTTP. C'est elle qui sera ouverte en public et redirigera les flux HTTP/HTTPS vers les bonnes machines.
+C'est elle qui fera par exemple qu'en appellant gitlab.dev-comutitres.fr nous arrivions sur la machine gitlab en HTTPS.
+
+Pour cela nous allons utiliser Nginx.
+
+## Mise en place HTTPS
+
+Pour les certificats, nous utiliserons [Let's Ecnrypt](LETS_ENCYPT.md).
+
+## Deployer Nginx
+
+```
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_nginx.yml -u arnauld
+```
+
+TODO firewald pour ouvrir les ports
