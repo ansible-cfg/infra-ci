@@ -10,10 +10,10 @@
     path: /volumes/gitlab/data
     state: directory
 
-- name: create certbot generation folder
+- name: create certs folder
   become: yes
   file:
-    path: /volumes/gitlab/data/certbot
+    path: /volumes/gitlab/data/certs
     state: directory
 
 - name: create backup scripts folder
@@ -23,21 +23,21 @@
     state: directory
 
 - name: generate cold backup script
-  template: 
+  template:
     src: cold-backup.sh.j2
     dest: /backup/scripts/cold-backup.sh
-    owner: robocop 
+    owner: robocop
     group: robocop
     mode: u=rwx,g=rx,o=rx
-    
+
 - name: generate cold restore script
-  template: 
+  template:
     src: cold-restore.sh.j2
     dest: /backup/scripts/cold-restore.sh
-    owner: robocop 
+    owner: robocop
     group: robocop
-    mode: u=rwx,g=rx,o=rx    
-        
+    mode: u=rwx,g=rx,o=rx
+
 - name: copy backup scripts files
   become: yes
   copy:

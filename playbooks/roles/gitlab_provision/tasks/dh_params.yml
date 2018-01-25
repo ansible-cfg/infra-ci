@@ -1,0 +1,24 @@
+- name: OpenSSL is installed
+  become: yes
+  yum:
+    name: openssl
+    state: latest
+    update_cache: yes
+
+- name: Check dhparam file existence
+  stat:
+    path: /etc/letsencrypt/dhparam.pem
+  register: dhparam_file
+
+- name: Generate dhparams
+  become: yes
+  command: "openssl dhparam -out '/etc/letsencrypt/dhparam.pem' 2048"
+  when: dhparam_file.stat.exists is defined and dhparam_file.stat.exists == False
+
+- name: copy dhparam file
+  become: yes
+  copy:
+    src: /etc/letsencrypt/dhparam.pem
+    dest: /volumes/gitlab/data/certs/dhparam.pem
+    remote_src: yes
+  when: dhparam_file.stat.exists is defined and dhparam_file.stat.exists == True

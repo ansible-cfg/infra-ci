@@ -1,3 +1,4 @@
 - import_tasks: volumes.yml
+- import_tasks: dh_params.yml
 - import_tasks: gitlab-docker.yml
 - import_tasks: crons.yml

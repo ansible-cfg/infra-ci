@@ -3,13 +3,25 @@
   vars_prompt:
     - name: "contact_mail_prompt"
       prompt: "Email contact to lets encrypt"
-      confirm: yes
-      private: yes
+      confirm: no
+      private: no
   tasks:
     - include_role:
         name: lets_encrypt
       vars:
-        contact_mail: {{ contact_mail_prompt}}
+        contact_mail: "{{ contact_mail_prompt}}"
         domain_name: vm4.dev-comutitres.fr
         cert_path:  /volumes/gitlab/data/certbot/
         nginx: false
+    - name: copy certs file
+        become: yes
+        copy:
+          src: /etc/letsencrypt/live/vm4.dev-comutitres.fr/fullchain.pem
+          dest: /volumes/gitlab/data/certs/gitlab.cert
+          remote_src: yes
+    - name: copy private key file
+        become: yes
+        copy:
+          src: /etc/letsencrypt/live/vm4.dev-comutitres.fr/privkey.pem
+          dest: /volumes/gitlab/data/certs/gitlab.key
+          remote_src: yes

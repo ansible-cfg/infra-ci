@@ -7,7 +7,6 @@
     ports:
         - "10022:22"
         - "10443:443"
-        - "80:80"
     volumes:
       - /volumes/gitlab/logs:/var/log/gitlab
       - /volumes/gitlab/data:/home/git/data
@@ -21,7 +20,8 @@
         DB_NAME: "{{ ci_db_name }}"
         DB_USER: "{{ ci_db_user }}"
         DB_PASS: "{{ ci_db_password }}"
+        GITLAB_SIGNUP_ENABLED: 'false'
         GITLAB_SECRETS_DB_KEY_BASE: "{{ ci_gitlab_secrets_db_key_base }}"
         GITLAB_SECRETS_SECRET_KEY_BASE: "{{ ci_gitlab_secrets_secret_key_base }}"
         GITLAB_SECRETS_OTP_KEY_BASE: "{{ ci_gitlab_secrets_otp_key_base }}"
-        GITLAB_SIGNUP_ENABLED: 'false'
+        GITLAB_HTTPS: 'true'
