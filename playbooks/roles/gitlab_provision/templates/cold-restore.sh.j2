@@ -29,3 +29,6 @@ sudo docker rm gitlab-restore
 
 # Restart the gitlab-ci docker container
 sudo docker start gitlab-ci
+
+# /!\ Sometimes, repositories are empty after data restore. 
+# You have to clean cache on Redis container using redis-cli.
