@@ -1,7 +1,8 @@
 ---
-- hosts: all
-  - tasks:
-      - name: Change hostname
-        hostname:
-          name: {{ hostname }}
-          
+- hosts: subnet
+
+  tasks:
+
+  - name: Change hostname
+    hostname:
+      name: "{{ name }}"
