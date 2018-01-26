@@ -19,15 +19,15 @@
 - name: cron copy renewed cert
   become: yes
   cron:
+    user: root
     minute: 5
     hour: 0,12
-    user: root
     job: cp /etc/letsencrypt/live/vm4.dev-comutitres.fr/fullchain.pem /volumes/gitlab/data/certs/gitlab.cert
 
 - name: cron copy renewed key
   become: yes
   cron:
+    user: root
     minute: 5
     hour: 0,12
-    user: root
     job: cp /etc/letsencrypt/live/vm4.dev-comutitres.fr/privkey.pem /volumes/gitlab/data/certs/gitlab.key

@@ -27,6 +27,9 @@ sudo docker run --name gitlab-restore \
 # Remove the gitlab-restore docker container
 sudo docker rm gitlab-restore
 
+# Copy certs
+/bin/sh /backup/scripts/copy-certs.sh
+
 # Restart the gitlab-ci docker container
 sudo docker start gitlab-ci
 
