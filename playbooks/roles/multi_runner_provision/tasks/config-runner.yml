@@ -11,7 +11,7 @@
     path: /etc/gitlab-runner/certs
     state: directory
     
-- name: copy letsencrypt ca root certificate
+- name: copy letsencrypt ca root certificate to runner certs directory
   become: yes
   copy:
     src: files/letsencrypt-root-ca.crt

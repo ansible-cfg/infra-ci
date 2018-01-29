@@ -7,4 +7,3 @@
     --locked=false
     --executor 'docker'
     --docker-image 'docker:latest'
-    --tls-ca-file "/etc/gitlab-runner/certs/ca.crt"
