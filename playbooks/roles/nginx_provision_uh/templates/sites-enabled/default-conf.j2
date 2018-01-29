@@ -1,0 +1,41 @@
+server {
+  listen 80;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen                    443 ssl;
+  server_name               {{ item.server_name }};
+
+  ## Increase this if you want to upload larger attachments
+  client_max_body_size      20m;
+
+  ## SSL
+  ssl                       on;
+  ssl_certificate           {{ item.ssl_certificate }};
+  ssl_certificate_key       {{ item.ssl_certificate_key }};
+  ssl_session_cache         shared:SSL:20m;
+  ssl_session_timeout       4h;
+  ssl_handshake_timeout     30s;
+
+  ## Individual logs for this vhost
+  access_log                /var/log/nginx/{{ item.name }}/ssl_access.log;
+  error_log                 /var/log/nginx/{{ item.name }}/ssl_error.log;
+
+  location / {
+    ## If you use https make sure you disable gzip compression
+    ## to be safe against BREACH attack.
+    gzip                    off;
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_set_header        Host                $http_host;
+    proxy_set_header        X-Real-IP           $remote_addr;
+    proxy_set_header        X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header        X-Forwarded-Proto   https;
+    proxy_set_header        X-Frame-Options     SAMEORIGIN;
+    proxy_pass              {{ item.upstream_url }};
+  }
+
+}

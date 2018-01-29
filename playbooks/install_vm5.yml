@@ -1,0 +1,41 @@
+---
+- hosts: nexus-hosts
+  tasks:
+    - include_role:
+        name: docker_provision
+
+    - include_role:
+        name: nexus_provision
+
+    - name: Configure firewalld
+      block:
+        - name: declare HTTP service
+          become: yes
+          firewalld:
+            service: http
+            permanent: true
+            state: enabled
+
+        - name: declare HTTPS service
+          become: yes
+          firewalld:
+            service: https
+            permanent: true
+            state: enabled
+
+        - name: restart
+          become: yes
+          service:
+            name: firewalld
+            state: restarted
+            enabled: yes
+
+    - include_role:
+        name: nginx_provision_uh
+      vars:
+        sites:
+          - name: nexus
+            server_name: "vm5.dev-comutitres.fr"
+            upstream_url: "http://localhost:8081"
+            ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr-0001/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr-0001/privkey.pem"

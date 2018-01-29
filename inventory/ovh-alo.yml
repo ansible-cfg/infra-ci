@@ -38,6 +38,9 @@ all:
       hosts:
         vps502105.ovh.net:
         vps502106.ovh.net:
+    nexus-hosts:
+      hosts:
+        vps502106.ovh.net:
 
 
   vars:
