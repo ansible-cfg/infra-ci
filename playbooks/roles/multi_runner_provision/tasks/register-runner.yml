@@ -1,0 +1,10 @@
+- name: Register runner to GitLab
+  command: gitlab-runner register >
+    --non-interactive
+    --url '{{ ci_server_url }}'
+    --registration-token '{{ ci_runner_registration_token }}'
+    --description 'ci-multi-runner'
+    --locked=false
+    --executor 'docker'
+    --docker-image 'docker:latest'
+    --tls-ca-file "/etc/gitlab-runner/certs/ca.crt"

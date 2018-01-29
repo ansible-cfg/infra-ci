@@ -1,0 +1,14 @@
+- name: Install Gitlab CI Multi Runner
+  hosts: gitlab-runner-hosts
+  vars_prompt:
+    - name: "CI_RUNNER_REGISTRATION_TOKEN"
+      prompt: "Gitlab Registration Token"
+      confirm: no
+      private: no
+  tasks:
+    - include_role:
+        name: multi_runner_provision
+      vars:
+        ci_server_url: "{{ CI_SERVER_URL }}"
+        ci_runner_registration_token: "{{ CI_RUNNER_REGISTRATION_TOKEN }}"
+        gitlab_runner_concurrent: 5

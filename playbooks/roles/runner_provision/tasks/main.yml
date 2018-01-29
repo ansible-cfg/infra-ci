@@ -39,8 +39,7 @@
         CI_SERVER_URL: "{{ ci_server_url }}"
         USERNAME: "{{ ci_root_username }}"
         PASSWORD: "{{ ci_root_password }}"
-        RUNNER_NAME: java_maven_runner
+        RUNNER_NAME: java-maven-runner
         RUNNER_EXECUTOR: shell
-        RUNNER_TAG_LIST: 'java maven'
         CI_SERVER_TLS_CA_FILE: /etc/gitlab-runner/certs/ca.crt
 

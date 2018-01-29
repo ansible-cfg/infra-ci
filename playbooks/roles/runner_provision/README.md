@@ -17,9 +17,9 @@ docker run -d \
            --name gitlab-runner-java-maven \
            -e "CI_SERVER_URL=http://gitlab-ci" \
            -e "REGISTRATION_TOKEN=f47KqYaN9XMguFcJSyaz" \
-           -e "RUNNER_NAME=java-maven-runner" \
+           -e "RUNNER_NAME=ci-multi-runner" \
            -e "RUNNER_EXECUTOR=shell" \
-           -e "RUNNER_TAG_LIST='java maven'" \
+           -e "REGISTER_RUN_UNTAGGED=true" \
            comutitres/gitlab-runner-java-maven
 ```
 
@@ -29,11 +29,11 @@ docker run -d \
 	   --restart=always \
            --name gitlab-runner-java-maven \
            -e "CI_SERVER_URL=http://gitlab-ci" \
-           -e "USERNAME=root" \
-           -e "PASSWORD=passw0rd" \
-           -e "RUNNER_NAME=java-maven-runner" \
+           -e "USERNAME=admin_user_name" \
+           -e "PASSWORD=admin_password" \
+           -e "RUNNER_NAME=ci-multi-runner" \
+           -e "REGISTER_RUN_UNTAGGED=true" \
            -e "RUNNER_EXECUTOR=shell" \
-           -e "RUNNER_TAG_LIST='java maven'" \
            comutitres/gitlab-runner-java-maven
 ```
 
@@ -47,8 +47,7 @@ docker run -d \
 | REGISTRATION_TOKEN                                   | The registration token to use with the GitLab instance. The token can be viewed in the admin area runners section. Either this environment variable or `USERNAME` and `PASSWORD` are **mandatory**. |
 | RUNNER_NAME                                   | Gitlab runner name. |
 | RUNNER_EXECUTOR                                   | Gitlab runner executor. GitLab runner implements a number of [executors](https://docs.gitlab.com/runner/executors/) that can be used to run builds in different scenarios|
-| RUNNER_TAG_LIST                                   |  If you want to use tags in you .gitlab-ci.yml, then you need to specify the comma-separated list of tags. This is useful to distinguish the runner types. |
-
+| REGISTER_RUN_UNTAGGED                                   | Indicates whether this runner can pick jobs without tags |
 
 ## Inspiration and sources
 * [Gitlab Runner docker image sources](https://github.com/ayufan/gitlab-ci-multi-runner)

@@ -26,8 +26,6 @@ all:
       hosts:
         vm3.dev-comutitres.fr:
             CI_SERVER_URL: https://gitlab.dev-comutitres.fr
-            CI_ROOT_USERNAME: root
-            CI_ROOT_PASSWORD: 5iveL!fe
     nginx-hosts:
       hosts:
         vm2.dev-comutitres.fr:

@@ -1,0 +1,3 @@
+- import_tasks: install-runner.yml
+- import_tasks: config-runner.yml
+- import_tasks: register-runner.yml

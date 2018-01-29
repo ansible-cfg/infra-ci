@@ -7,7 +7,7 @@ fi
 
 if [ ! -z "$USERNAME" ] && [ ! -z "$PASSWORD" ]; then
    # TODO : add letsencrypt ca certifcate in curl ca trust store and remove k option
-    # Certificate link : https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt
+   # Certificate link : https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt
    ACCESS_TOKEN_RESULT=$(curl -s -k \
                               -H "Content-Type: application/json" \
                               -X POST -d '{"grant_type":"password","username":"'$USERNAME'","password":"'$PASSWORD'"}' \
@@ -44,6 +44,7 @@ trap "gitlab-runner stop" SIGTERM
 
 echo "Running gitlab-runner register..."
 export REGISTER_NON_INTERACTIVE=true
+export REGISTER_RUN_UNTAGGED=false
 gitlab-runner register
 if [ $? -gt 0 ]; then
   echo "ERROR: Registration failed!"
