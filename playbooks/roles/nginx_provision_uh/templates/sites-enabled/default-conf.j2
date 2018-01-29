@@ -16,11 +16,11 @@ server {
   ssl_certificate_key       {{ item.ssl_certificate_key }};
   ssl_session_cache         shared:SSL:20m;
   ssl_session_timeout       4h;
-  ssl_handshake_timeout     30s;
+  # ssl_handshake_timeout     30s;
 
   ## Individual logs for this vhost
-  access_log                /var/log/nginx/{{ item.name }}/ssl_access.log;
-  error_log                 /var/log/nginx/{{ item.name }}/ssl_error.log;
+  access_log                /var/log/nginx/{{ item.name }}/access.log;
+  error_log                 /var/log/nginx/{{ item.name }}/error.log;
 
   location / {
     ## If you use https make sure you disable gzip compression

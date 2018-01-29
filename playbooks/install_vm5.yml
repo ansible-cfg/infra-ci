@@ -1,41 +1,54 @@
 ---
 - hosts: nexus-hosts
+  vars_prompt:
+    - name: "contact_mail_prompt"
+      prompt: "Email contact to lets encrypt"
+      confirm: yes
+      private: yes
+
   tasks:
     - include_role:
         name: docker_provision
 
     - include_role:
         name: nexus_provision
+      vars:
+        nexus_port: 8081
 
-    - name: Configure firewalld
+    - name: Open ports
       block:
-        - name: declare HTTP service
-          become: yes
-          firewalld:
-            service: http
-            permanent: true
-            state: enabled
+        - name: http
+          iptables:
+            chain: INPUT
+            action: insert
+            destination_port: 80
+            protocol: tcp
+            state: present
 
-        - name: declare HTTPS service
-          become: yes
-          firewalld:
-            service: https
-            permanent: true
-            state: enabled
+        - name: https
+          iptables:
+            chain: INPUT
+            action: insert
+            destination_port: 443
+            protocol: tcp
+            state: present
 
-        - name: restart
-          become: yes
-          service:
-            name: firewalld
-            state: restarted
-            enabled: yes
+
+    - include_role:
+        name: lets_encrypt
+      vars:
+        contact_mail: "{{ contact_mail_prompt}}"
+        domain_name: vm5.dev-comutitres.fr
+        nginx: false
+        firewalld: false
 
     - include_role:
         name: nginx_provision_uh
       vars:
+        letsencrypt: true
         sites:
           - name: nexus
             server_name: "vm5.dev-comutitres.fr"
             upstream_url: "http://localhost:8081"
-            ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr-0001/cert.pem"
-            ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr-0001/privkey.pem"
+            ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/privkey.pem"

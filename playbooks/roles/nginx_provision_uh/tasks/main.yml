@@ -16,7 +16,7 @@
 - name: create folders to sites log
   become: yes
   file:
-    path: /var/log/nginx/{{ item }}
+    path: /var/log/nginx/{{ item.name }}
     state: directory
   with_items:
     - "{{ sites }}"
@@ -32,7 +32,7 @@
   file:
     path: /var/run/acme/acme-challenge
     state: directory
-  when: letsencrypt
+  when: letsencrypt|default(false)
 
 - name: copy nginx config
   become: yes
@@ -49,7 +49,7 @@
 - name: configure sites
   become: yes
   template:
-    src: files/sites-enabled/{{ item.template | default('default-conf.j2') }}
+    src: sites-enabled/{{ item.template | default('default-conf.j2') }}
     dest: /etc/nginx/sites-available/{{ item.name }}
   with_items:
     - "{{ sites }}"

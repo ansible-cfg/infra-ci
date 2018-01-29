@@ -5,18 +5,17 @@
       prompt: "Email contact to lets encrypt"
       confirm: yes
       private: yes
+
   tasks:
     - include_role:
         name: lets_encrypt
       vars:
         contact_mail: {{ contact_mail_prompt}}
         domain_name: gitlab.dev-comutitres.fr
-        cert_path:  /volumes/gitlab/data/certbot/
         nginx: true
     - include_role:
         name: lets_encrypt
       vars:
         contact_mail: {{ contact_mail_prompt}}
         domain_name: sonar.dev-comutitres.fr
-        cert_path:  /volumes/sonar/data/certbot/
         nginx: true

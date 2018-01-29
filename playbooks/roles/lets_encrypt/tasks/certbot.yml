@@ -2,31 +2,28 @@
   yum: name=certbot state=latest
   become: yes
 
-- name: create certs path
-  become: yes
-  file:
-    path: "{{ cert_path }}"
-    state: directory
+- name: certbot in standalone mode
+  command: certbot certonly --standalone -m {{ contact_mail }} -d {{ domain_name }} -n -vvv --agree-tos
+  register: certbot_output
 
-- name: run Certbot
-  command: sudo certbot certonly --standalone -m {{ contact_mail }} -d {{ domain_name }} -n -vvv --agree-tos > /volumes/certbot.log
+- name: debug
+  debug:
+    var: certbot_output
 
 - name: cron renew
   become: yes
   cron:
-    seconds: 0
     minute: 0
     hour: 0,12
     user: root
     job: python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew --standalone -vvv
-  when: $nginx == 'false'
+  when: not nginx
 
 - name: cron renew
   become: yes
   cron:
-    seconds: 0
     minute: 0
     hour: 0,12
     user: root
     job: python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew
-  when: $nginx == 'true'
+  when: nginx

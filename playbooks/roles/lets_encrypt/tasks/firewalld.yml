@@ -4,6 +4,7 @@
     service: http
     permanent: true
     state: enabled
+  when: firewalld|default(false)
 
 - name: add HTTPS service
   become: yes
@@ -11,7 +12,9 @@
     service: https
     permanent: true
     state: enabled
+  when: firewalld|default(false)
 
 - name: Enable firewalld
   become: yes
   service: name=firewalld state=restarted enabled=yes
+  when: firewalld|default(false)
