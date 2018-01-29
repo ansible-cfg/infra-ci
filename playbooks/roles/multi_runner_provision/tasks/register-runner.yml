@@ -1,4 +1,4 @@
-- name: Register runner to GitLab
+- name: register runner
   command: gitlab-runner register >
     --non-interactive
     --url '{{ ci_server_url }}'
