@@ -1,8 +1,0 @@
-- name: copy letsencrypt ca root certificate to system
-  become: yes
-  copy:
-    src: files/letsencrypt-root-ca.crt
-    dest: /etc/pki/ca-trust/source/anchors/letsencrypt-root-ca.crt
-    
-- name: update trusted ca
-  shell: /bin/update-ca-trust

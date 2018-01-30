@@ -1,4 +1,3 @@
-- import_tasks: add-authority-cert.yml
-- import_tasks: install-runner.yml
-- import_tasks: config-runner.yml
-- import_tasks: register-runner.yml
+- import_tasks: install.yml
+- import_tasks: configure.yml
+- import_tasks: register.yml

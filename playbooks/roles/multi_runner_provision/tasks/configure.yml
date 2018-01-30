@@ -1,0 +1,6 @@
+---
+- name: copy letsencrypt ca
+  become: yes
+  copy:
+    src: files/letsencrypt-ca.crt
+    dest: /etc/gitlab-runner/certs/ca.crt

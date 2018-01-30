@@ -11,4 +11,4 @@
       vars:
         ci_server_url: "{{ CI_SERVER_URL }}"
         ci_runner_registration_token: "{{ CI_RUNNER_REGISTRATION_TOKEN }}"
-        gitlab_runner_concurrent: 5
+        gitlab_runner_concurrent: 1

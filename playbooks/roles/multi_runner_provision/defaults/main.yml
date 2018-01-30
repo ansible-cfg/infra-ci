@@ -1,0 +1,4 @@
+---
+concurrent_jobs: 3
+description: ci-multi-runner
+tls-ca-file: /etc/gitlab-runner/certs/ca.crt

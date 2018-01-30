@@ -1,6 +1,8 @@
+---
 - name: register runner
   command: gitlab-runner register >
     --non-interactive
+    --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
     --url '{{ ci_server_url }}'
     --registration-token '{{ ci_runner_registration_token }}'
     --description 'ci-multi-runner'

@@ -11,7 +11,7 @@
       private: yes
   tasks:
     - include_role:
-        name: gitlab_runner_provision
+        name: runner_provision
       vars:
         ci_server_url: "{{ CI_SERVER_URL }}"
         ci_root_username: "{{ CI_ROOT_USERNAME }}"
