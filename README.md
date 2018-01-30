@@ -2,7 +2,7 @@
 
 ```
 ssh-keygen -R vps502106.ovh.net
-ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/invalidate_root.yml
+ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/invalidate_root.yml  --extra-vars "root_new_password=..."
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/declare_users.yml  -u arnauld
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/protect_server.yml -u arnauld
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/prepare_vm.yml -u arnauld
