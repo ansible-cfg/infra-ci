@@ -5,10 +5,12 @@
 - name: certbot in standalone mode
   command: certbot certonly --standalone -m {{ contact_mail }} -d {{ domain_name }} -n -vvv --agree-tos
   register: certbot_output
+  when: not (cron_only|default(false))
 
 - name: debug
   debug:
     var: certbot_output
+  when: certbot_output
 
 - name: cron renew
   become: yes

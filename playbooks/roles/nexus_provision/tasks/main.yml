@@ -2,7 +2,7 @@
   file:
     path: /volumes/nexus/data
     state: directory
-    mode: 0200
+    mode: 0777
 
 - name: Install nexus container
   become: yes

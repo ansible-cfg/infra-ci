@@ -1,0 +1,69 @@
+- hosts: nginx-hosts
+  vars_prompt:
+    - name: "contact_mail_prompt"
+      prompt: "Email contact to lets encrypt"
+      confirm: yes
+      private: yes
+
+  tasks:
+
+    - name: Ensure nginx is stopped
+      become: yes
+      systemd:
+        name: nginx
+        state: stopped
+
+    - name: Open ports
+      block:
+        - name: http
+          iptables:
+            chain: INPUT
+            action: insert
+            destination_port: 80
+            protocol: tcp
+            state: present
+
+        - name: https
+          iptables:
+            chain: INPUT
+            action: insert
+            destination_port: 443
+            protocol: tcp
+            state: present
+
+    - name: Generate certificates
+      include_role:
+        name: lets_encrypt
+      with_items:
+        - gitlab.dev-comutitres.fr
+#        - sonar.dev-comutitres.fr
+        - nexus.dev-comutitres.fr
+      vars:
+        contact_mail: "{{ contact_mail_prompt}}"
+        domain_name: "{{ item }}"
+        nginx: false
+        firewalld: false
+
+    - include_role:
+        name: nginx_provision_uh
+      vars:
+        letsencrypt: true
+        sites:
+          - name: gitlab
+            server_name: "gitlab.dev-comutitres.fr"
+            upstream_url: "https://vm4.dev-comutitres.fr:10443"
+            ssl_certificate: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr-0001/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr-0001/privkey.pem"
+          - name: nexus
+            server_name: "nexus.dev-comutitres.fr"
+            upstream_url: "https://vm5.dev-comutitres.fr"
+            ssl_certificate: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/privkey.pem"
+
+    - name: register cron
+      include_role:
+        name: lets_encrypt
+      vars:
+        nginx: true
+        firewalld: false
+        cron_only: true
