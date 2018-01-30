@@ -25,7 +25,7 @@ sudo docker run -v /tmp/csv:/tmp/csv -e CTU_RABBIT_HOST=dev5.dev-comutitres.fr -
 
 Voir les messages s'empiler dans RabbitMQ: 
 http://dev5.dev-comutitres.fr:15672
-
+(login:test/password:test)
 
 Lancer le consumer en local:
 
