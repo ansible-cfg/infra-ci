@@ -15,13 +15,17 @@ Pour cela, il faut éditer le fichier de configuration `/etc/gitlab-runner/confi
 
 Dans la section `runners`, ajouter la ligne suivante :
 
-`pre_clone_script = "update-ca-certificates;git config --global http.https://gitlab.dev-comutitres.fr.sslcainfo /etc/ssl/certs/ca-certificates.crt`
+```
+pre_clone_script = "update-ca-certificates;git config --global http.https://gitlab.dev-comutitres.fr.sslcainfo /etc/ssl/certs/ca-certificates.crt
+```
 
 Dans la section `runners.docker`, ajouter ou modifier les lignes suivantes :
 
-`tls_verify = true`
-`disable_cache = true`
-`volumes = ["/etc/gitlab-runner/certs/ca.crt:/usr/local/share/ca-certificates/ca.crt"]`
+```
+tls_verify = true
+disable_cache = true
+volumes = ["/etc/gitlab-runner/certs/ca.crt:/usr/local/share/ca-certificates/ca.crt"]
+```
 
 Un exemple de fichier `config.toml` :
 
