@@ -21,10 +21,10 @@
     path: /volumes/gitlab-runner/certs
     state: directory
     
-- name: copy letsencrypt ca root certificate
+- name: copy letsencrypt ca certificate
   become: yes
   copy:
-    src: files/letsencrypt-root-ca.crt
+    src: files/letsencrypt-ca.crt
     dest: /volumes/gitlab-runner/certs/ca.crt
 
 - name: install container
