@@ -31,6 +31,7 @@
         - gitlab.dev-comutitres.fr
         - sonar.dev-comutitres.fr
         - nexus.dev-comutitres.fr
+        - registry.dev-comutitres.fr
       vars:
         contact_mail: "{{ contact_mail_prompt}}"
         domain_name: "{{ item }}"
@@ -57,6 +58,11 @@
             upstream_url: "https://vm5.dev-comutitres.fr"
             ssl_certificate: "/etc/letsencrypt/live/sonar.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/sonar.dev-comutitres.fr/privkey.pem"
+          - name: docker-registry
+            server_name: "registry.dev-comutitres.fr"
+            upstream_url: "http://localhost:5000"
+            ssl_certificate: "/etc/letsencrypt/live/registry.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/registry.dev-comutitres.fr/privkey.pem"
 
     - name: register cron
       include_role:
