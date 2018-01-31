@@ -14,22 +14,15 @@
         state: stopped
 
     - name: Open ports
-      block:
-        - name: http
-          iptables:
-            chain: INPUT
-            action: insert
-            destination_port: 80
-            protocol: tcp
-            state: present
-
-        - name: https
-          iptables:
-            chain: INPUT
-            action: insert
-            destination_port: 443
-            protocol: tcp
-            state: present
+      iptables:
+        chain: INPUT
+        action: insert
+        destination_port: "{{ item }}"
+        protocol: tcp
+        state: present
+      with_items:
+        - 80
+        - 443
 
     - name: Generate certificates
       include_role:
