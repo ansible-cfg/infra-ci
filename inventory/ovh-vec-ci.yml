@@ -77,14 +77,14 @@ all:
           ipv4: 217.182.205.222
           type: ssd2
           name: vm5
-          trusted_ports: ["22/tcp", "5432/tcp"]
+          trusted_ports: ["22/tcp", "8081/tcp", "9000/tcp"]
           public_ports: []
         vm6.dev-comutitres.fr:
           vps: vps503107.ovh.net
           ipv4: 217.182.206.135
           type: ssd2
           name: vm6
-          trusted_ports: ["22/tcp"]
+          trusted_ports: ["22/tcp", "5432/tcp"]
           public_ports: []
 
   vars:
