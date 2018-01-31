@@ -1,0 +1,12 @@
+- name: Install sonar container
+  become: yes
+  docker_container:
+    name: sonarqube
+    image: sonarqube:6.7.1
+    state: started
+    ports:
+      - "{{ sonar_port }}:9000"
+    env:
+      SONARQUBE_JDBC_USERNAME: "{{ sonar_jdbc_username }}"
+      SONARQUBE_JDBC_PASSWORD: "{{ sonar_jdbc_password }}"
+      SONARQUBE_JDBC_URL: "{{ sonar_jdbc_url }}"

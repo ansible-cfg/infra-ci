@@ -44,20 +44,3 @@
     name: postgresql
     state: restarted
     enabled: yes
-
-- name: create DB {{ CI_DB_NAME }}
-  become: yes
-  postgresql_db:
-    name: "{{ CI_DB_NAME }}"
-
-- postgresql_ext:
-    name: pg_trgm
-    db: "{{ CI_DB_NAME }}"
-
-- name: create user {{ CI_DB_USER }} on {{ CI_DB_NAME }}
-  become: yes
-  postgresql_user:
-    db: "{{ CI_DB_NAME }}"
-    name: "{{ CI_DB_USER }}"
-    password: "{{ CI_DB_PASSWORD }}"
-    role_attr_flags: CREATEDB,LOGIN

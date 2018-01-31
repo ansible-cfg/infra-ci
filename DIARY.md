@@ -1,3 +1,15 @@
+# Password in ansible
+
+Copy the `pass-ansible.txt` file into `~/.comutitres/pass-ansible.txt`
+
+To encrypt a value:
+
+```
+ansible-vault encrypt_string password123 --vault-password-file ~/.comutitres/pass-ansible.txt
+```
+
+
+
 # Iptables
 
 * [mikegleasonjr/ansible-role-firewall](https://github.com/mikegleasonjr/ansible-role-firewall)
@@ -58,7 +70,7 @@ Redémarrer:
 > [a] eth0 with 192.168.1.1 private IP address – Internal LAN ~ Desktop system
 > [b] eth1 with 202.54.1.1 public IP address – WAN connected to ISP router
 > [c] eth2 with 192.168.2.1 private IP address – DMZ connected to Mail / Web / DNS and other private servers
-> 
+>
 
 * [IPtables tutorial / Les entrées deconntrack](https://www.inetdoc.net/guides/iptables-tutorial/theconntrackentries.html)
 * [OpenSSH/Cookbook/Proxies and Jump Hosts](https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Proxies_and_Jump_Hosts)

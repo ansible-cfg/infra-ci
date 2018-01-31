@@ -3,7 +3,33 @@
   tasks:
     - include_role:
         name: postgresql_provision
-      vars:
-        ci_db_name: "{{ CI_DB_NAME }}"
-        ci_db_user: "{{ CI_DB_USER }}"
-        ci_db_password: "{{ CI_DB_PASSWORD }}"
+
+    - name: create DB {{ CI_DB_NAME }}
+      become: yes
+      postgresql_db:
+        name: "{{ CI_DB_NAME }}"
+
+    - postgresql_ext:
+        name: pg_trgm
+        db: "{{ CI_DB_NAME }}"
+
+    - name: create user {{ CI_DB_USER }} on {{ CI_DB_NAME }}
+      become: yes
+      postgresql_user:
+        db: "{{ CI_DB_NAME }}"
+        name: "{{ CI_DB_USER }}"
+        password: "{{ CI_DB_PASSWORD }}"
+        role_attr_flags: CREATEDB,LOGIN
+
+    - name: create DB {{ SONAR_DB_NAME }}
+      become: yes
+      postgresql_db:
+        name: "{{ SONAR_DB_NAME }}"
+
+    - name: create user {{ SONAR_DB_USERNAME }} on {{ SONAR_DB_NAME }}
+      become: yes
+      postgresql_user:
+        db: "{{ SONAR_DB_NAME }}"
+        name:     "{{ SONAR_DB_USERNAME }}"
+        password: "{{ SONAR_DB_PASSWORD }}"
+        role_attr_flags: CREATEDB,LOGIN

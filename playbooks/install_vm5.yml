@@ -6,6 +6,10 @@
       confirm: yes
       private: yes
 
+  vars:
+    SONAR_PORT: 9000
+    NEXUS_PORT: 8081
+
   tasks:
     - include_role:
         name: docker_provision
@@ -13,7 +17,15 @@
     - include_role:
         name: nexus_provision
       vars:
-        nexus_port: 8081
+        nexus_port: "{{ NEXUS_PORT }}"
+
+    - include_role:
+        name: sonar_provision
+      vars:
+        sonar_port: "{{ SONAR_PORT }}"
+        sonar_jdbc_url: "jdbc:postgresql://{{ SONAR_DB_HOST }}/{{ SONAR_DB_NAME }}"
+        sonar_jdbc_username: "{{ SONAR_DB_USERNAME }}"
+        sonar_jdbc_password: "{{ SONAR_DB_PASSWORD }}"
 
     - name: Open ports
       block:
@@ -33,11 +45,10 @@
             protocol: tcp
             state: present
 
-
     - include_role:
         name: lets_encrypt
       vars:
-        contact_mail: "{{ contact_mail_prompt}}"
+        contact_mail: "{{ contact_mail_prompt }}"
         domain_name: vm5.dev-comutitres.fr
         nginx: false
         firewalld: false
@@ -49,6 +60,11 @@
         sites:
           - name: nexus
             server_name: "vm5.dev-comutitres.fr"
-            upstream_url: "http://localhost:8081"
+            upstream_url: "http://localhost:{{ NEXUS_PORT }}"
+            ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/privkey.pem"
+          - name: sonar
+            server_name: "sonar.dev-comutitres.fr"
+            upstream_url: "http://localhost:{{ SONAR_PORT }}"
             ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/privkey.pem"
