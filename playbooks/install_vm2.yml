@@ -29,7 +29,7 @@
         name: lets_encrypt
       with_items:
         - gitlab.dev-comutitres.fr
-#        - sonar.dev-comutitres.fr
+        - sonar.dev-comutitres.fr
         - nexus.dev-comutitres.fr
       vars:
         contact_mail: "{{ contact_mail_prompt}}"
@@ -52,6 +52,11 @@
             upstream_url: "https://vm5.dev-comutitres.fr"
             ssl_certificate: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/privkey.pem"
+          - name: sonar
+            server_name: "sonar.dev-comutitres.fr"
+            upstream_url: "https://vm5.dev-comutitres.fr"
+            ssl_certificate: "/etc/letsencrypt/live/sonar.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/sonar.dev-comutitres.fr/privkey.pem"
 
     - name: register cron
       include_role:
