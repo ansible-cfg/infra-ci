@@ -5,7 +5,9 @@
     --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
     --url '{{ ci_server_url }}'
     --registration-token '{{ ci_runner_registration_token }}'
-    --description 'ci-multi-runner'
+    --description 'java-maven-docker-runner'
+    --tag-list 'java maven'
+    --docker-privileged true
     --locked=false
     --executor 'docker'
     --docker-image 'docker:latest'
