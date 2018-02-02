@@ -12,6 +12,7 @@
       - /volumes/gitlab/data:/home/git/data
     env:
         GITLAB_HOST: "{{ ci_gitlab_host }}"
+        GITLAB_SSH_PORT: "{{ ci_gitlab_ssh_port }}"
         REDIS_HOST: "{{ ci_redis_host }}"
         REDIS_PORT: "{{ ci_redis_port }}"
         DB_ADAPTER: "{{ ci_db_adapter }}"

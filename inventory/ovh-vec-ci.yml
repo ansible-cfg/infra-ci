@@ -11,6 +11,7 @@ all:
       hosts:
         vm4.dev-comutitres.fr:
             CI_GITLAB_HOST: gitlab.dev-comutitres.fr
+            CI_GITLAB_SSH_PORT: 10022
             CI_REDIS_HOST: vm6.dev-comutitres.fr
             CI_REDIS_PORT: 6379
             CI_DB_ADAPTER: postgresql

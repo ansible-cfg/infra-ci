@@ -5,6 +5,7 @@
         name: gitlab_provision
       vars:
         ci_gitlab_host: "{{ CI_GITLAB_HOST }}"
+        ci_gitlab_ssh_port: "{{ CI_GITLAB_SSH_PORT }}"
         ci_redis_host: "{{ CI_REDIS_HOST }}"
         ci_redis_port: "{{ CI_REDIS_PORT }}"
         ci_db_adapter: "{{ CI_DB_ADAPTER }}"

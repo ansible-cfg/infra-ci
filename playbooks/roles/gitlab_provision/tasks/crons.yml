@@ -6,6 +6,7 @@
     hour: 2
     minute: 0
     job: "/bin/sh /backup/scripts/hot-backup.sh > /home/robocop/hot-backup.log"
+    state: present
 
 - cron:
     name: cron cold backup
@@ -15,6 +16,7 @@
     hour: 2
     minute: 0
     job: "/bin/sh /backup/scripts/cold-backup.sh > /home/robocop/cold-backup.log"
+    state: present
 
 - name: cron copy renewed cert
   become: yes
@@ -23,6 +25,7 @@
     minute: 5
     hour: 0,12
     job: cp /etc/letsencrypt/live/vm4.dev-comutitres.fr/fullchain.pem /volumes/gitlab/data/certs/gitlab.cert
+    state: present
 
 - name: cron copy renewed key
   become: yes
@@ -31,3 +34,4 @@
     minute: 5
     hour: 0,12
     job: cp /etc/letsencrypt/live/vm4.dev-comutitres.fr/privkey.pem /volumes/gitlab/data/certs/gitlab.key
+    state: present
