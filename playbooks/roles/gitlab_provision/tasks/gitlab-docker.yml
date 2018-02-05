@@ -26,3 +26,5 @@
         GITLAB_SECRETS_SECRET_KEY_BASE: "{{ ci_gitlab_secrets_secret_key_base }}"
         GITLAB_SECRETS_OTP_KEY_BASE: "{{ ci_gitlab_secrets_otp_key_base }}"
         GITLAB_HTTPS: 'true'
+        UNICORN_WORKERS: "{{ ci_unicorn_workers }}"
+        SIDEKIQ_CONCURRENCY: "{{ ci_sidekiq_concurrency }}"
