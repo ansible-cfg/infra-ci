@@ -13,7 +13,7 @@
         ci_db_port: "{{ CI_DB_PORT }}"
         ci_db_name: "{{ CI_DB_NAME }}"
         ci_db_user: "{{ CI_DB_USER }}"
-        ci_db_password: "passw0rd"
+        ci_db_password: "{{ CI_DB_PASSWORD }}"
         ci_domain_name: "{{ CI_DOMAIN_NAME }}"
         ci_gitlab_secrets_db_key_base: "{{ CI_GITLAB_SECRETS_DB_KEY_BASE }}"
         ci_gitlab_secrets_secret_key_base: "{{ CI_GITLAB_SECRETS_SECRET_KEY_BASE }}"
