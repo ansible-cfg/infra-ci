@@ -3,7 +3,7 @@ server {
   server_name               {{ item.server_name }};
 
   ## Increase this if you want to upload larger attachments
-  client_max_body_size      20m;
+  client_max_body_size      {{ item.client_max_body_size|default("100m") }};
 
   ## SSL
   ssl                       on;

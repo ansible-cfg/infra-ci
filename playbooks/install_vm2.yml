@@ -63,6 +63,7 @@
             upstream_url: "http://localhost:5000"
             ssl_certificate: "/etc/letsencrypt/live/registry.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/registry.dev-comutitres.fr/privkey.pem"
+            client_max_body_size: 1000m
 
     - name: register cron
       include_role:
