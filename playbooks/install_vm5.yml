@@ -63,6 +63,7 @@
             upstream_url: "http://localhost:{{ NEXUS_PORT }}"
             ssl_certificate: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/vm5.dev-comutitres.fr/privkey.pem"
+            client_max_body_size: 200m
           - name: sonar
             server_name: "sonar.dev-comutitres.fr"
             upstream_url: "http://localhost:{{ SONAR_PORT }}"
