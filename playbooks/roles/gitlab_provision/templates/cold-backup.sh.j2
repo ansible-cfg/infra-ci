@@ -1,5 +1,5 @@
 # Delete the expired backup files older than 7 days
-find /volumes/gitlab/data/backups -mtime +7 -exec rm {} \;
+find /volumes/gitlab/data/backups -mtime +7 -exec sudo rm {} \;
 
 # Stop the gitlab-ci docker container
 sudo docker stop gitlab-ci

@@ -1,5 +1,5 @@
 # Delete the expired backup files older than 7 days
-find /volumes/gitlab/data/backups -mtime +7 -exec rm {} \;
+find /volumes/gitlab/data/backups -mtime +7 -exec sudo rm {} \;
 
 # Run hot backup on gitlab-ci container
 sudo docker exec -i gitlab-ci bundle exec rake gitlab:backup:create
