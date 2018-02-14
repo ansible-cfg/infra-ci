@@ -7,7 +7,7 @@
     --registration-token '{{ ci_runner_registration_token }}'
     --description 'java-maven-docker-runner'
     --tag-list 'java maven'
-    --docker-privileged true
+    --docker-privileged=true
     --locked=false
     --executor 'docker'
     --docker-image 'docker:latest'
