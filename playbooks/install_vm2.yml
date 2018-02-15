@@ -6,7 +6,29 @@
       private: yes
 
   tasks:
-
+    - name: "enable ip forwarding"
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
+    - name: "dnat for gitlab (vm4)"
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: tcp
+        destination_port: 10022
+        jump: DNAT
+        to_destination: "{{ privatenetwork.vm4.ipv4 }}"
+    - name: "snat for return trafic from gitlab"
+      iptables:
+        table: nat
+        chain: POSTROUTING
+        protocol: tcp
+        destination_port: 10022
+        jump: SNAT
+        to_source: "{{ privatenetwork.vm2.ipv4 }}"
     - name: Ensure nginx is stopped
       become: yes
       systemd:
@@ -20,6 +42,7 @@
         destination_port: "{{ item }}"
         protocol: tcp
         state: present
+        jump: ACCEPT
       with_items:
         - 80
         - 443
