@@ -1,0 +1,16 @@
+---
+CI_GITLAB_HOST: gitlab.dev-comutitres.fr
+CI_GITLAB_SSH_PORT: 10022
+CI_REDIS_HOST: vm6.dev-comutitres.fr
+CI_REDIS_PORT: 6379
+CI_DB_ADAPTER: postgresql
+CI_DB_HOST: vm6.dev-comutitres.fr
+CI_DB_PORT: 5432
+CI_DOMAIN_NAME: vm4.dev-comutitres.fr
+CI_GITLAB_SECRETS_DB_KEY_BASE: sie_phae1Mavomahthahxafivueraihu
+CI_GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej
+CI_GITLAB_SECRETS_OTP_KEY_BASE: aeVi7ja.maquooliacolietevaloowahfohkaeviesaeshahfohfueneraseeyun
+# The number of unicorn workers to start. The recommandation is to use :  CPU cores + 1
+CI_UNICORN_WORKERS: 3
+# The number of concurrent sidekiq jobs to run.
+CI_SIDEKIQ_CONCURRENCY: 5

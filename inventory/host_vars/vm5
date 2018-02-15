@@ -1,0 +1,12 @@
+---
+vps: vps503105.ovh.net
+ipv4: 217.182.205.222
+type: ssd2
+name: vm5
+public_ports:
+  - name: 8081
+    port: 8081
+    protocol: tcp
+  - name: 9000
+    port: 9000
+    protocol: tcp

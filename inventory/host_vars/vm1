@@ -1,0 +1,33 @@
+---
+public_ssh: true
+bastion: true
+type: ssd2
+name: vm1
+ipv4: 51.254.213.188
+vps: vps494404.ovh.net
+public_ports: []
+
+registry_image_version: 2.6
+containers:
+  registry:
+    image: "registry:{{ registry_image_version }}"
+    state: started
+    recreate: no
+    pull: yes
+    published_ports: '{{ ansible_default_ipv4.address }}:{{ registry.host_port }}:{{ registry.container_port }}'
+    volumes:
+      - "/home/registry/images:/var/lib/registry"
+      - "/home/registry/certs:/certs"
+# env:
+# REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/wildcard.{{ env }}.{{ domain_name }}.cert"
+# REGISTRY_HTTP_TLS_KEY: "/certs/wildcard.{{ env }}.{{ domain_name }}.priv"
+#  registry_frontend:
+#    image: "konradkleine/docker-registry-frontend:v2"
+#    state: started
+#    recreate: no
+#    pull: yes
+#    published_ports: 8080:80
+#    env:
+#      ENV_DOCKER_REGISTRY_HOST: "{{ docker.registry.public_url }}"
+#      ENV_DOCKER_REGISTRY_PORT: "{{ registry.host_port }}"
+#      ENV_DOCKER_REGISTRY_USE_SSL: 1

@@ -1,0 +1,46 @@
+---
+module: ci-vec
+datacenter: "ci-vec"
+
+privatenetwork:
+  vm1:
+    vps: vps494404.ovh.net
+    ipv4: 51.254.213.188
+    type: ssd2
+    name: vm1
+  vm2:
+    vps: vps503108.ovh.net
+    ipv4: 217.182.206.140
+    type: ssd1
+    name: vm2
+  vm3:
+    vps: vps503106.ovh.net
+    ipv4: 217.182.206.15
+    type: ssd2
+    name: vm3
+  vm4:
+    vps: vps503114.ovh.net
+    ipv4: 217.182.207.96
+    type: ssd3
+    name: vm4
+  vm5:
+    vps: vps503105.ovh.net
+    ipv4: 217.182.205.222
+    type: ssd2
+    name: vm5
+  vm6:
+    vps: vps503107.ovh.net
+    ipv4: 217.182.206.135
+    type: ssd2
+    name: vm6
+
+SONAR_DB_HOST: vm6.dev-comutitres.fr:5432
+SONAR_DB_NAME: sonar
+SONAR_DB_USERNAME: sonar
+SONAR_DB_PASSWORD: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  66373233306266396563336538306430326235633532656466306266323535366263633462383836
+  6234396661316537643037653665313038373139633761350a383461313633653334343761366537
+  32653061353861666539373466323430623839393664626237373336613337376539633331623863
+  3431326632643764360a343930363262363163353733313738636535643235386538396136313462
+  61626362623238653862613536333432356335653966303439316662343635313733

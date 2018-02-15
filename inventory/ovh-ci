@@ -1,0 +1,37 @@
+vm1 ansible_host=vm1.dev-comutitres.fr
+vm2 ansible_host=vm2.dev-comutitres.fr
+vm3 ansible_host=vm3.dev-comutitres.fr
+vm4 ansible_host=vm4.dev-comutitres.fr
+vm5 ansible_host=vm5.dev-comutitres.fr
+vm6 ansible_host=vm6.dev-comutitres.fr
+
+[bastion]
+vm1
+
+[nexus-hosts]
+vm5
+
+[gitlab-hosts]
+vm4
+
+[gitlab-runner-hosts]
+vm3
+
+[docker-host]
+vm2
+vm3
+vm4
+vm5
+vm6
+
+[nginx-hosts]
+vm2
+
+[postgresql-hosts]
+vm6
+
+[redis-hosts]
+vm6
+
+[docker-registry]
+vm2

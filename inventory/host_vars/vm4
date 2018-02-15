@@ -1,0 +1,6 @@
+---
+vps: vps503114.ovh.net
+ipv4: 217.182.207.96
+type: ssd3
+name: vm4
+public_ports: []

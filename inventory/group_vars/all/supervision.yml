@@ -1,0 +1,2 @@
+influxdb_port: 8086
+telegraf_statsd_port: 8125

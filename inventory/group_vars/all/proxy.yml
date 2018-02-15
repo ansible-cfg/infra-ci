@@ -1,0 +1,6 @@
+---
+proxy_env:
+  no_proxy: "true"
+  NO_PROXY: "true"
+http_proxy: ""
+no_proxy: ""
