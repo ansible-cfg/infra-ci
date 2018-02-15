@@ -1,0 +1,17 @@
+{
+    "ui": false,
+    "server": false,
+    "datacenter": "{{ datacenter }}",
+    "log_level": "DEBUG",
+    "data_dir": "/var/lib/consul",
+    "enable_syslog": true,
+    "disable_remote_exec": true,
+    "enable_script_checks": true,
+    "start_join": [{% for host in groups['consul-server'] %}"{{hostvars[host].ansible_default_ipv4.address}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+    "addresses" : {
+        "http": "0.0.0.0"
+    },
+    "telemetry": {
+        "statsd_address": "127.0.0.1:{{telegraf_statsd_port}}"
+    }
+} 

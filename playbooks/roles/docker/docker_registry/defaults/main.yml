@@ -1,0 +1,3 @@
+---
+registry_consul_name: docker-registry
+registry_port: 5000

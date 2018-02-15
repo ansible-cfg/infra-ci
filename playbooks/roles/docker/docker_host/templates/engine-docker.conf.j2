@@ -1,0 +1,6 @@
+$umask 0000
+$FileOwner root
+$FileGroup root
+$FileCreateMode 0644
+if $programname == 'dockerd-current' then /var/log/docker-engine.log
+& stop

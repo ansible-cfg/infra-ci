@@ -1,0 +1,14 @@
+[Unit]
+Description=Nomad server
+
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart= /bin/nomad agent -config=/etc/nomad.d/server/config-server.hcl
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

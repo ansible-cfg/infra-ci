@@ -1,0 +1,26 @@
+[Unit]
+Description=Docker Registry (in a container)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+#ExecStartPre=-/usr/bin/docker rm -f %n
+#ExecStartPre=/usr/bin/docker pull registry:2
+ExecStart=/usr/bin/docker run \
+	-e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/self.crt \
+	-e REGISTRY_HTTP_TLS_KEY=/certs/self.key \
+	-e REGISTRY_HTTP_ADDR=0.0.0.0:5000 \
+	-p 5000:5000 \
+	--rm \
+	--name %n \
+	-v /var/lib/docker-registry:/var/lib/registry \
+	-v /etc/docker/cert_registry:/certs \
+	registry:2
+
+TimeoutStartSec=10
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+# Increase log verbosity
+datacenter = "{{datacenter}}"
+log_level = "DEBUG"
+data_dir = "/var/lib/nomad"
+client {
+  enabled = true
+  node_class = "node"
+  servers = ["{{ groups['nomad-server']|map('extract', hostvars, ['ansible_default_ipv4','address'])|join('","') }}"]
+}
+telemetry {
+  publish_allocation_metrics = true
+  publish_node_metrics = false
+  collection_interval = "10s"
+  statsd_address = "127.0.0.1:{{telegraf_statsd_port}}"
+}

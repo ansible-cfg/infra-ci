@@ -1,0 +1,21 @@
+# /etc/sysconfig/docker
+
+# Modify these options if you want to change the way the docker daemon runs
+OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'
+if [ -z "${DOCKER_CERT_PATH}" ]; then
+    DOCKER_CERT_PATH=/etc/docker
+fi
+
+#ADD_REGISTRY='--add-registry registry.access.redhat.com'
+
+INSECURE_REGISTRY='--insecure-registry=registry.cmtt.as8677.net
+{%- for host in groups['docker-registry'] %} --insecure-registry {{hostvars[host].ansible_default_ipv4.address}}:5000{% endfor %}
+{%- if registry is defined %}
+    {%- if registry.cache is defined %} --insecure-registry {{ registry.cache }}{% endif %}
+    {%- if registry.consul is defined %} --insecure-registry {{ registry.consul }}{% endif %}
+    {%- if registry.url is defined %} --insecure-registry {{ registry.url }}{% endif %}
+{%- endif %}'
+
+# HTTP Proxy settings
+HTTP_PROXY="{{ http_proxy }}"
+NO_PROXY="{%- for host in groups['docker-registry'] %}{{hostvars[host].ansible_default_ipv4.address}}{% endfor %},{{ no_proxy }}"

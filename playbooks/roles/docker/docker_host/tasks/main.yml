@@ -1,0 +1,65 @@
+---
+- name: "yum repo for docker"
+  yum_repository:
+    name: centos-extra
+    enabled: yes
+    baseurl: http://mirror.centos.org/centos/7/extras/x86_64
+    description: CentOS Extra
+
+- name: "yum repo base centos"
+  yum_repository:
+    name: centos
+    enabled: yes
+    baseurl: http://mirror.centos.org/centos/7/os/x86_64
+    description: CentOS Base
+
+# Set docker storage before installation : the volume is created during docker installation
+- name: "Set docker storage"
+  template:
+    src: docker-storage-setup.j2
+    dest: /etc/sysconfig/docker-storage-setup
+
+- name: install docker and cron from centos repo
+  yum:
+    name: docker, cronie
+  environment: "{{ proxy_env }}"
+
+- name: gather registry facts
+  setup:
+  delegate_facts: true
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups['docker-registry'] }}"
+
+- name: /etc/sysconfig/docker from template
+  template:
+    src: sysconfig.docker.j2
+    dest: /etc/sysconfig/docker
+  notify:
+    - restart docker
+
+- name: setup /etc/rsyslog.d/engine-docker.conf
+  template:
+    src: engine-docker.conf.j2
+    dest: /etc/rsyslog.d/engine-docker.conf
+  notify:
+    - restart docker
+
+- name: ensure docker cleaner scripts exists
+  copy:
+    src: docker-cleaner.sh
+    dest: /usr/local/bin/docker-cleaner.sh
+    mode: u=rwx,g=rx,o=rx
+
+- name: ensure that docker containers are cleaned each night via crontab
+  cron:
+    name: "cleanup (remove stopped containers, dangling images & dangling images)"
+    minute: 0
+    hour: 4
+    job: "docker system prune -f &> /dev/null"
+
+- name: Ensure Docker is started and enabled at boot.
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

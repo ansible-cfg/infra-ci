@@ -1,0 +1,60 @@
+---
+# **TODO** list :
+#
+# storage location: https://docs.docker.com/registry/deploying/#storage-customization or https://docs.docker.com/registry/configuration/#storage
+# letsencrypt : https://docs.docker.com/registry/configuration/#letsencrypt https://docs.docker.com/registry/deploying/#support-for-lets-encrypt
+# garbage collection : https://docs.docker.com/registry/garbage-collection/
+# restrict access to authenticated? : https://docs.docker.com/registry/deploying/#restricting-access & https://docs.docker.com/registry/configuration/#auth
+# mirror docker hub ? : https://docs.docker.com/registry/recipes/mirror/
+# webhooks: https://docs.docker.com/registry/notifications/
+
+- name: Copy Docker registry service file for systemd
+  copy:
+    src: docker-registry.service
+    dest: /etc/systemd/system/docker-registry.service
+
+- name: Create directory for certificate
+  file:
+    path: /etc/docker/cert_registry/
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Create data directory
+  file:
+    path: /var/lib/docker-registry
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: "Copy Docker registry certifate file"
+  copy:
+    src: self.crt
+    dest: /etc/docker/cert_registry/self.crt
+
+- name: "Copy Docker registry key file"
+  copy:
+    src: self.key
+    dest: /etc/docker/cert_registry/self.key
+
+- name: Pull registry image
+  docker_image:
+    name: "{%- if registry is defined %}{%- if registry.cache is defined %}{{ registry.cache }}/{% endif %}{% endif %}registry:2"
+    state: present
+
+- name: Ensure Docker registry service is started and enabled at boot.
+  service:
+    name: docker-registry
+    enabled: yes
+    state: started
+
+- name: register service with the local consul agent
+  consul:
+    service_name: "{{registry_consul_name}}"
+    service_address: "{{hostvars[inventory_hostname].ansible_default_ipv4.address}}"
+    service_port: "{{registry_port}}"
+    script: curl --insecure "https://{{hostvars[inventory_hostname].ansible_default_ipv4.address}}:{{registry_port}}/v2/"
+    interval: 60s
+  changed_when: false

@@ -1,0 +1,7 @@
+--- 
+- name: "restart consul-server"
+  systemd:
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+    name: consul-server.service

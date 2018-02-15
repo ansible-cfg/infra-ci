@@ -1,0 +1,17 @@
+{
+    "bootstrap_expect": {{bootstrap_count}},
+    "server": true,
+    "datacenter": "{{ datacenter }}",
+    "ui": true,
+    "log_level": "DEBUG",
+    "data_dir": "/var/lib/consul",
+    "disable_remote_exec": true,
+    "enable_script_checks": true,
+    {% if datacenter != "dc_cockpit"%}
+    "start_join_wan": [{% for host in groups['cockpit'] %}"{{hostvars[host].ansible_default_ipv4.address}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+    {% endif %}
+    "enable_syslog": true,
+    "telemetry": {
+        "statsd_address": "127.0.0.1:{{telegraf_statsd_port}}"
+    }
+}

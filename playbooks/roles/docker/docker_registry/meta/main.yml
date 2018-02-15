@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: ansible_requirements/docker_python }
+  - { role: ansible_requirements/consul_python }

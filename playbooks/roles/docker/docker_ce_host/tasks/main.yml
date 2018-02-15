@@ -1,0 +1,93 @@
+---
+- name: "uninstall older versions of Docker"
+  yum:
+    name: "{{ item }}"
+    state: removed
+  environment: "{{ proxy_env }}"
+  with_items:
+    - docker
+    - docker-common
+    - docker-selinux
+    - docker-engine
+
+- name: "install required packages"
+  yum:
+    name: "{{ item }}"
+  environment: "{{ proxy_env }}"
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: "Add Docker GPG key"
+  rpm_key:
+    key: https://download.docker.com/linux/centos/gpg
+    state: present
+
+- name: "yum repo for Docker CE"
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 0644
+
+- name: "yum repo for docker"
+  yum_repository:
+    name: centos-extra
+    enabled: yes
+    baseurl: http://mirror.centos.org/centos/7/extras/x86_64
+    description: CentOS Extra
+
+- name: "yum repo base centos"
+  yum_repository:
+    name: centos
+    enabled: yes
+    baseurl: http://mirror.centos.org/centos/7/os/x86_64
+    description: CentOS Base
+
+# Set docker storage before installation : the volume is created during docker installation
+- name: "Set docker storage"
+  template:
+    src: docker-storage-setup.j2
+    dest: /etc/sysconfig/docker-storage-setup
+
+- name: install docker and cron from centos repo
+  yum:
+    name: "{{ item }}"
+  environment: "{{ proxy_env }}"
+  with_items:
+    - docker-ce
+    - cronie
+
+- name: gather registry facts
+  setup:
+  delegate_facts: true
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups['docker-registry'] }}"
+
+- name: /etc/sysconfig/docker from template
+  template:
+    src: sysconfig.docker.j2
+    dest: /etc/sysconfig/docker
+  notify:
+    - restart docker
+
+- name: setup /etc/rsyslog.d/engine-docker.conf
+  template:
+    src: engine-docker.conf.j2
+    dest: /etc/rsyslog.d/engine-docker.conf
+  notify:
+    - restart docker
+
+- name: ensure that docker containers are cleaned each night via crontab
+  cron:
+    name: "Docker cleanup"
+    minute: 0
+    hour: 4
+    job: "docker system prune -f"
+
+- name: Ensure Docker is started and enabled at boot.
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
