@@ -34,7 +34,7 @@ all:
     redis-hosts:
       hosts:
         vps502106.ovh.net:
-    docker-hosts:
+    docker-host:
       hosts:
         vps502105.ovh.net:
         vps502106.ovh.net:

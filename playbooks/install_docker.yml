@@ -1,5 +1,5 @@
 - name: Install docker
-  hosts: docker-hosts
+  hosts: docker-host
   roles:
     - role: docker_provision
 

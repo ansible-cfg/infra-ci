@@ -1,6 +1,6 @@
 all:
   children:
-    docker-hosts:
+    docker-host:
       hosts:
         vm2.dev-comutitres.fr:
         vm3.dev-comutitres.fr:
