@@ -65,6 +65,65 @@
         v4_configure: true
         v4_persist: false
         v4_host_rules: "{{v4_rules}}"
+      when: inventory_hostname != "vm1"
+
+    - name: "dnat for gitlab (vm2 -> vm4)"
+      iptables:
+        table: nat
+        chain: PREROUTING
+        protocol: tcp
+        destination_port: 10022
+        jump: DNAT
+        to_destination: "{{ privatenetwork.vm4.ipv4 }}"
+      when: inventory_hostname == "vm2"
+    - name: "snat for return trafic from gitlab"
+      iptables:
+        table: nat
+        chain: POSTROUTING
+        protocol: tcp
+        destination_port: 10022
+        jump: SNAT
+        to_source: "{{ privatenetwork.vm2.ipv4 }}"
+      when: inventory_hostname == "vm2"
+
+    - name: Open SSH for RGU personnal machine (fallback)
+      iptables:
+        chain: INPUT
+        source: 178.32.28.55
+        jump: ACCEPT
+
+    - name: Open SSH for bastion
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 22
+        jump: ACCEPT
+      when: inventory_hostname == "vm1"
+
+    - name: full access from bastion
+      iptables:
+        chain: BEFORE-DOCKER
+        source: "{{ bastion_ip }}"
+        jump: ACCEPT
+      when: inventory_hostname != "vm1"
+
+    - name: BEFORE-DOCKER
+      iptables:
+        chain: INPUT
+        action: insert
+        jump: BEFORE-DOCKER
+      when: inventory_hostname != "vm1"
+
+    - iptables:
+        chain: INPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+
+    - name: Close SSH
+      iptables:
+        chain: INPUT
+        policy: DROP
+      when: inventory_hostname != "vm1"
 
     - name: Retrieve v4 rules afterwards
       command: iptables -nL

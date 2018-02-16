@@ -3,4 +3,7 @@ vps: vps503114.ovh.net
 ipv4: 217.182.207.96
 type: ssd3
 name: vm4
-public_ports: []
+public_ports:
+  - name: git-ssh
+    port: 22
+    protocol: tcp

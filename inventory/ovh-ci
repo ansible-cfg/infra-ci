@@ -24,6 +24,13 @@ vm4
 vm5
 vm6
 
+[private_network]
+vm2
+vm3
+vm4
+vm5
+vm6
+
 [nginx-hosts]
 vm2
 
