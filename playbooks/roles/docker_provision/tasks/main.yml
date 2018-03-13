@@ -1,27 +1,2 @@
----
-- name: Install python setup tools
-  yum: name=python-setuptools
-  become: yes
-  tags: docker
-
-- name: Install Pypi
-  easy_install: name=pip
-  become: yes
-  tags: docker
-
-- name: Install docker-py
-  pip: name=docker-py
-  become: yes
-  tags: docker
-
-- name: Install Docker
-  yum: name=docker state=latest
-  become: yes
-  tags: docker
-
-- name: Ensure Docker is started and enabled at boot.
-  become: yes
-  systemd:
-    name: docker
-    state: started
-    enabled: yes
+- import_tasks: crons.yml
+- import_tasks: docker.yml
