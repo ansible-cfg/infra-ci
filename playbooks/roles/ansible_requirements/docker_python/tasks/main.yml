@@ -1,0 +1,21 @@
+---
+- name: check to see if docker-py is already installed
+  command: "pip show docker-py"
+  register: docker_py_is_installed
+  changed_when: false
+  failed_when: no
+
+- block:
+
+  - name: "pip install docker-py: six {{ pip.repo }}"
+    pip:
+      name: six
+      extra_args: "{{ pip.repo }}"
+
+  - name: "pip install docker-py {{ pip.repo }}"
+    pip:
+      name: docker-py
+      extra_args: "{{ pip.repo }}"
+
+  when: docker_py_is_installed.rc != 0
+  environment: "{{ proxy_env }}"

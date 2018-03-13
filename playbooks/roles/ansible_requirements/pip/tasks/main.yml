@@ -1,0 +1,51 @@
+---
+- name: check to see if pip is already installed
+  command: "pip -V"
+  register: pip_is_installed
+  changed_when: false
+  failed_when: no
+
+- debug: msg={{pip_is_installed}}
+- name: download get-pip.py
+  get_url:
+    url: "{{ pip.url }}/get-pip.py"
+    dest: "/tmp"
+  when: pip_is_installed.rc != 0
+  environment: "{{ proxy_env }}"
+
+- block:
+
+  - name: download pip auto-install
+    get_url:
+      url: "{{ pip.autoinstall }}"
+      dest: "/tmp"
+
+  - name: unarchive pip auto-install
+    unarchive:
+      src: "/tmp/auto-install.tgz"
+      dest: "/tmp"
+      remote_src: yes
+
+  - name: install pip with auto-install
+    command: "python /tmp/get-pip.py --no-index --find-links=/tmp/auto-install/"
+
+  - name: delete get-pip.py
+    file:
+      state: absent
+      path: "/tmp/auto-install/"
+
+  when: pip_is_installed.rc != 0 and
+        pip.autoinstall is defined
+  environment: "{{ proxy_env }}"
+
+- name: install pip
+  command: "python /tmp/get-pip.py"
+  when: pip_is_installed.rc != 0 and
+        pip.autoinstall is undefined
+  environment: "{{ proxy_env }}"
+
+- name: delete get-pip.py
+  file:
+    state: absent
+    path: /tmp/get-pip.py
+  when: pip_is_installed.rc != 0

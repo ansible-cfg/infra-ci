@@ -1,0 +1,15 @@
+---
+- name: check to see if python-consul is already installed
+  command: "pip show python-consul"
+  register: python_consul_is_installed
+  changed_when: false
+  failed_when: no
+
+- block:
+
+  - name: "pip install python-consul {{ pip.repo }}"
+    pip:
+      name: python-consul
+      extra_args: "{{ pip.repo }}"
+  when: python_consul_is_installed.rc != 0
+  environment: "{{ proxy_env }}"
