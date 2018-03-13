@@ -49,12 +49,3 @@
     name: docker-registry
     enabled: yes
     state: started
-
-- name: register service with the local consul agent
-  consul:
-    service_name: "{{registry_consul_name}}"
-    service_address: "{{hostvars[inventory_hostname].ansible_default_ipv4.address}}"
-    service_port: "{{registry_port}}"
-    script: curl --insecure "https://{{hostvars[inventory_hostname].ansible_default_ipv4.address}}:{{registry_port}}/v2/"
-    interval: 60s
-  changed_when: false
