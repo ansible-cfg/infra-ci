@@ -45,6 +45,9 @@ all:
     nexus-hosts:
       hosts:
         vm5.dev-comutitres.fr:
+    registry-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
 
     subnet:
       hosts:
