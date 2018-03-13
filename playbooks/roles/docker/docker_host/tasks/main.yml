@@ -45,18 +45,16 @@
   notify:
     - restart docker
 
-- name: ensure docker cleaner scripts exists
-  copy:
-    src: docker-cleaner.sh
-    dest: /usr/local/bin/docker-cleaner.sh
-    mode: u=rwx,g=rx,o=rx
-
-- name: ensure that docker containers are cleaned each night via crontab
+- name: ensure that docker containers are cleaned
   cron:
-    name: "cleanup (remove stopped containers, dangling images & dangling images)"
-    minute: 0
+    name: docker cleanup cron
+    user: root
+    # @ 04:00 Everyday
+    weekday: "*"
     hour: 4
+    minute: 0
     job: "docker system prune -f &> /dev/null"
+    state: present
 
 - name: Ensure Docker is started and enabled at boot.
   systemd:

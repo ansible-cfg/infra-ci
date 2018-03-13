@@ -1,9 +1,8 @@
 - cron:
     name: docker cleanup cron
     user: root
-    # @ 02:00 Everyday
     weekday: "*"
-    hour: 2
+    hour: 4
     minute: 0
-    job: "sudo docker system prune -a"
+    job: "docker system prune -a"
     state: present

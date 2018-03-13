@@ -79,12 +79,16 @@
   notify:
     - restart docker
 
-- name: ensure that docker containers are cleaned each night via crontab
+- name: ensure that docker containers are cleaned
   cron:
-    name: "Docker cleanup"
-    minute: 0
+    name: docker cleanup cron
+    user: root
+    # @ 04:00 Everyday
+    weekday: "*"
     hour: 4
-    job: "docker system prune -f"
+    minute: 0
+    job: "docker system prune -f &> /dev/null"
+    state: present
 
 - name: Ensure Docker is started and enabled at boot.
   systemd:
