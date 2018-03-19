@@ -13,14 +13,6 @@
     src: docker-registry.service
     dest: /etc/systemd/system/docker-registry.service
 
-- name: Create directory for certificate
-  file:
-    path: /etc/docker/cert_registry/
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-
 - name: Create data directory
   file:
     path: /var/lib/docker-registry
@@ -28,16 +20,6 @@
     group: root
     mode: 0755
     state: directory
-
-- name: "Copy Docker registry certifate file"
-  copy:
-    src: self.crt
-    dest: /etc/docker/cert_registry/self.crt
-
-- name: "Copy Docker registry key file"
-  copy:
-    src: self.key
-    dest: /etc/docker/cert_registry/self.key
 
 - name: Pull registry image
   docker_image:
@@ -49,3 +31,14 @@
     name: docker-registry
     enabled: yes
     state: started
+    
+- name: ensure that docker registry is cleaned
+  cron:
+    name: docker registry cleanup cron
+    user: root
+    # @ 02:00 Everyday
+    weekday: "*"
+    hour: 2
+    minute: 0
+    job: "docker exec docker-registry /bin/registry garbage-collect /etc/docker/registry/config.yml &> /dev/null"
+    state: present    

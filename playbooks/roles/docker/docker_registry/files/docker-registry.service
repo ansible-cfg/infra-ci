@@ -12,6 +12,5 @@ ExecStart=/usr/bin/docker run \
 	-v /var/lib/docker/volumes:/var/lib/registry \
 	registry:2.6.2
 
-
 [Install]
 WantedBy=multi-user.target
