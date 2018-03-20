@@ -103,7 +103,7 @@ all:
           type: ssd2
           name: vm6
           trusted_ports: ["22/tcp", "5432/tcp", "3000/tcp", "8086/tcp"]
-          public_ports: []
+          public_ports: ["3000/tcp", "8086/tcp"]
   vars:
     users:
       - hugh
