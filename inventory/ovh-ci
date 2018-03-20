@@ -42,3 +42,13 @@ vm6
 
 [docker-registry]
 vm2
+
+[telegraf-hosts]
+vm2
+vm3
+vm4
+vm5
+vm6
+
+[supervision-hosts]
+vm6

@@ -18,16 +18,3 @@ containers:
     volumes:
       - "/home/registry/images:/var/lib/registry"
       - "/home/registry/certs:/certs"
-# env:
-# REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/wildcard.{{ env }}.{{ domain_name }}.cert"
-# REGISTRY_HTTP_TLS_KEY: "/certs/wildcard.{{ env }}.{{ domain_name }}.priv"
-#  registry_frontend:
-#    image: "konradkleine/docker-registry-frontend:v2"
-#    state: started
-#    recreate: no
-#    pull: yes
-#    published_ports: 8080:80
-#    env:
-#      ENV_DOCKER_REGISTRY_HOST: "{{ docker.registry.public_url }}"
-#      ENV_DOCKER_REGISTRY_PORT: "{{ registry.host_port }}"
-#      ENV_DOCKER_REGISTRY_USE_SSL: 1

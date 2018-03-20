@@ -14,7 +14,6 @@ public_ports:
     port: 443
     protocol: tcp
 
-
 docker_storage_volume_group: ""
 physical_disk: ""
 docker_storage_data_size: ""

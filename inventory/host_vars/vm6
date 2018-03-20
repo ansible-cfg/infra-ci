@@ -3,4 +3,10 @@ vps: vps503107.ovh.net
 ipv4: 217.182.206.135
 type: ssd2
 name: vm6
-public_ports: []
+public_ports:
+  - name: 3000
+    port: 3000
+    protocol: tcp
+  - name: 8086
+    port: 8086
+    protocol: tcp

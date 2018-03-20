@@ -4,11 +4,11 @@
     - role: supervision_provision/telegraf
 
 - name: install influxdb
-  hosts: influxdb-hosts
+  hosts: supervision-hosts
   roles:
     - role: supervision_provision/influxdb
 
 - name: install grafana
-  hosts: grafana-hosts
+  hosts: supervision-hosts
   roles:
     - role: supervision_provision/grafana
