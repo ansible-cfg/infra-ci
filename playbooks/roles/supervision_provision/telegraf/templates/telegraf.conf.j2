@@ -76,7 +76,7 @@
   ## The full HTTP or UDP endpoint URL for your InfluxDB instance.
   ## Multiple urls can be specified as part of the same cluster,
   ## this means that only ONE of the urls will be written to each interval.
-  urls = ["http://{{hostvars[groups['influxdb-hosts']|first].ansible_default_ipv4.address}}:{{influxdb_port}}"]
+  urls = ["http://{{hostvars[groups['supervision-hosts']|first].ansible_default_ipv4.address}}:{{influxdb_port}}"]
   ## The target database for metrics (telegraf will create it if not exists).
   database = "telegraf" # required
 
@@ -220,7 +220,7 @@
 
   ## Multiple URLs from which to read InfluxDB-formatted JSON
   ## Default is "http://localhost:8086/debug/vars".
-  urls = ["http://{{hostvars[groups['influxdb-hosts']|first].ansible_default_ipv4.address}}:{{influxdb_port}}/debug/vars"]
+  urls = ["http://{{hostvars[groups['supervision-hosts']|first].ansible_default_ipv4.address}}:{{influxdb_port}}/debug/vars"]
 
   ## Optional SSL Config
   # ssl_ca = "/etc/telegraf/ca.pem"
