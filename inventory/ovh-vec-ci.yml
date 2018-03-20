@@ -48,6 +48,19 @@ all:
     registry-hosts:
       hosts:
         vm2.dev-comutitres.fr:
+    telegraf-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm3.dev-comutitres.fr:
+        vm4.dev-comutitres.fr:
+        vm5.dev-comutitres.fr:
+        vm6.dev-comutitres.fr:
+    influxdb-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
+    grafana-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
 
     subnet:
       hosts:
@@ -94,7 +107,6 @@ all:
           name: vm6
           trusted_ports: ["22/tcp", "5432/tcp"]
           public_ports: []
-
   vars:
     users:
       - hugh
@@ -124,3 +136,6 @@ all:
           32653061353861666539373466323430623839393664626237373336613337376539633331623863
           3431326632643764360a343930363262363163353733313738636535643235386538396136313462
           61626362623238653862613536333432356335653966303439316662343635313733
+
+    telegraf_statsd_port: 8125
+    influxdb_port: 8086

@@ -1,0 +1,14 @@
+---
+- name: start container
+  become: yes
+  docker_container:
+    name: influxdb
+    image: influxdb:alpine
+    state: started
+    ports:
+     - "8086:8086"
+     - "8083:8083"
+    env:
+        INFLUXDB_ADMIN_ENABLED: true
+        INFLUXDB_DATA_ENGINE: tsm1
+        INFLUXDB_REPORTING_DISABLED: false

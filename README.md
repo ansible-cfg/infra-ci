@@ -6,8 +6,11 @@ ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/invalidate_root.yml  --e
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/declare_users.yml  -u arnauld
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/protect_server.yml -u arnauld
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/prepare_vm.yml -u arnauld
+```
 
 # Bastion mode
+
+```
 ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/firewalld.yml -u arnauld
 ```
 
@@ -106,7 +109,6 @@ La plupart des machines necessitent docker, il faut donc lancer la recette suiva
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_docker.yml -u arnauld
 ```
 
-
 # Etape 5 : Installer la base des données PostgreSQL pour le Gitlab-CI
 
 *Attention* remplacer `arnauld` par votre propre login sudoer.
@@ -175,3 +177,12 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_nginx.yml -u arna
 ```
 
 TODO firewald pour ouvrir les ports
+
+# Etape 9 : Mise en place de la supervision
+
+Un agent telegraf sera installé sur toutes les VM de la CI.
+Le serveur InfluxDB et Grafana seront installés sur VM6.
+
+```
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_supervision.yml -u arnauld
+```

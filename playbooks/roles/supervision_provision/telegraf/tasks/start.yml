@@ -1,0 +1,11 @@
+---
+- name: start container
+  become: yes
+  docker_container:
+    name: telegraf-statsd
+    image: telegraf:alpine
+    state: started
+    ports:
+     - "8125:8125/udp"
+    volumes:
+      - /volumes/telegraf/config/telegraf.conf:/etc/telegraf/telegraf.conf:ro

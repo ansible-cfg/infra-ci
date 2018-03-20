@@ -8,8 +8,6 @@ To encrypt a value:
 ansible-vault encrypt_string password123 --vault-password-file ~/.comutitres/pass-ansible.txt
 ```
 
-
-
 # Iptables
 
 * [mikegleasonjr/ansible-role-firewall](https://github.com/mikegleasonjr/ansible-role-firewall)
