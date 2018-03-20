@@ -96,7 +96,7 @@ all:
           type: ssd2
           name: vm5
           trusted_ports: ["22/tcp", "8081/tcp", "9000/tcp"]
-          public_ports: []
+          public_ports: ["8081/tcp", "9000/tcp"]
         vm6.dev-comutitres.fr:
           vps: vps503107.ovh.net
           ipv4: 217.182.206.135

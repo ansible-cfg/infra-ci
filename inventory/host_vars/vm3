@@ -1,9 +1,12 @@
 ---
-CI_ROOT_USERNAME: root
-CI_ROOT_PASSWORD: 5iveL!fe
-
 vps: vps503106.ovh.net
 ipv4: 217.182.206.15
 type: ssd2
 name: vm3
-public_ports: []
+public_ports:
+  - name: git-ssh
+    port: 22
+    protocol: tcp
+
+CI_ROOT_USERNAME: root
+CI_ROOT_PASSWORD: 5iveL!fe

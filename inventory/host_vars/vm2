@@ -13,6 +13,12 @@ public_ports:
   - name: https
     port: 443
     protocol: tcp
+  - name: grafana
+    port: 3000
+    protocol: tcp
+  - name: git-ssh
+    port: 22
+    protocol: tcp
 
 docker_storage_volume_group: ""
 physical_disk: ""
