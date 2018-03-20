@@ -39,7 +39,6 @@
         - sonar.dev-comutitres.fr
         - nexus.dev-comutitres.fr
         - registry.dev-comutitres.fr
-        - grafana.dev-comutitres.fr
       vars:
         contact_mail: "{{ contact_mail_prompt}}"
         domain_name: "{{ item }}"
@@ -72,12 +71,6 @@
             upstream_url: "http://localhost:5000"
             ssl_certificate: "/etc/letsencrypt/live/registry.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/registry.dev-comutitres.fr/privkey.pem"
-            client_max_body_size: 1000m
-          - name: grafana
-            server_name: "grafana.dev-comutitres.fr"
-            upstream_url: "http://vm6.dev-comutitres.fr:3000"
-            ssl_certificate: "/etc/letsencrypt/live/grafana.dev-comutitres.fr/cert.pem"
-            ssl_certificate_key: "/etc/letsencrypt/live/grafana.dev-comutitres.fr/privkey.pem"
             client_max_body_size: 1000m
 
     - name: register cron
