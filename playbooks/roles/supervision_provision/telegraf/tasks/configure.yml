@@ -1,5 +1,6 @@
 ---
 - name: create config folder
+  become: yes
   file:
     path: /volumes/telegraf/config
     state: directory
