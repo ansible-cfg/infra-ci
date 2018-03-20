@@ -55,10 +55,7 @@ all:
         vm4.dev-comutitres.fr:
         vm5.dev-comutitres.fr:
         vm6.dev-comutitres.fr:
-    influxdb-hosts:
-      hosts:
-        vm6.dev-comutitres.fr:
-    grafana-hosts:
+    supervision-hosts:
       hosts:
         vm6.dev-comutitres.fr:
 
