@@ -1,5 +1,5 @@
 ---
-- name: start container
+- name: install and run container
   become: yes
   docker_container:
     name: telegraf-statsd

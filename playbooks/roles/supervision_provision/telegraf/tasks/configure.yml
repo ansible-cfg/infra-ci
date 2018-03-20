@@ -1,11 +1,11 @@
 ---
 - name: create config folder
-  become: yes
   file:
     path: /volumes/telegraf/config
     state: directory
 
-- name: deploy main configuration file
-  template:
-    src: telegraf.conf.j2
-    dest: /volumes/telegraf/config/telegraf.conf
+- name: copy config file
+  become: yes
+  copy:
+    src: files/telegraf.conf
+    dest: /volumes/telegraf/config
