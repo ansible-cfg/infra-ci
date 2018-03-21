@@ -186,3 +186,12 @@ Le serveur InfluxDB et Grafana seront installés sur VM6.
 ```
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_supervision.yml -u arnauld
 ```
+
+Un client en ligne de commande est disponible pour explorer les données dans InfluxDB.
+Pour démarrer, il faut exécuter la commande qui suit à l'intérieur du conteneur docker.
+
+```
+influx
+```
+
+La [documentation officielle](https://docs.influxdata.com/influxdb/v1.2/query_language/database_management/) est disponible pour avoir plus de détails sur le format des requêtes InfluxDB.

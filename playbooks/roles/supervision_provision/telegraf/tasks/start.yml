@@ -2,6 +2,7 @@
 - name: install and run container
   become: yes
   docker_container:
+    hostname: "{{ name }}"
     name: telegraf-statsd
     image: telegraf:alpine
     state: started

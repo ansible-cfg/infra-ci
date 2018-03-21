@@ -78,7 +78,6 @@
             upstream_url: "http://vm6.dev-comutitres.fr:3000"
             ssl_certificate: "/etc/letsencrypt/live/grafana.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/grafana.dev-comutitres.fr/privkey.pem"
-            client_max_body_size: 1000m
     - name: register cron
       include_role:
         name: lets_encrypt

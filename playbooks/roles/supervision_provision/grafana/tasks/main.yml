@@ -8,6 +8,4 @@
     ports:
      - "3000:3000"
     env:
-        INFLUXDB_ADMIN_ENABLED: true
-        INFLUXDB_DATA_ENGINE: tsm1
-        INFLUXDB_REPORTING_DISABLED: false
+     GF_INSTALL_PLUGINS='grafana-clock-panel,briangann-gauge-panel,natel-plotly-panel,grafana-simple-json-datasource,grafana-piechart-panel'

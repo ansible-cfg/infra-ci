@@ -18,6 +18,7 @@ vm4
 vm3
 
 [docker-host]
+vm1
 vm2
 vm3
 vm4
@@ -44,6 +45,7 @@ vm6
 vm2
 
 [telegraf-hosts]
+vm1
 vm2
 vm3
 vm4

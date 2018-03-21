@@ -20,7 +20,7 @@
   become: yes
   docker_container:
     name: gitlab-redis
-    image: redis
+    image: redis:alpine
     state: started
     ports:
      - "6379:6379"
