@@ -3,10 +3,10 @@ require 'net/http'
 require 'uri'
 require 'open3'
 require 'optparse'
+require "resolv"
 
 DOMAIN=".dev-comutitres.fr"
 ENVS=["dev", "vm"]
-VMS=[ "dev1", "dev2", "dev3", "dev4", "dev5", "dev6"]
 
 #####################################################################
 #
@@ -55,7 +55,15 @@ hosts = vms.map { |elem| "#{environment}#{elem}#{DOMAIN}" }
 printf "About to reset #{hosts}\n"
 
 hosts.each do |host|
+  address = Resolv.getaddress(host)
+  puts address
+
   cmd = "ssh-keygen -R #{host}"
+  logs, status = Open3.capture2e(cmd)
+  printf "#{host}: ssh-keygen OK\n" if status.success?
+  printf "#{host}: ssh-keygen KO\n" unless status.success?
+
+  cmd = "ssh-keygen -R #{address}"
   logs, status = Open3.capture2e(cmd)
   printf "#{host}: ssh-keygen OK\n" if status.success?
   printf "#{host}: ssh-keygen KO\n" unless status.success?
