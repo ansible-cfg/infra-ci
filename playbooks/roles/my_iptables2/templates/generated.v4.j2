@@ -23,10 +23,13 @@ iptables -F DOCKER-USER
 #iptables -t mangle -X
 
 # --- Accept loopback
-iptables -I INPUT 1 -i lo -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
 
 # --- Keep ssh open
+# iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+{% if (inventory_hostname == "vm1") %}
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+{% endif %}
 
 # permettre à une connexion déjà ouverte de recevoir du trafic :
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
@@ -56,7 +59,10 @@ iptables -A BEFORE-DOCKER -p {{ port.protocol }} --dport {{ port.port }} -j ACCE
 #
 {% for network, host in privatenetwork.iteritems() %}
 iptables -A DOCKER-USER -s {{   host.ipv4 }} -d 172.16.0.0/12 -i eth0 -o docker0 -j ACCEPT
+{% endfor %}
+
 # private network: allow access from any machine within the subnet
+{% for network, host in privatenetwork.iteritems() %}
 iptables -A BEFORE-DOCKER -s {{ host.ipv4 }} -p tcp -j ACCEPT
 {% endfor %}
 

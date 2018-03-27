@@ -1,3 +1,4 @@
 ---
 v4_configure: true
+v4_apply: true
 v4_persist: true

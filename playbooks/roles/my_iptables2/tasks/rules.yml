@@ -16,4 +16,6 @@
     v4_script_load_result.rc != 0 or
     'unknown option' in v4_script_load_result.stderr or
     'Table does not exist' in v4_script_load_result.stderr
-  when: v4_script|changed
+  when:
+    - v4_apply
+    - v4_script|changed

@@ -28,24 +28,9 @@
     - include_role:
         name: my_iptables2
       vars:
+        v4_apply: true
         v4_configure: true
-        v4_persist: false
-        v4_host_rules: "{{v4_rules}}"
-      when: inventory_hostname != "vm1"
-
-    - name: Open SSH for bastion
-      iptables:
-        chain: INPUT
-        protocol: tcp
-        destination_port: 22
-        jump: ACCEPT
-      when: inventory_hostname == "vm1"
-
-    - name: Close SSH
-      iptables:
-        chain: INPUT
-        policy: DROP
-      when: inventory_hostname != "vm1"
+        v4_persist: true
 
     - name: Retrieve v4 rules afterwards
       command: iptables -nL
