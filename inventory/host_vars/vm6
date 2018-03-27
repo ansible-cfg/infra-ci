@@ -4,6 +4,12 @@ ipv4: 217.182.206.135
 type: ssd2
 name: vm6
 public_ports:
-  - name: git-ssh
-    port: 22
+  - name: ?1?
+    port: 5432
+    protocol: tcp
+  - name: ?2?
+    port: 3000
+    protocol: tcp
+  - name: ?3?
+    port: 8086
     protocol: tcp

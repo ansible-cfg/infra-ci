@@ -1,1 +1,0 @@
-Simplified version of [mikegleasonjr/ansible-role-firewall](https://github.com/mikegleasonjr/ansible-role-firewall/tree/master)

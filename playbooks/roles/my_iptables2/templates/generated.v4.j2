@@ -1,14 +1,19 @@
 #!/bin/sh
 # {{ ansible_managed }}
-{% set merged = v4_default_rules.copy() %}
-{% set _ = merged.update(v4_group_rules) %}
-{% set _ = merged.update(v4_host_rules) %}
 
-# flush rules & delete user-defined chains
+# ---- RENITIALISER LES IPTABLES
+
+iptables -F
+# iptables -t nat -F
+
+# create user-defined chains
 iptables -N BEFORE-DOCKER
+iptables -N DOCKER-USER
 
+# flush user-defined chains
 iptables -F BEFORE-DOCKER
 iptables -F DOCKER-USER
+
 #iptables -X
 #iptables -t raw -F
 #iptables -t raw -X
@@ -17,19 +22,56 @@ iptables -F DOCKER-USER
 #iptables -t mangle -F
 #iptables -t mangle -X
 
+# --- Accept loopback
+iptables -I INPUT 1 -i lo -j ACCEPT
+
+# --- Keep ssh open
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# permettre à une connexion déjà ouverte de recevoir du trafic :
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# TODO: templating for port forward??
+{% if (inventory_hostname == "vm2") %}
+# gitlab
+iptables -t nat -I PREROUTING  1 -p tcp --dport 10022 -j DNAT --to {{ privatenetwork.vm4.ipv4 }}:10022
+iptables -t nat -I POSTROUTING 1 -p tcp --dport 10022 -j SNAT --to {{ privatenetwork.vm2.ipv4 }}
+{% endif %}
 
 {% for port in public_ports %}
-iptables -A DOCKER-USER -s 0.0.0.0/0 -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
+iptables -A DOCKER-USER   -s 0.0.0.0/0 -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
 iptables -A BEFORE-DOCKER -s 0.0.0.0/0 -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
+iptables -A BEFORE-DOCKER -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
 {% endfor %}
 
+# WHY: 172.16.0.0/12 ??
+#
+# According to standards set forth in Internet Engineering Task Force (IETF) document RFC-1918,
+# the following IPv4 address ranges have been reserved by the IANA for private internets,
+# and are not publicly routable on the global internet:
+#
+# 10.0.0.0/8 IP addresses: 10.0.0.0 -- 10.255.255.255
+# 172.16.0.0/12 IP addresses: 172.16.0.0 -- 172.31.255.255
+# 192.168.0.0/16 IP addresses: 192.168.0.0 – 192.168.255.255
+#
 {% for network, host in privatenetwork.iteritems() %}
-iptables -A DOCKER-USER -s {{ host.ipv4 }} -d 172.16.0.0/12 -i eth0 -o docker0 -j ACCEPT
-iptables -A BEFORE-DOCKER -s {{ host.ipv4 }} -d 0.0.0.0/0 -j ACCEPT
+iptables -A DOCKER-USER -s {{   host.ipv4 }} -d 172.16.0.0/12 -i eth0 -o docker0 -j ACCEPT
+# private network: allow access from any machine within the subnet
+iptables -A BEFORE-DOCKER -s {{ host.ipv4 }} -p tcp -j ACCEPT
 {% endfor %}
 
 iptables -A DOCKER-USER -i eth0 -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-
 iptables -A DOCKER-USER -s 172.16.0.0/12 -d 0.0.0.0/0 -j ACCEPT
 
-iptables -A DOCKER-USER -s 0.0.0.0/0 -j DROP
+# Append custom chain to INPUT and FORWARD
+iptables -t filter -A INPUT -j BEFORE-DOCKER
+iptables -t filter -A INPUT -j DOCKER-USER
+iptables -t filter -A FORWARD -j BEFORE-DOCKER
+
+# Default policy: DROP
+#
+# Keep it at the end:
+# > ATTENTION, si vous avez modifié la règle par défaut pour le blocage
+# > (iptables -P INPUT DROP voir plus bas) et que vous tapez `iptables -F`
+# > vous bloquerez tous les accès … y compris celui en cours...
+iptables -P INPUT DROP

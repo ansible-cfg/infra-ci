@@ -1,5 +1,0 @@
----
-- include_tasks: rules.yml
-
-- include_tasks: persist.yml
-  when: v4_persist

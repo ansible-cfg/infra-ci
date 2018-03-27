@@ -5,7 +5,10 @@ type: ssd2
 name: vm1
 ipv4: 51.254.213.188
 vps: vps494404.ovh.net
-public_ports: []
+public_ports:
+  - name: ssh
+    port: 22
+    protocol: tcp
 
 registry_image_version: 2.6
 containers:

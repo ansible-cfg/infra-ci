@@ -1,22 +1,5 @@
 ---
 - hosts: all
-  vars:
-    v4_default_rules:
-      001 default policies:
-        - -P INPUT ACCEPT
-        - -P OUTPUT ACCEPT
-        - -P FORWARD DROP
-      002 allow loopback:
-        - -A INPUT -i lo -j ACCEPT
-      003 allow ping replies:
-        - -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
-        - -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
-      100 allow established related:
-        - -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-      200 allow ssh limiting brute force: []
-      999 drop everything:
-        - -P INPUT DROP
-
   tasks:
     - name: disable firewalld
       systemd:
@@ -24,6 +7,7 @@
         enabled: no
         state: stopped
       failed_when: false
+
     - name: Retrieve v4 rules
       command: iptables -nL
       changed_when: false
@@ -33,31 +17,13 @@
       debug:
         msg: "{{ v4_rules.stdout_lines }}"
 
-#    - name: Debug host_vars
-#      debug:
-#        var: hostvars
-
-    - name: Allow SSH?
-      set_fact:
-        ssh_rules: ["-A INPUT -p tcp --dport ssh -j ACCEPT"]
-        v4_rules: |
-                    {{ v4_rules
-                      | combine({'200 allow ssh limiting brute force': '{{ ssh_rules }}' })
-                      }}
-      when: public_ssh|default(false)
-
-    - name: Allow HTTPS?
-      set_fact:
-        https_rules: ["-A INPUT -p tcp --dport https -j ACCEPT"]
-        v4_rules: |
-                    {{ v4_rules
-                      | combine({'300 allow https': '{{ https_rules }}' })
-                      }}
-      when: public_https|default(false)
-
-    - name: Debug v4 rules
-      debug:
-        var: v4_rules
+    - name: "enable ip forwarding"
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
 
     - include_role:
         name: my_iptables2
@@ -67,31 +33,6 @@
         v4_host_rules: "{{v4_rules}}"
       when: inventory_hostname != "vm1"
 
-    - name: "dnat for gitlab (vm2 -> vm4)"
-      iptables:
-        table: nat
-        chain: PREROUTING
-        protocol: tcp
-        destination_port: 10022
-        jump: DNAT
-        to_destination: "{{ privatenetwork.vm4.ipv4 }}"
-      when: inventory_hostname == "vm2"
-    - name: "snat for return trafic from gitlab"
-      iptables:
-        table: nat
-        chain: POSTROUTING
-        protocol: tcp
-        destination_port: 10022
-        jump: SNAT
-        to_source: "{{ privatenetwork.vm2.ipv4 }}"
-      when: inventory_hostname == "vm2"
-
-    - name: Open SSH for RGU personnal machine (fallback)
-      iptables:
-        chain: INPUT
-        source: 178.32.28.55
-        jump: ACCEPT
-
     - name: Open SSH for bastion
       iptables:
         chain: INPUT
@@ -99,25 +40,6 @@
         destination_port: 22
         jump: ACCEPT
       when: inventory_hostname == "vm1"
-
-    - name: full access from bastion
-      iptables:
-        chain: BEFORE-DOCKER
-        source: "{{ bastion_ip }}"
-        jump: ACCEPT
-      when: inventory_hostname != "vm1"
-
-    - name: BEFORE-DOCKER
-      iptables:
-        chain: INPUT
-        action: insert
-        jump: BEFORE-DOCKER
-      when: inventory_hostname != "vm1"
-
-    - iptables:
-        chain: INPUT
-        ctstate: ESTABLISHED,RELATED
-        jump: ACCEPT
 
     - name: Close SSH
       iptables:
@@ -133,4 +55,3 @@
     - name: Debug v4 rules afterwards
       debug:
         msg: "{{ v4_rules_afterwards.stdout_lines }}"
-

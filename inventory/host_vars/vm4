@@ -4,6 +4,9 @@ ipv4: 217.182.207.96
 type: ssd3
 name: vm4
 public_ports:
-  - name: git-ssh
-    port: 22
+  - name: gitlab-ssh
+    port: 10022
+    protocol: tcp
+  - name: gitlab-https
+    port: 10433
     protocol: tcp

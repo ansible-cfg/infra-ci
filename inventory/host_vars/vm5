@@ -10,6 +10,3 @@ public_ports:
   - name: sonar
     port: 9000
     protocol: tcp
-  - name: git-ssh
-    port: 22
-    protocol: tcp
