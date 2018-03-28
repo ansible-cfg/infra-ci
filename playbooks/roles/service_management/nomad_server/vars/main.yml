@@ -1,1 +1,0 @@
-bootstrap_count: "{{ groups['nomad-server'] | length }}"

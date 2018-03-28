@@ -1,5 +1,5 @@
 - name: Install Gitlab CI Multi Runner
-  hosts: gitlab-runner-hosts
+  hosts: runner-hosts
   vars_prompt:
     - name: "CI_RUNNER_REGISTRATION_TOKEN"
       prompt: "Gitlab Registration Token"

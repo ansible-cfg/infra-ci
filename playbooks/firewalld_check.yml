@@ -1,11 +1,8 @@
 ---
 - hosts: subnet
-
   vars:
     subnet_zone: "trusted"
-
   tasks:
-    
     - name: Retrieve firewalld active zones
       block:
         - command: firewall-cmd --get-active-zones
@@ -20,7 +17,6 @@
         - debug:
             var: firewalld_active_zones_list
 
-
     - name: Retrieve firewalld public zone settings
       block:
         - command: firewall-cmd --zone=public --list-all
@@ -28,7 +24,6 @@
           register: firewalld_public_zone
         - debug:
             var: firewalld_public_zone
-
 
     - name: Retrieve firewalld {{ subnet_zone }} zone settings
       block:
@@ -38,7 +33,6 @@
         - debug:
             var: firewalld_subnet_zone
 
-  
     - name: Check that only {{ subnet_zone }} and 'public' are actives
       assert:
         that: 
@@ -73,7 +67,6 @@
         that: 
           - "undeclared_public_ports|length == 0"
 
-
     - name: Collected activated services
       block:
         - set_fact:
@@ -90,4 +83,3 @@
       assert:
         that: 
             - "undeclared_public_services|length == 0"
-

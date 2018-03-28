@@ -1,4 +1,5 @@
-- name: Install Docker Registry
+- name: install docker registry
+- name: install docker registry
   hosts: registry-hosts
   roles:
     - role: docker/docker_registry

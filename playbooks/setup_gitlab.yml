@@ -1,4 +1,4 @@
-- name: Install gitlab
+- name: install gitlab
   hosts: gitlab-hosts
   tasks:
     - include_role:

@@ -1,5 +1,5 @@
 ---
-- hosts: nexus-hosts
+- hosts: sonar-hosts
   vars_prompt:
     - name: "contact_mail_prompt"
       prompt: "Email contact to lets encrypt"
@@ -11,7 +11,6 @@
     NEXUS_PORT: 8081
 
   tasks:
-
     - include_role:
         name: nexus_provision
       vars:

@@ -1,8 +1,6 @@
 ---
 - hosts: subnet
-
   tasks:
-
   - name: Change hostname
     hostname:
       name: "{{ name }}"

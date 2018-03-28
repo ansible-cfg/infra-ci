@@ -1,3 +1,4 @@
+---
 - name: Lets encypt the plateform
   hosts: vm4.dev-comutitres.fr
   vars_prompt:

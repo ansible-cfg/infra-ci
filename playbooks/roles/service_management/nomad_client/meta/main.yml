@@ -1,3 +1,0 @@
----
-dependencies:
-  - { role: service_management/nomad_deploy }

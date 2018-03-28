@@ -1,4 +1,5 @@
-- name: install telegraf-statsd
+---
+- name: install telegraf/statsd
   hosts: telegraf-hosts
   roles:
     - role: supervision_provision/telegraf

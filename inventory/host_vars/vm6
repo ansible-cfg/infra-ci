@@ -4,12 +4,6 @@ ipv4: 217.182.206.135
 type: ssd2
 name: vm6
 public_ports:
-  - name: ?1?
-    port: 5432
-    protocol: tcp
-  - name: ?2?
+  - name: grafana
     port: 3000
-    protocol: tcp
-  - name: ?3?
-    port: 8086
     protocol: tcp

@@ -11,13 +11,16 @@ vm1
 [nexus-hosts]
 vm5
 
+[sonar-hosts]
+vm5
+
 [gitlab-hosts]
 vm4
 
-[gitlab-runner-hosts]
+[runner-hosts]
 vm3
 
-[docker-host]
+[docker-hosts]
 vm1
 vm2
 vm3

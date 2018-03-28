@@ -11,9 +11,9 @@
 - cron:
     name: cron cold backup
     user: robocop
-    # @ 02:00 on Saturday
+    # @ 10:00 on Saturday
     weekday: "6"
-    hour: 2
+    hour: 10
     minute: 0
     job: "/bin/sh /backup/scripts/cold-backup.sh > /home/robocop/cold-backup.log"
     state: present
@@ -21,6 +21,7 @@
 - name: cron copy renewed cert
   become: yes
   cron:
+    name: letsencrypt renewed cert  
     user: root
     minute: 5
     hour: 0,12
@@ -30,6 +31,7 @@
 - name: cron copy renewed key
   become: yes
   cron:
+    name: letsencrypt renewed key  
     user: root
     minute: 5
     hour: 0,12

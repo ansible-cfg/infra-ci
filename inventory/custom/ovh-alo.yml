@@ -42,7 +42,6 @@ all:
       hosts:
         vps502106.ovh.net:
 
-
   vars:
     users:
       - arnauld

@@ -1,4 +1,5 @@
-- name: Install nginx
+---
+- name: install nginx
   hosts: nginx-hosts
   roles:
     - role: nginx_provision

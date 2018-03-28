@@ -1,4 +1,5 @@
-- name: install PostgreSQL
+---
+- name: install gitlab postgre
   hosts: postgresql-hosts
   tasks:
     - include_role:

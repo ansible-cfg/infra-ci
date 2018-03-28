@@ -1,6 +1,5 @@
 ---
 - hosts: subnet
-
   tasks:
     - include_role:
         name: vps_strict_ssh

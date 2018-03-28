@@ -1,7 +1,0 @@
---- 
-- name: "restart consul-client"
-  systemd:
-    state: restarted
-    enabled: yes
-    daemon_reload: yes
-    name: consul-client.service

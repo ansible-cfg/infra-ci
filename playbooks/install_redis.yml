@@ -1,4 +1,5 @@
-- name: install Redis
+---
+- name: install gitlab redis
   hosts: redis-hosts
   roles:
     - role: redis_provision
