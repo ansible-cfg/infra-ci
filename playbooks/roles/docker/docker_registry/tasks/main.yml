@@ -1,13 +1,4 @@
 ---
-# **TODO** list :
-#
-# storage location: https://docs.docker.com/registry/deploying/#storage-customization or https://docs.docker.com/registry/configuration/#storage
-# letsencrypt : https://docs.docker.com/registry/configuration/#letsencrypt https://docs.docker.com/registry/deploying/#support-for-lets-encrypt
-# garbage collection : https://docs.docker.com/registry/garbage-collection/
-# restrict access to authenticated? : https://docs.docker.com/registry/deploying/#restricting-access & https://docs.docker.com/registry/configuration/#auth
-# mirror docker hub ? : https://docs.docker.com/registry/recipes/mirror/
-# webhooks: https://docs.docker.com/registry/notifications/
-
 - name: Copy Docker registry service file for systemd
   copy:
     src: docker-registry.service
@@ -32,7 +23,7 @@
     enabled: yes
     state: started
     
-- name: ensure that docker registry is cleaned
+- name: Ensure that docker registry is cleaned
   cron:
     name: docker registry cleanup cron
     user: root
@@ -43,7 +34,7 @@
     job: "docker exec docker-registry /bin/registry garbage-collect /etc/docker/registry/config.yml &> /dev/null"
     state: present
 
-- name: symlink on registry volume
+- name: Symlink on registry volume
   become: yes
   file:
     src: "/var/lib/docker/volumes"

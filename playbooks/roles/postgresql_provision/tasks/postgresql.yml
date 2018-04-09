@@ -17,7 +17,7 @@
   command: postgresql-setup initdb
   when: conf_file.stat.exists  is defined and conf_file.stat.exists == False
 
-- name: gather subnet ip address
+- name: Gather subnet ip address
   setup:
   delegate_facts: true
   delegate_to: "{{ item }}"

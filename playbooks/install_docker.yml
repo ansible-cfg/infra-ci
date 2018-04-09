@@ -1,4 +1,4 @@
-- name: install docker
+- name: Install docker
   hosts: docker-hosts
   roles:
     - role: docker_provision

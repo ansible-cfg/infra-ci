@@ -1,4 +1,4 @@
-- name: initialize backup dirs
+- name: Initialize backup dirs
   hosts: backup-hosts
   tasks:
     - include_role:

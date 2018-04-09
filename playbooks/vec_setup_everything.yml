@@ -1,7 +1,8 @@
-#- import_playbook: setup_vm.yml
-#- import_playbook: setup_docker.yml
-#- import_playbook: install_postgres.yml
-#- import_playbook: install_redis.yml
-#- import_playbook: setup_gitlab.yml #yes
-#- import_playbook: install_nginx.yml
-- import_playbook: setup_supervision.yml
+#- import_playbook: setup_docker.yml #? ou install_docker ?
+- import_playbook: install_postgres.yml #to test
+
+#- import_playbook: init_backup.yml #done
+#- import_playbook: install_nginx.yml #done
+#- import_playbook: install_redis.yml #done
+#- import_playbook: install_gitlab.yml #done
+#- import_playbook: install_supervision.yml #done

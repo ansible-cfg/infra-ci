@@ -1,4 +1,4 @@
-- name: Install Gitlab Runner
+- name: Install gitlab runner
   hosts: runner-hosts
   vars_prompt:
     - name: "CI_ROOT_USERNAME"

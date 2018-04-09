@@ -10,9 +10,7 @@ ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/prepare_vm.yml -u arnaul
 
 # Bastion mode
 
-```
-ansible-playbook -i inventory/ovh-vec-dev.yml playbooks/firewalld.yml -u arnauld
-```
+TODO
 
 # Sommaire
 

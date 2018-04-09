@@ -3,7 +3,6 @@ vps: vps503106.ovh.net
 ipv4: 217.182.206.15
 type: ssd2
 name: vm3
-public_ports: []
 
 CI_ROOT_USERNAME: root
 CI_ROOT_PASSWORD: 5iveL!fe

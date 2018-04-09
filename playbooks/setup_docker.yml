@@ -1,5 +1,5 @@
 ---
-- name: deploy docker hosts
+- name: Deploy docker hosts
   hosts: docker-hosts
   gather_facts: true
   roles:
@@ -7,7 +7,7 @@
       tags: docker_host
       when: use_docker_ce == false
 
-- name: deploy docker CE hosts
+- name: Deploy docker CE hosts
   hosts: docker-hosts
   gather_facts: true
   roles:
@@ -15,7 +15,7 @@
       tags: docker_host
       when: use_docker_ce == true
 
-- name: deploy docker registry
+- name: Deploy docker registry
   hosts: docker-registry
   gather_facts: true
   roles:

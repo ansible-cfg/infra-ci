@@ -1,5 +1,0 @@
----
-- import_playbook: invalidate_root.yml
-- import_playbook: prepare_vm.yml
-- import_playbook: protect_server.yml
-- import_playbook: init_backup.yml

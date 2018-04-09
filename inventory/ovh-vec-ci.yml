@@ -1,0 +1,134 @@
+all:
+  children:
+    docker-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm3.dev-comutitres.fr:
+        vm4.dev-comutitres.fr:
+        vm5.dev-comutitres.fr:
+        vm6.dev-comutitres.fr:
+    gitlab-hosts:
+      hosts:
+        vm4.dev-comutitres.fr:
+            CI_GITLAB_HOST: gitlab.dev-comutitres.fr
+            CI_GITLAB_SSH_PORT: 10022
+            CI_REDIS_HOST: vm6.dev-comutitres.fr
+            CI_REDIS_PORT: 6379
+            CI_DB_ADAPTER: postgresql
+            CI_DB_HOST: vm6.dev-comutitres.fr
+            CI_DB_PORT: 5432
+            CI_DOMAIN_NAME: vm4.dev-comutitres.fr
+            CI_GITLAB_SECRETS_DB_KEY_BASE: sie_phae1Mavomahthahxafivueraihu
+            CI_GITLAB_SECRETS_SECRET_KEY_BASE: ru9Iesh!oopaedayeaghofuingaethungimaeyohyohmukewediewaeshovohtej
+            CI_GITLAB_SECRETS_OTP_KEY_BASE: aeVi7ja.maquooliacolietevaloowahfohkaeviesaeshahfohfueneraseeyun
+            # The number of unicorn workers to start. The recommandation is to use :  CPU cores + 1
+            CI_UNICORN_WORKERS: 3
+            # The number of concurrent sidekiq jobs to run.
+            CI_SIDEKIQ_CONCURRENCY: 5
+    runner-hosts:
+      hosts:
+        vm3.dev-comutitres.fr:
+            CI_SERVER_URL: https://gitlab.dev-comutitres.fr
+    nginx-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+    postgresql-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
+    redis-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
+    backup-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm1.dev-comutitres.fr:
+    nexus-hosts:
+      hosts:
+        vm5.dev-comutitres.fr:
+    registry-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+    telegraf-hosts:
+      hosts:
+        vm2.dev-comutitres.fr:
+        vm3.dev-comutitres.fr:
+        vm4.dev-comutitres.fr:
+        vm5.dev-comutitres.fr:
+        vm6.dev-comutitres.fr:
+    supervision-hosts:
+      hosts:
+        vm6.dev-comutitres.fr:
+
+    subnet:
+      hosts:
+        vm1.dev-comutitres.fr:
+          vps: vps494404.ovh.net
+          ipv4: 51.254.213.188
+          bastion: true
+          type: ssd2
+          name: vm1
+          trusted_ports: []
+          public_ports: ["22/tcp"]
+        vm2.dev-comutitres.fr:
+          vps: vps503108.ovh.net
+          ipv4: 217.182.206.140
+          type: ssd1
+          name: vm2
+          trusted_ports: ["22/tcp"]
+          public_ports: ["443/tcp", "80/tcp", "5000/tcp"]
+        vm3.dev-comutitres.fr:
+          vps: vps503106.ovh.net
+          ipv4: 217.182.206.15
+          type: ssd2
+          name: vm3
+          trusted_ports: ["22/tcp"]
+          public_ports: []
+        vm4.dev-comutitres.fr:
+          vps: vps503114.ovh.net
+          ipv4: 217.182.207.96
+          type: ssd3
+          name: vm4
+          trusted_ports: ["22/tcp", "10443/tcp"]
+          public_ports: ["10022/tcp", "80/tcp"]
+        vm5.dev-comutitres.fr:
+          vps: vps503105.ovh.net
+          ipv4: 217.182.205.222
+          type: ssd2
+          name: vm5
+          trusted_ports: ["22/tcp", "8081/tcp", "9000/tcp"]
+          public_ports: ["8081/tcp", "9000/tcp"]
+        vm6.dev-comutitres.fr:
+          vps: vps503107.ovh.net
+          ipv4: 217.182.206.135
+          type: ssd2
+          name: vm6
+          trusted_ports: ["22/tcp", "5432/tcp", "3000/tcp", "8086/tcp"]
+          public_ports: ["3000/tcp", "8086/tcp"]
+  vars:
+    users:
+      - hugh
+      - sylvain
+      - arnauld
+      - fabien
+      - amin
+
+    CI_DB_NAME: gitlabhq
+    CI_DB_USER: gitlab
+    CI_DB_PASSWORD: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30363838323165336331613861353033663934343263383139303063376565663135643664353132
+          6239373433303430653065383037336133363363393533630a326561663864303436343230656666
+          39633731393662393062363266326162326364353161356232396639336466383963616531656233
+          3034346439646334660a656262363239376537323634623963373330666532323832326337643964
+          3436
+
+    SONAR_DB_HOST: vm6.dev-comutitres.fr:5432
+    SONAR_DB_NAME: sonar
+    SONAR_DB_USERNAME: sonar
+    SONAR_DB_PASSWORD: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66373233306266396563336538306430326235633532656466306266323535366263633462383836
+          6234396661316537643037653665313038373139633761350a383461313633653334343761366537
+          32653061353861666539373466323430623839393664626237373336613337376539633331623863
+          3431326632643764360a343930363262363163353733313738636535643235386538396136313462
+          61626362623238653862613536333432356335653966303439316662343635313733

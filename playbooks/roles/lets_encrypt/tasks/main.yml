@@ -1,2 +1,1 @@
-- import_tasks: firewalld.yml
 - import_tasks: certbot.yml

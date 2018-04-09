@@ -1,13 +1,10 @@
-# Lets encrypt
+# Let's encrypt
+Nous utilisons [Let's encrypt](https://letsencrypt.org/) comme autorité de certification.
+Pour utiliser lets encrypt, il faut utiliser un client, nous utilisons [Certbot](https://certbot.eff.org/)
 
-Nous utilisons Lets encrypt (https://letsencrypt.org/) comme autorité de certification.
-
-Pour utiliser lets encrypt, il faut utiliser un client, nous utilisons Certbot (https://certbot.eff.org/)
-
-tout est très bien documenté sur les différents sites.
+Tout est très bien documenté sur les différents sites.
 
 ## Installation
-
 Suivre l'exemple de la recette [letsencrypt_VM4.yml].
  * Installation du Certbot
  * Lancement de Certbot
@@ -16,11 +13,13 @@ Suivre l'exemple de la recette [letsencrypt_VM4.yml].
 
 # Fonctionnement
 
- certbot doit contacter letsencrypt pour demander un certificat pour un domaine donné.
- Pour vérifier le bienfondé de la requête, letsencrypt va "challenger" la requête en appellant une url précise sur le nom de domaine pour lequel on a demandé le certificat.
+Certbot doit contacter letsencrypt pour demander un certificat pour un domaine donné.
+
+Pour vérifier le bienfondé de la requête, letsencrypt va "challenger" la requête en appellant une url précise sur le nom de domaine pour lequel on a demandé le certificat.
+
 Une fois la requête approuvée, le certificat est reçu dans /etc/letsencrypt/live.
 
-demander un certificat:
+Demander un certificat:
 ```
 certbot certonly
 ```
@@ -35,4 +34,4 @@ certbot renew
 --cert-path,--fullchain-path,--key-path,ect possibilité de donner le path des certificats (pratique pour les renouveller dans un container docker directement)
 
 # Renouvellement
-Des crons ont été ajouté dans la crontab du root sur les machines concernées.
+Des crons ont été ajoutés dans la crontab du root des machines concernées.

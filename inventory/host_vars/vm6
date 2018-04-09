@@ -3,7 +3,3 @@ vps: vps503107.ovh.net
 ipv4: 217.182.206.135
 type: ssd2
 name: vm6
-public_ports:
-  - name: grafana
-    port: 3000
-    protocol: tcp

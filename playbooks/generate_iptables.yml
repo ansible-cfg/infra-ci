@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - name: disable firewalld
+    - name: Disable firewalld
       systemd:
         name: firewalld
         enabled: no
@@ -17,7 +17,7 @@
       debug:
         msg: "{{ v4_rules.stdout_lines }}"
 
-    - name: "enable ip forwarding"
+    - name: Enable ip forwarding
       sysctl:
         name: net.ipv4.ip_forward
         value: 1

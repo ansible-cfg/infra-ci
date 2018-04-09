@@ -3,10 +3,3 @@ vps: vps503105.ovh.net
 ipv4: 217.182.205.222
 type: ssd2
 name: vm5
-public_ports:
-  - name: nexus
-    port: 8081
-    protocol: tcp
-  - name: sonar
-    port: 9000
-    protocol: tcp

@@ -1,18 +1,5 @@
 ---
-#- name: register runner
-#  command: gitlab-runner register >
-#    --non-interactive
-#    --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
-#    --url '{{ ci_server_url }}'
-#    --registration-token '{{ ci_runner_registration_token }}'
-#    --description 'java-maven-docker-runner'
-#    --tag-list 'java maven'
-#    --docker-privileged true
-#    --locked=false
-#    --executor docker
-#    --docker-image 'docker:latest'
-
-- name: register runner
+- name: register docker runner to build docker images
   command: gitlab-runner register >
     --non-interactive
     --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
@@ -20,7 +7,7 @@
     --registration-token '{{ ci_runner_registration_token }}'
     --description 'docker-runner'
     --tag-list 'docker'
-    --docker-privileged true
+    --docker-privileged=true
     --locked=false
     --executor docker
     --docker-image 'registry.dev-comutitres.fr/comutitres/docker:latest'
@@ -28,7 +15,7 @@
     --docker-volumes /etc/gitlab-runner/certs/ca.crt:/usr/local/share/ca-certificates/ca.crt
     --pre-clone-script "update-ca-certificates;git config --global http.https://gitlab.dev-comutitres.fr.sslcainfo /etc/ssl/certs/ca-certificates.crt"
 
-- name: register runner docker builder
+- name: register dind java maven runner
   command: gitlab-runner register >
     --non-interactive
     --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
@@ -36,9 +23,9 @@
     --registration-token '{{ ci_runner_registration_token }}'
     --description 'docker-builder-runner'
     --tag-list 'dockertest'
-    --docker-privileged true
+    --docker-privileged=true
     --locked=false
-    --executor docker
+    --executor "docker"
     --docker-image 'registry.dev-comutitres.fr/comutitres/docker:latest'
     --docker-volumes /var/run/docker.sock:/var/run/docker.sock
     --docker-volumes /etc/gitlab-runner/certs/ca.crt:/usr/local/share/ca-certificates/ca.crt

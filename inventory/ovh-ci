@@ -39,6 +39,10 @@ vm6
 [nginx-hosts]
 vm2
 
+[backup-hosts]
+vm1
+vm2
+
 [postgresql-hosts]
 vm6
 

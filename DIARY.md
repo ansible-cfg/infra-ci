@@ -34,7 +34,6 @@ ansible -m ping -i inventory/ovh-alo all
 
 Extract the `invalidate_root.yml` from `bastion.yml` since it is a one shot move; not idempotent.
 
-
 ## Inspiration
 
 * [Install Ansible, Create Your Inventory File, and Run an Ansible Playbook and Some Ansible Commands](https://thornelabs.net/2014/03/08/install-ansible-create-your-inventory-file-and-run-an-ansible-playbook-and-some-ansible-commands.html)
@@ -57,7 +56,6 @@ Mise à jour du système:
 Redémarrer:
 
     reboot
-
 
 # Bastion, DMZ, wtf!?!
 
