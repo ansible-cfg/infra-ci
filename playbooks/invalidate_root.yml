@@ -5,7 +5,7 @@
       prompt: "Root new password"
       confirm: yes
       private: yes
- 
+
   tasks:
     - include_role:
         name: users_declaration
@@ -19,4 +19,3 @@
 
     - include_role:
         name: ssh_disable_root
- 
