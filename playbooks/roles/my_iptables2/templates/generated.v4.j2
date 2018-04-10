@@ -9,17 +9,13 @@ iptables -F
 # create user-defined chains
 iptables -X BEFORE-DOCKER
 iptables -X DOCKER-USER
-iptables -X PRIVATE-NETWORK
-iptables -X PRIVATE-NETWORK -t nat
 
 iptables -N BEFORE-DOCKER
 iptables -N DOCKER-USER
-iptables -N PRIVATE-NETWORK -t nat
 
 # flush user-defined chains
 iptables -F BEFORE-DOCKER
 iptables -F DOCKER-USER
-iptables -F PRIVATE-NETWORK
 
 #iptables -X
 #iptables -t raw -F
@@ -71,22 +67,17 @@ iptables -A DOCKER-USER -s {{   host.ipv4 }} -d 172.16.0.0/12 -i eth0 -o docker0
 # private network: allow access from any machine within the subnet
 {% for network, host in privatenetwork.iteritems() %}
 iptables -A BEFORE-DOCKER   -s {{ host.ipv4 }} -p tcp -j ACCEPT
-iptables -t nat -A PRIVATE-NETWORK -s {{   host.ipv4 }} -p tcp -j RETURN
 {% endfor %}
-iptables -t nat -A PRIVATE-NETWORK -p tcp -j DROP
 
 iptables -A DOCKER-USER -i eth0 -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A DOCKER-USER -s 172.16.0.0/12 -d 0.0.0.0/0 -j ACCEPT
+iptables -A DOCKER-USER -s 0.0.0.0/0 -j DROP
 
 # Append custom chain to INPUT and FORWARD
 iptables -t filter -A INPUT -j BEFORE-DOCKER
 iptables -t filter -A INPUT -j DOCKER-USER
 iptables -t filter -A FORWARD -j BEFORE-DOCKER
 
-
-{% if (inventory_hostname != "vm1") and (inventory_hostname != "vm2") %}
-iptables -t nat -I PREROUTING 1 -j PRIVATE-NETWORK
-{% endif %}
 
 # Default policy: DROP
 #
