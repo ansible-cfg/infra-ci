@@ -48,6 +48,7 @@ iptables -t nat -I POSTROUTING 1 -p tcp --dport 10022 -j SNAT --to {{ privatenet
 iptables -A DOCKER-USER   -s 0.0.0.0/0 -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
 iptables -A BEFORE-DOCKER -s 0.0.0.0/0 -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
 iptables -A BEFORE-DOCKER -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
+iptables -A INPUT -p {{ port.protocol }} --dport {{ port.port }} -j ACCEPT
 {% endfor %}
 
 # WHY: 172.16.0.0/12 ??
