@@ -111,6 +111,7 @@ all:
       - arnauld
       - fabien
       - amin
+      - francois
 
     CI_DB_NAME: gitlabhq
     CI_DB_USER: gitlab
