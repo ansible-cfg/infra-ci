@@ -35,3 +35,20 @@ certbot renew
 
 # Renouvellement
 Des crons ont été ajoutés dans la crontab du root des machines concernées.
+
+Check certificate:
+
+```
+sudo openssl x509 -in cert.pem -text -noout
+```
+
+## VM2
+
+```
+$ ssh vm2.dev-comutitres.fr
+$ sudo systemctl stop nginx
+$ sudo certbot renew
+$ sudo systemctl start nginx
+```
+
+## VM4

@@ -55,8 +55,8 @@
           - name: gitlab
             server_name: "gitlab.dev-comutitres.fr"
             upstream_url: "https://vm4.dev-comutitres.fr:10443"
-            ssl_certificate: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr-0001/cert.pem"
-            ssl_certificate_key: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr-0001/privkey.pem"
+            ssl_certificate: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr/cert.pem"
+            ssl_certificate_key: "/etc/letsencrypt/live/gitlab.dev-comutitres.fr/privkey.pem"
           - name: nexus
             server_name: "nexus.dev-comutitres.fr"
             upstream_url: "https://vm5.dev-comutitres.fr"
