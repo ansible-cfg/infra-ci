@@ -10,7 +10,7 @@
     - include_role:
         name: users_declaration
       vars:
-        usernames: ["arnauld", "amin", "fabien"]
+        usernames: ["arnauld", "amin", "fabien", "francois"]
 
     - name: Change root password
       user:
