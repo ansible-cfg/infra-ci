@@ -30,11 +30,4 @@ CI_SERVER_URL: https://gitlab.dev-comutitres.fr
 CI_DB_ADAPTER: postgresql
 CI_DB_HOST: vm6.dev-comutitres.fr
 CI_DB_PORT: 5432
-            
-users:
-  - hugh
-  - sylvain
-  - arnauld
-  - fabien
-  - amin
-  - francois
+          
