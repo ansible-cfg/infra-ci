@@ -21,7 +21,13 @@ TODO
 Supprimer le host des `known_hosts`; cela arrive lorsque l'on réinitialise un vps sur OVH.
 
 ```
-ssh-keygen -R vps502106.ovh.net
+ssh-keygen -R dev1.dev-comutitres.fr
+ssh-keygen -R dev2.dev-comutitres.fr
+ssh-keygen -R dev2.dev-comutitres.fr
+ssh-keygen -R 217.182.207.47
+...
+ssh root@dev1.dev-comutitres.fr
+ssh root@dev2.dev-comutitres.fr
 ```
 
 Copier la clé publique ssh de l'utilisateur `root` pour faciliter l'utilisation d'Ansible:

@@ -34,3 +34,12 @@ privatenetwork:
     ipv4: 217.182.206.135
     type: ssd2
     name: vm6
+
+
+users:
+  - hugh
+  - sylvain
+  - arnauld
+  - fabien
+  - amin
+  - francois
