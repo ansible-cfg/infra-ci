@@ -63,6 +63,7 @@
             ssl_certificate: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/nexus.dev-comutitres.fr/privkey.pem"
             client_max_body_size: 200m
+            client_body_buffer_size: 200m
           - name: sonar
             server_name: "sonar.dev-comutitres.fr"
             upstream_url: "https://vm5.dev-comutitres.fr"
@@ -74,6 +75,7 @@
             ssl_certificate: "/etc/letsencrypt/live/registry.dev-comutitres.fr/cert.pem"
             ssl_certificate_key: "/etc/letsencrypt/live/registry.dev-comutitres.fr/privkey.pem"
             client_max_body_size: 1000m
+            client_body_buffer_size: 600m
           - name: grafana
             server_name: "grafana.dev-comutitres.fr"
             upstream_url: "http://vm6.dev-comutitres.fr:3000"
