@@ -8,8 +8,12 @@ Type=simple
 ExecStart=/usr/bin/docker run \
 	--name docker-registry \
 	-e REGISTRY_STORAGE_DELETE_ENABLED=true \
+        -e "REGISTRY_AUTH=htpasswd" \
+        -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+        -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
 	-p 5000:5000 \
 	-v /var/lib/docker/volumes:/var/lib/registry \
+	-v /app/docker/docker-registry/auth:/auth \
 	registry:2.6.2
 
 [Install]
