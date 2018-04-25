@@ -12,6 +12,14 @@
     mode: 0755
     state: directory
 
+- name: Create directory to store basic HTTP authentication
+  file:
+    path: /app/docker/docker-registry/auth
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
 - name: Pull registry image
   docker_image:
     name: "{%- if registry is defined %}{%- if registry.cache is defined %}{{ registry.cache }}/{% endif %}{% endif %}registry:2"
