@@ -16,3 +16,21 @@
         ci_server_url: "{{ CI_SERVER_URL }}"
         ci_root_username: "{{ CI_ROOT_USERNAME }}"
         ci_root_password: "{{ CI_ROOT_PASSWORD }}"
+
+- name: Login to Docker registry
+  vars_prompt:
+    - name: "CI_DOCKER_IMAGES_REGISTRY_HOST"
+      prompt: "Username for Docker registry"
+      default: registry.dev-comutitres.fr
+      confirm: no
+      private: yes
+    - name: "CI_DOCKER_IMAGES_REGISTRY_USERNAME"
+      prompt: "Username for Docker registry"
+      default: comutitres
+      confirm: no
+      private: yes
+    - name: "CI_DOCKER_IMAGES_REGISTRY_PASSWORD"
+      prompt: "Username for Docker registry"
+      confirm: no
+      private: no
+  command: docker login -u {{ CI_DOCKER_IMAGES_REGISTRY_USERNAME }} -p {{ CI_DOCKER_IMAGES_REGISTRY_PASSWORD }} {{ CI_DOCKER_IMAGES_REGISTRY_HOST }}
