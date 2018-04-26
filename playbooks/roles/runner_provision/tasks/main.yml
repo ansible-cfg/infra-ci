@@ -20,7 +20,7 @@
   file:
     path: /volumes/gitlab-runner/certs
     state: directory
-    
+
 - name: copy letsencrypt ca certificate
   become: yes
   copy:
@@ -42,4 +42,5 @@
         RUNNER_NAME: java-maven-runner
         RUNNER_EXECUTOR: shell
         CI_SERVER_TLS_CA_FILE: /etc/gitlab-runner/certs/ca.crt
-        CI_RUNNER_TAGS: "java maven"
+        RUNNER_TAG_LIST: ["java maven"]
+        REGISTER_LOCKED: false
