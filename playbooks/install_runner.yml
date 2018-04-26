@@ -4,13 +4,11 @@
     - name: "CI_ROOT_USERNAME"
       prompt: "Gitlab admin username"
       confirm: no
-      private: no
-      default: root
+      private: yes
     - name: "CI_ROOT_PASSWORD"
       prompt: "Gitlab admin password"
       confirm: no
-      private: no
-      default: ComutitresCI2018
+      private: yes
   tasks:
     - include_role:
         name: runner_provision
