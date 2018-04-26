@@ -42,5 +42,5 @@
         RUNNER_NAME: java-maven-runner
         RUNNER_EXECUTOR: shell
         CI_SERVER_TLS_CA_FILE: /etc/gitlab-runner/certs/ca.crt
-        RUNNER_TAG_LIST: ["java maven"]
+        RUNNER_TAG_LIST: "java maven"
         REGISTER_LOCKED: false
