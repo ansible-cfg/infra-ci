@@ -107,7 +107,15 @@ La plupart des machines necessitent docker, il faut donc lancer la recette suiva
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_docker.yml -u arnauld
 ```
 
-# Etape 5 : Installer la base des données PostgreSQL pour le Gitlab-CI
+# Etape 5 : Installer le registry des images Docker
+
+Les runners utilisés par Gitlab-CI nécessitent d'être authentifié sur la registry Docker :
+
+```
+ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_registry.yml -u arnauld
+```
+
+# Etape 6 : Installer la base des données PostgreSQL pour le Gitlab-CI
 
 *Attention* remplacer `arnauld` par votre propre login sudoer.
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
@@ -117,7 +125,7 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_docker.yml -u arn
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_postgres.yml -u arnauld
 ```
 
-# Etape 6 : Installer le Redis pour le Gitlab-CI
+# Etape 7 : Installer le Redis pour le Gitlab-CI
 
 *Attention* remplacer `arnauld` par votre propre login sudoer.
 `-u arnauld` pour indiquer à ansible d'utiliser le user 'arnauld'
@@ -126,7 +134,7 @@ ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_postgres.yml -u a
 ansible-playbook -i inventory/ovh-vec-ci.yml playbooks/install_redis.yml -u arnauld
 ```
 
-# Etape 7 : Installer la machine Gitlab-CI
+# Etape 8 : Installer la machine Gitlab-CI
 
 ## Initialiser les serveurs de sauvegarde
 
@@ -157,7 +165,7 @@ Les fichiers sauvegardés sont transférés dans le dossiers `/backups` sur les 
 
 Pour plus d'informations, vous pouvez consuler le [manuel d'utilisation des scripts de sauvegarde et de restauration des données.](playbooks/roles/gitlab_provision/files/backup/README.md)
 
-# Etape 8 : Installer la machine Nginx
+# Etape 9 : Installer la machine Nginx
 
 Une des machines (actuellement VM2) servira de "breaking glass" HTTP. C'est elle qui sera ouverte en public et redirigera les flux HTTP/HTTPS vers les bonnes machines.
 C'est elle qui fera par exemple qu'en appellant gitlab.dev-comutitres.fr nous arrivions sur la machine gitlab en HTTPS.
