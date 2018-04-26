@@ -5,7 +5,7 @@
     --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
     --url '{{ ci_server_url }}'
     --registration-token '{{ ci_runner_registration_token }}'
-    --description 'docker-runner'
+    --description  "Docker Runner to build docker images"
     --tag-list 'docker'
     --docker-privileged=true
     --locked=false
@@ -21,7 +21,7 @@
     --tls-ca-file '/usr/local/share/ca-certificates/ca.crt'
     --url '{{ ci_server_url }}'
     --registration-token '{{ ci_runner_registration_token }}'
-    --description 'docker-builder-runner'
+    --description "Docker in Docker Java Maven Runner"
     --tag-list 'dockertest'
     --docker-privileged=true
     --locked=false
