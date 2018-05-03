@@ -76,6 +76,7 @@
             ssl_certificate_key: "/etc/letsencrypt/live/registry.dev-comutitres.fr/privkey.pem"
             client_max_body_size: 1000m
             client_body_buffer_size: 600m
+            redirect_all_traffic_to_https: true
           - name: grafana
             server_name: "grafana.dev-comutitres.fr"
             upstream_url: "http://vm6.dev-comutitres.fr:3000"
