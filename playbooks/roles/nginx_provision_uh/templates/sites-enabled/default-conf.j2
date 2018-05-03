@@ -1,3 +1,13 @@
+{% if item.redirect_all_traffic_to_https == True %}
+server {
+      listen      80 default;
+      server_name               {{ item.server_name }};
+      access_log off;
+      error_log off;
+      return      301 https://$server_name$request_uri;
+}
+{% endif %}
+
 server {
   listen                    443 ssl;
   server_name               {{ item.server_name }};
