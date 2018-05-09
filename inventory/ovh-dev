@@ -4,3 +4,13 @@ dev3 ansible_host=dev3.dev-comutitres.fr
 dev4 ansible_host=dev4.dev-comutitres.fr
 dev5 ansible_host=dev5.dev-comutitres.fr
 dev6 ansible_host=dev6.dev-comutitres.fr
+dev7 ansible_host=dev7.dev-comutitres.fr
+
+[subnet]
+dev1
+dev2
+dev3
+dev4
+dev5
+dev6
+dev7

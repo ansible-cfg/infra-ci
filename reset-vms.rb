@@ -75,9 +75,9 @@ hosts.each do |host|
 end
 
 env_inventory = if environment == "dev"
-                  "inventory/ovh-vec-dev.yml"
+                  "inventory/ovh-dev"
                 else
-                  "inventory/ovh-vec-ci.yml"
+                  "inventory/ovh-ci"
                 end
 password_file = if environment == "dev"
                   "~/.comutitres/password-dev"
@@ -87,7 +87,7 @@ password_file = if environment == "dev"
 
 root_env_password = File.open(File.expand_path(password_file), "rb").read
 
-cmd = "ansible-playbook -i #{env_inventory} playbooks/invalidate_root.yml  --extra-vars \"root_new_password=#{root_env_password}\""
+cmd = "ansible-playbook -i #{env_inventory} playbooks/invalidate_root.yml --extra-vars \"root_new_password=#{root_env_password}\""
 Open3.popen2e(cmd) do |stdin, stdout_stderr, wait_thread|
   Thread.new do
     stdout_stderr.each {|l| puts l }
